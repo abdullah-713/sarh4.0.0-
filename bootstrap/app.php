@@ -11,7 +11,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        // SARH Hardened: Trust all proxies (Hostinger shared hosting reverse proxy).
+        // Without this, $request->isSecure() returns false behind HTTPS proxy,
+        // causing CSRF token / session cookie mismatches → 419 errors.
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

@@ -21,6 +21,9 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 /**
  * SARH v1.9.0 — بوابة الموظفين /app
  *
+ * Module 5: Employee Portal Emerald Theme
+ * Module 4: Mobile-First responsive configuration
+ *
  * بوابة مستقلة تماماً عن /admin، مخصصة للموظفين (security_level < 4).
  * تكتشف Resources/Pages/Widgets من مجلد Filament/App/ فقط.
  */
@@ -34,7 +37,19 @@ class AppPanelProvider extends PanelProvider
             ->login()
             ->passwordReset()
             ->colors([
-                'primary' => Color::Emerald,
+                'primary' => [
+                    50  => '#ecfdf5',
+                    100 => '#d1fae5',
+                    200 => '#a7f3d0',
+                    300 => '#6ee7b7',
+                    400 => '#34d399',
+                    500 => '#10b981',
+                    600 => '#059669',
+                    700 => '#047857',
+                    800 => '#065f46',
+                    900 => '#064e3b',
+                    950 => '#022c22',
+                ],
                 'danger'  => Color::Rose,
                 'warning' => Color::Amber,
                 'success' => Color::Green,
@@ -42,6 +57,7 @@ class AppPanelProvider extends PanelProvider
                 'gray'    => Color::Zinc,
             ])
             ->font('Cairo')
+            ->viteTheme('resources/css/filament/app/theme.css')
             ->brandName('سهر — بوابة الموظفين')
             ->darkMode(true)
             ->sidebarCollapsibleOnDesktop()

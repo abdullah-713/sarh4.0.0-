@@ -26,6 +26,20 @@ class TrapInteractionResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
+    /**
+     * Module 3: Stealth Visibility — Hidden from navigation unless Level 10.
+     */
+    public static function canAccess(): bool
+    {
+        $user = auth()->user();
+        return $user && ($user->is_super_admin || $user->security_level >= 10);
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return static::canAccess();
+    }
+
     public static function getNavigationLabel(): string
     {
         return __('traps.interactions_label');
@@ -51,23 +65,28 @@ class TrapInteractionResource extends Resource
                         ->searchable()
                         ->preload()
                         ->disabled()
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الموظف الذي تفاعل مع المصيدة')
                         ->label(__('traps.employee')),
 
                     Forms\Components\Select::make('trap_id')
                         ->relationship('trap', 'trap_code')
                         ->disabled()
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'رمز المصيدة التي تم التفاعل معها')
                         ->label(__('traps.trap_code')),
 
                     Forms\Components\TextInput::make('trap_type')
                         ->disabled()
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'نوع المصيدة: رابط مخفي، صفحة وهمية، أو غيرها')
                         ->label(__('traps.trap_type')),
 
                     Forms\Components\TextInput::make('page_url')
                         ->disabled()
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'عنوان الصفحة التي حدث فيها التفاعل')
                         ->label(__('traps.page_url')),
 
                     Forms\Components\TextInput::make('ip_address')
                         ->disabled()
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'عنوان الإنترنت (IP) الخاص بالجهاز المستخدم')
                         ->label(__('traps.ip_address')),
 
                     Forms\Components\Select::make('risk_level')
@@ -78,15 +97,18 @@ class TrapInteractionResource extends Resource
                             'critical' => __('traps.risk_levels.critical'),
                         ])
                         ->disabled()
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'مستوى الخطورة: يحدد مدى أهمية هذا التفاعل الأمني')
                         ->label(__('traps.risk_level')),
                 ])->columns(3),
 
             Forms\Components\Section::make(__('traps.review_section'))
                 ->schema([
                     Forms\Components\Toggle::make('is_reviewed')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'حدد ما إذا تمت مراجعة هذا التفاعل من قبل المسؤول')
                         ->label(__('traps.is_reviewed')),
 
                     Forms\Components\Textarea::make('review_notes')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'أضف ملاحظات المراجعة والإجراء المتخذ')
                         ->label(__('traps.review_notes')),
                 ])->columns(1),
         ]);

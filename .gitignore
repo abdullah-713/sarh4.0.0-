@@ -1,22 +1,41 @@
-/.phpunit.cache
-/node_modules
-# /public/build  ← tracked for Hostinger (no npm on server)
-/public/hot
-/public/storage
-/storage/*.key
-/storage/pail
+# ── SARH v1.9.0 Security-Hardened .gitignore ──
+
+# Dependencies
 /vendor
+/node_modules
+
+# Environment & Credentials
 .env
 .env.backup
-.phpactor.json
-.phpunit.result.cache
-Homestead.json
-Homestead.yaml
-npm-debug.log
-yarn-error.log
+.env.production
+.env.staging
 /auth.json
+/storage/*.key
+*.pem
+*.key
+
+# Laravel Generated
+/public/hot
+/public/storage
+/storage/pail
+/.phpunit.cache
+.phpunit.result.cache
+.phpactor.json
+
+# Build artifacts (tracked for Hostinger — no npm on server)
+# /public/build
+
+# IDE & OS
 /.fleet
 /.idea
 /.nova
 /.vscode
 /.zed
+.DS_Store
+Thumbs.db
+
+# Misc
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log

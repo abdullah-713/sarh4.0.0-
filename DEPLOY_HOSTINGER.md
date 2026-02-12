@@ -1,45 +1,45 @@
-# SARH AL-ITQAN — Hostinger Deployment Playbook (sarh.online)
-> **Date:** 2026-02-08 | **DB State:** Empty — Fresh Install
+# صرح الإتقان — دليل النشر على Hostinger (sarh.online)
+> **التاريخ:** 2026-02-08 | **حالة قاعدة البيانات:** فارغة — تثبيت جديد
 
 ---
 
-## Quick Reference
+## مرجع سريع
 
-| Item | Value |
-|------|-------|
-| Domain | `sarh.online` |
+| العنصر | القيمة |
+|--------|--------|
+| النطاق | `sarh.online` |
 | SSH | `ssh -p 65002 u850419603@145.223.119.139` |
-| Project Path | `/home/u850419603/sarh` |
-| Web Root | `/home/u850419603/public_html` → symlink to `sarh/public` |
-| Database | `u850419603_sarh` @ `127.0.0.1:3306` |
-| DB User | `u850419603_sarh` |
-| Admin Panel | `https://sarh.online/admin` |
+| مسار المشروع | `/home/u850419603/sarh` |
+| جذر الويب | `/home/u850419603/public_html` → رابط رمزي إلى `sarh/public` |
+| قاعدة البيانات | `u850419603_sarh` @ `127.0.0.1:3306` |
+| مستخدم قاعدة البيانات | `u850419603_sarh` |
+| لوحة الإدارة | `https://sarh.online/admin` |
 
 ---
 
-## Step-by-Step Deployment
+## خطوات النشر التفصيلية
 
-### 1. SSH into the Server
+### 1. الاتصال بالخادم عبر SSH
 
 ```bash
 ssh -p 65002 u850419603@145.223.119.139
 ```
 
-### 2. Upload the Project
+### 2. رفع المشروع
 
-**Option A — Git Clone (if repo exists):**
+**الخيار أ — استنساخ Git (إذا كان المستودع موجوداً):**
 ```bash
 cd /home/u850419603
-git clone <YOUR_REPO_URL> sarh
+git clone <رابط_المستودع> sarh
 cd sarh
 ```
 
-**Option B — Upload via File Manager / SFTP:**
-Upload the entire `sarh/` folder to `/home/u850419603/sarh`.
+**الخيار ب — الرفع عبر مدير الملفات / SFTP:**
+ارفع كامل مجلد `sarh/` إلى `/home/u850419603/sarh`.
 
-> **Security:** The project lives ABOVE `public_html`, so only the `public/` folder is web-accessible.
+> **أمان:** المشروع يقع **فوق** `public_html`، لذا فقط مجلد `public/` يكون متاحاً عبر الويب.
 
-### 3. Run the Deploy Script
+### 3. تشغيل سكربت النشر
 
 ```bash
 cd /home/u850419603/sarh
@@ -47,91 +47,91 @@ chmod +x deploy.sh
 bash deploy.sh
 ```
 
-This single command will:
+هذا الأمر الواحد سيقوم بـ:
 1. ✅ `composer install --no-dev --optimize-autoloader`
-2. ✅ Copy `.env.production` → `.env` and generate `APP_KEY`
-3. ✅ `php artisan migrate --force --seed` (creates all 16 tables + seeds RBAC, Traps, Badges)
-4. ✅ `npm install && npm run build` (compile Vite/Tailwind assets)
+2. ✅ نسخ `.env.production` → `.env` وتوليد `APP_KEY`
+3. ✅ `php artisan migrate --force --seed` (إنشاء 16 جدول + بذر الأدوار والمصائد والشارات)
+4. ✅ `npm install && npm run build` (تجميع أصول Vite/Tailwind)
 5. ✅ `php artisan storage:link`
-6. ✅ Delete `public_html/` and symlink it → `sarh/public/`
-7. ✅ `php artisan optimize` (cache config, routes, views)
-8. ✅ Fix permissions on `storage/` and `bootstrap/cache/`
+6. ✅ حذف `public_html/` وربطه رمزياً بـ `sarh/public/`
+7. ✅ `php artisan optimize` (تخزين الإعدادات والمسارات والعروض مؤقتاً)
+8. ✅ إصلاح صلاحيات `storage/` و `bootstrap/cache/`
 
-### 4. Create the Super Admin
+### 4. إنشاء المدير العام
 
-After deploy.sh completes:
+بعد اكتمال deploy.sh:
 
 ```bash
 php artisan sarh:install
 ```
 
-> This is the `SarhInstallCommand`. Since migrations already ran, it will skip to creating the Super Admin (Level 10).  
-> Enter: **name_ar**, **name_en**, **email**, **password** when prompted.
+> هذا هو أمر `SarhInstallCommand`. بما أن الترحيلات تمت بالفعل، سينتقل مباشرة لإنشاء حساب المدير العام (المستوى 10).  
+> أدخل: **الاسم_العربي**، **الاسم_الإنجليزي**، **البريد_الإلكتروني**، **كلمة_المرور** عند الطلب.
 
-### 5. Verify
+### 5. التحقق
 
-Open `https://sarh.online/admin` and log in with the Super Admin credentials.
+افتح `https://sarh.online/admin` وسجل الدخول ببيانات المدير العام.
 
 ---
 
-## If npm Is Not Available on Hostinger
+## إذا لم يكن npm متاحاً على Hostinger
 
-Hostinger shared hosting may not include Node.js. In that case:
+استضافة Hostinger المشتركة قد لا تتضمن Node.js. في هذه الحالة:
 
-1. Build locally on your machine:
+1. ابنِ محلياً على جهازك:
 ```bash
 cd sarh
 npm install
 npm run build
 ```
 
-2. Upload the generated `public/build/` folder to `/home/u850419603/sarh/public/build/` via SFTP.
+2. ارفع مجلد `public/build/` المُنشأ إلى `/home/u850419603/sarh/public/build/` عبر SFTP.
 
-The deploy script detects this and warns you — it won't fail.
+سكربت النشر يكتشف ذلك ويُنبهك — لن يفشل.
 
 ---
 
-## Manual Commands Reference
+## مرجع الأوامر اليدوية
 
-If you prefer running steps individually instead of `deploy.sh`:
+إذا كنت تفضل تنفيذ الخطوات فردياً بدلاً من `deploy.sh`:
 
 ```bash
-# Navigate to project
+# الانتقال للمشروع
 cd /home/u850419603/sarh
 
-# Copy env
+# نسخ ملف البيئة
 cp .env.production .env
 php artisan key:generate --force
 
-# PHP dependencies
+# مكتبات PHP
 composer install --no-dev --optimize-autoloader --no-interaction
 
-# Database (empty → full schema + seed data)
+# قاعدة البيانات (فارغة → مخطط كامل + بيانات أولية)
 php artisan migrate --force --seed
 
-# Frontend (if npm available)
+# الواجهة الأمامية (إذا كان npm متاحاً)
 npm install --no-audit --no-fund && npm run build
 
-# Storage link
+# رابط التخزين
 php artisan storage:link --force
 
-# Symlink public_html
+# الرابط الرمزي لـ public_html
 rm -rf /home/u850419603/public_html
 ln -s /home/u850419603/sarh/public /home/u850419603/public_html
 
-# Production cache
+# كاش الإنتاج
 php artisan optimize
 
-# Permissions
+# الصلاحيات
 chmod -R 775 storage bootstrap/cache
 
-# Create Super Admin
+# إنشاء المدير العام
 php artisan sarh:install
 ```
 
 ---
 
-## Permissions Fix (if 500 errors)
+## إصلاح الصلاحيات (عند ظهور خطأ 500)
 
 ```bash
 cd /home/u850419603/sarh
@@ -139,36 +139,36 @@ chmod -R 775 storage bootstrap/cache
 chmod -R 644 storage/logs/*.log 2>/dev/null || true
 ```
 
-If Hostinger uses a different web server user:
+إذا كان Hostinger يستخدم مستخدم خادم ويب مختلف:
 ```bash
-# Check the web server user
+# فحص مستخدم خادم الويب
 ps aux | grep -E 'apache|nginx|lsws' | head -1
 
-# If needed, set group ownership
+# إذا لزم الأمر، اضبط ملكية المجموعة
 chgrp -R www-data storage bootstrap/cache
 ```
 
 ---
 
-## Troubleshooting
+## استكشاف الأخطاء وإصلاحها
 
-| Symptom | Fix |
-|---------|-----|
-| 500 Internal Server Error | `chmod -R 775 storage bootstrap/cache` |
-| "Vite manifest not found" | Upload `public/build/` — npm build was missing |
-| "SQLSTATE Connection refused" | Verify DB host is `127.0.0.1` in `.env`, not `localhost` |
-| CSS/JS not loading | Confirm symlink: `ls -la /home/u850419603/public_html` should show `→ sarh/public` |
+| العَرَض | الحل |
+|---------|------|
+| خطأ 500 Internal Server Error | `chmod -R 775 storage bootstrap/cache` |
+| "Vite manifest not found" | ارفع `public/build/` — بناء npm كان مفقوداً |
+| "SQLSTATE Connection refused" | تحقق أن DB host هو `127.0.0.1` في `.env` وليس `localhost` |
+| CSS/JS لا يُحمّل | تأكد من الرابط الرمزي: `ls -la /home/u850419603/public_html` يجب أن يُظهر `→ sarh/public` |
 | "No application encryption key" | `php artisan key:generate --force` |
-| 404 on all routes except `/` | Check `.htaccess` exists in `public/`, Hostinger may need Apache mod_rewrite |
-| Admin login page blank | `php artisan filament:optimize` then `php artisan view:clear` |
+| 404 على كل المسارات ما عدا `/` | تحقق من وجود `.htaccess` في `public/`، Hostinger قد يحتاج `mod_rewrite` |
+| صفحة تسجيل الدخول فارغة | `php artisan filament:optimize` ثم `php artisan view:clear` |
 
 ---
 
-## Post-Deploy Checklist
+## قائمة التحقق بعد النشر
 
-- [ ] `https://sarh.online` loads without errors
-- [ ] `https://sarh.online/admin` shows Filament login
-- [ ] Super Admin can log in (Level 10)
-- [ ] Arabic RTL layout renders correctly
-- [ ] Sidebar shows: الحضور، الأمان، غرفة القيادة
-- [ ] `APP_DEBUG=false` confirmed in `.env`
+- [ ] `https://sarh.online` يُحمّل بدون أخطاء
+- [ ] `https://sarh.online/admin` يُظهر صفحة تسجيل دخول Filament
+- [ ] المدير العام يستطيع تسجيل الدخول (المستوى 10)
+- [ ] التنسيق العربي RTL يظهر بشكل صحيح
+- [ ] القائمة الجانبية تُظهر: الحضور، الأمان، غرفة القيادة
+- [ ] `APP_DEBUG=false` مؤكد في `.env`

@@ -298,6 +298,42 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(TrapInteraction::class);
     }
 
+    // --- RBAC Overrides (Module 2: Granular RBAC) ---
+
+    public function userPermissions(): HasMany
+    {
+        return $this->hasMany(UserPermission::class);
+    }
+
+    public function directPermissions(): BelongsToMany
+    {
+        return $this->belongsToMany(Permission::class, 'user_permissions')
+                     ->withPivot('type', 'granted_by', 'expires_at', 'reason')
+                     ->withTimestamps();
+    }
+
+    // --- Attendance Exceptions (Module 7) ---
+
+    public function attendanceExceptions(): HasMany
+    {
+        return $this->hasMany(AttendanceException::class);
+    }
+
+    /**
+     * Get active attendance exception for today.
+     */
+    public function getActiveException(): ?AttendanceException
+    {
+        return AttendanceException::getActiveForUser($this->id);
+    }
+
+    // --- Score Adjustments (Module 8) ---
+
+    public function scoreAdjustments(): HasMany
+    {
+        return $this->hasMany(ScoreAdjustment::class);
+    }
+
     public function shifts(): BelongsToMany
     {
         return $this->belongsToMany(Shift::class, 'user_shifts')
@@ -319,7 +355,13 @@ class User extends Authenticatable implements FilamentUser
     */
 
     /**
-     * Check if user has a specific permission via their role.
+     * Check if user has a specific permission via their role + direct overrides.
+     *
+     * Priority Order:
+     * 1. Super Admin → always true
+     * 2. Direct 'revoke' override → false (explicit denial)
+     * 3. Direct 'grant' override → true (explicit grant)
+     * 4. Role permission → check role's permissions
      */
     public function hasPermission(string $slug): bool
     {
@@ -327,8 +369,53 @@ class User extends Authenticatable implements FilamentUser
             return true;
         }
 
+        // Check for direct user-level overrides (active, non-expired)
+        $override = $this->userPermissions()
+            ->whereHas('permission', fn ($q) => $q->where('slug', $slug))
+            ->active()
+            ->first();
+
+        if ($override) {
+            return $override->type === 'grant';
+        }
+
+        // Fallback to role permission
         return $this->role
             && $this->role->permissions()->where('slug', $slug)->exists();
+    }
+
+    /**
+     * Get all effective permissions for this user (role + direct grants - revocations).
+     */
+    public function getEffectivePermissions(): \Illuminate\Support\Collection
+    {
+        if ($this->is_super_admin) {
+            return Permission::all();
+        }
+
+        // Role permissions
+        $rolePermissions = $this->role
+            ? $this->role->permissions()->pluck('permissions.id')
+            : collect();
+
+        // Direct grants (active)
+        $grantedIds = $this->userPermissions()
+            ->active()
+            ->grants()
+            ->pluck('permission_id');
+
+        // Direct revocations (active)
+        $revokedIds = $this->userPermissions()
+            ->active()
+            ->revocations()
+            ->pluck('permission_id');
+
+        $effectiveIds = $rolePermissions
+            ->merge($grantedIds)
+            ->diff($revokedIds)
+            ->unique();
+
+        return Permission::whereIn('id', $effectiveIds)->get();
     }
 
     /**

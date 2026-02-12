@@ -1,0 +1,62 @@
+/**
+ * SARH v1.9.0 — Module 5: Employee Portal Theme
+ *
+ * Clean emerald/orange theme for mobile-first employee portal.
+ */
+@import '/vendor/filament/filament/resources/css/theme.css';
+
+@config '../../tailwind.config.js';
+
+:root {
+    --primary-50: #ecfdf5;
+    --primary-100: #d1fae5;
+    --primary-200: #a7f3d0;
+    --primary-300: #6ee7b7;
+    --primary-400: #34d399;
+    --primary-500: #10b981;
+    --primary-600: #059669;
+    --primary-700: #047857;
+    --primary-800: #065f46;
+    --primary-900: #064e3b;
+    --primary-950: #022c22;
+}
+
+/* Mobile-First: Single column widgets */
+@media (max-width: 768px) {
+    .fi-wi-stats-overview {
+        grid-template-columns: 1fr !important;
+    }
+
+    .fi-page-header {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .fi-ta-table {
+        font-size: 0.875rem;
+    }
+
+    /* Stack table cells on mobile */
+    .fi-ta-row {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        padding: 0.75rem;
+        border-bottom: 1px solid var(--gray-200);
+    }
+}
+
+/* Large touch targets for mobile */
+.fi-btn {
+    min-height: 44px;
+    min-width: 44px;
+}
+
+/* Card animations */
+.fi-wi-stats-overview-stat {
+    transition: transform 0.15s ease;
+}
+
+.fi-wi-stats-overview-stat:active {
+    transform: scale(0.98);
+}

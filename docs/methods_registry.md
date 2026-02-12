@@ -1,165 +1,165 @@
-# SARH — Methods Registry (Technical Registry)
-> **Version:** 1.6.0 | **Updated:** 2026-02-09
-> **Scope:** Documentation of every function, accessor, scope, constant, and mathematical formula
+# صرح — سجل الدوال والخدمات (المرجع التقني)
+> **الإصدار:** 1.6.0 | **آخر تحديث:** 2026-02-09
+> **النطاق:** توثيق كل دالة، ومُحصِّل محسوب، ونطاق استعلام، وثابت، ومعادلة رياضية
 
 ---
 
-## Table of Contents
+## فهرس المحتويات
 
-1. [User Model](#1-user-model-appmodelsuser)
-2. [Branch Model](#2-branch-model-appmodelsbranch)
-3. [AttendanceLog Model](#3-attendancelog-model-appmodelsattendancelog)
-4. [FinancialReport Model](#4-financialreport-model-appmodelsfinancialreport)
-5. [WhistleblowerReport Model](#5-whistleblowerreport-model-appmodelswhistleblowerreport)
-6. [Role Model](#6-role-model-appmodelsrole)
-7. [Permission Model](#7-permission-model-appmodelspermission)
-8. [Department Model](#8-department-model-appmodelsdepartment)
-9. [Conversation Model](#9-conversation-model-appmodelsconversation)
-10. [Message Model](#10-message-model-appmodelsmessage)
-11. [Circular Model](#11-circular-model-appmodelscircular)
-12. [CircularAcknowledgment Model](#12-circularacknowledgment-model)
-13. [PerformanceAlert Model](#13-performancealert-model)
-14. [Badge Model](#14-badge-model-appmodelsbadge)
-15. [PointsTransaction Model](#15-pointstransaction-model)
-16. [TrapInteraction Model](#16-trapinteraction-model)
-17. [LeaveRequest Model](#17-leaverequest-model)
-18. [Shift Model](#18-shift-model-appmodelsshift)
-19. [AuditLog Model](#19-auditlog-model-appmodelsauditlog)
-20. [Holiday Model](#20-holiday-model-appmodelsholiday)
+1. [نموذج المستخدم](#1-نموذج-المستخدم-appmodelsuser)
+2. [نموذج الفرع](#2-نموذج-الفرع-appmodelsbranch)
+3. [نموذج سجل الحضور](#3-نموذج-سجل-الحضور-appmodelsattendancelog)
+4. [نموذج التقرير المالي](#4-نموذج-التقرير-المالي-appmodelsfinancialreport)
+5. [نموذج بلاغ المبلغين](#5-نموذج-بلاغ-المبلغين-appmodelswhistleblowerreport)
+6. [نموذج الدور](#6-نموذج-الدور-appmodelsrole)
+7. [نموذج الصلاحية](#7-نموذج-الصلاحية-appmodelspermission)
+8. [نموذج القسم](#8-نموذج-القسم-appmodelsdepartment)
+9. [نموذج المحادثة](#9-نموذج-المحادثة-appmodelsconversation)
+10. [نموذج الرسالة](#10-نموذج-الرسالة-appmodelsmessage)
+11. [نموذج التعميم](#11-نموذج-التعميم-appmodelscircular)
+12. [نموذج إقرار التعميم](#12-نموذج-إقرار-التعميم)
+13. [نموذج تنبيه الأداء](#13-نموذج-تنبيه-الأداء)
+14. [نموذج الشارة](#14-نموذج-الشارة-appmodelsbadge)
+15. [نموذج حركة النقاط](#15-نموذج-حركة-النقاط)
+16. [نموذج تفاعل المصيدة](#16-نموذج-تفاعل-المصيدة)
+17. [نموذج طلب الإجازة](#17-نموذج-طلب-الإجازة)
+18. [نموذج المناوبة](#18-نموذج-المناوبة-appmodelsshift)
+19. [نموذج سجل التدقيق](#19-نموذج-سجل-التدقيق-appmodelsauditlog)
+20. [نموذج العطلة](#20-نموذج-العطلة-appmodelsholiday)
 
 ---
 
-## 1. User Model (`App\Models\User`)
+## 1. نموذج المستخدم (`App\Models\User`)
 
-**File:** `app/Models/User.php`
-**Table:** `users`
-**Traits:** `HasFactory`, `Notifiable`, `SoftDeletes`
+**الملف:** `app/Models/User.php`
+**الجدول:** `users`
+**السمات:** `HasFactory`, `Notifiable`, `SoftDeletes`
 
-### 1.1 Computed Accessors (Financial Engine)
+### 1.1 المُحصِّلات المحسوبة (المحرك المالي)
 
 #### `getTotalSalaryAttribute(): float`
-- **Purpose:** Calculate total monthly compensation
-- **Formula:** `basic_salary + housing_allowance + transport_allowance + other_allowances`
-- **Returns:** `float` — Total monthly compensation in SAR
-- **Usage:** `$user->total_salary`
+- **الغرض:** حساب إجمالي التعويض الشهري
+- **المعادلة:** `basic_salary + housing_allowance + transport_allowance + other_allowances`
+- **يُرجع:** `float` — إجمالي التعويض الشهري بالريال السعودي
+- **الاستخدام:** `$user->total_salary`
 
 #### `getMonthlyWorkingMinutesAttribute(): int`
-- **Purpose:** Calculate total working minutes per month
-- **Formula:** `working_days_per_month × working_hours_per_day × 60`
-- **Returns:** `int` — Total available working minutes in a month
-- **Usage:** `$user->monthly_working_minutes`
-- **Example:** `22 × 8 × 60 = 10,560 minutes`
+- **الغرض:** حساب إجمالي دقائق العمل الشهرية
+- **المعادلة:** `working_days_per_month × working_hours_per_day × 60`
+- **يُرجع:** `int` — إجمالي دقائق العمل المتاحة في الشهر
+- **الاستخدام:** `$user->monthly_working_minutes`
+- **مثال:** `22 × 8 × 60 = 10,560 دقيقة`
 
 #### `getCostPerMinuteAttribute(): float`
-- **Purpose:** **Core financial metric** — the cost of each minute of employee delay
-- **Formula:** `basic_salary ÷ monthly_working_minutes`
-- **Mathematical Proof:**
+- **الغرض:** **المقياس المالي الأساسي** — تكلفة كل دقيقة تأخير للموظف
+- **المعادلة:** `basic_salary ÷ monthly_working_minutes`
+- **البرهان الرياضي:**
   ```
-  cost_per_minute = basic_salary / (working_days_per_month × working_hours_per_day × 60)
+  تكلفة_الدقيقة = الراتب_الأساسي / (أيام_العمل_الشهرية × ساعات_العمل_اليومية × 60)
 
-  For salary = 8000 SAR, 22 days, 8 hours:
-  monthly_working_minutes = 22 × 8 × 60 = 10,560
-  cost_per_minute = 8000 / 10,560 = 0.7576 SAR/min (rounded to 4 decimals)
+  للراتب = 8000 ريال، 22 يوم، 8 ساعات:
+  دقائق_العمل_الشهرية = 22 × 8 × 60 = 10,560
+  تكلفة_الدقيقة = 8000 / 10,560 = 0.7576 ريال/دقيقة (مُقرّبة لـ 4 منازل عشرية)
   ```
-- **Guard:** Returns `0.0` if `monthly_working_minutes <= 0` (prevents division by zero)
-- **Returns:** `float` — Rounded to 4 decimal places
-- **Usage:** `$user->cost_per_minute`
+- **الحماية:** تُرجع `0.0` إذا كانت `monthly_working_minutes <= 0` (منع القسمة على صفر)
+- **يُرجع:** `float` — مُقرّبة لـ 4 منازل عشرية
+- **الاستخدام:** `$user->cost_per_minute`
 
 #### `getTotalCostPerMinuteAttribute(): float`
-- **Purpose:** Same as above but uses **total compensation** not just basic salary
-- **Formula:** `total_salary ÷ monthly_working_minutes`
-- **Returns:** `float` — Rounded to 4 decimal places
-- **Usage:** `$user->total_cost_per_minute`
-- **Note:** Used for comprehensive reporting; `cost_per_minute` (basic only) is the standard for delay cost
+- **الغرض:** نفس ما سبق لكن يستخدم **إجمالي التعويضات** وليس الراتب الأساسي فقط
+- **المعادلة:** `total_salary ÷ monthly_working_minutes`
+- **يُرجع:** `float` — مُقرّبة لـ 4 منازل عشرية
+- **الاستخدام:** `$user->total_cost_per_minute`
+- **ملاحظة:** يُستخدم في التقارير الشاملة؛ `cost_per_minute` (الأساسي فقط) هو المعيار لحساب تكلفة التأخير
 
 #### `getDailyRateAttribute(): float`
-- **Purpose:** Calculate the daily salary rate (used for leave cost estimation)
-- **Formula:** `basic_salary ÷ working_days_per_month`
-- **Guard:** Returns `0.0` if `working_days_per_month <= 0`
-- **Returns:** `float` — Rounded to 2 decimal places
-- **Usage:** `$user->daily_rate`
+- **الغرض:** حساب معدل الراتب اليومي (يُستخدم لتقدير تكلفة الإجازات)
+- **المعادلة:** `basic_salary ÷ working_days_per_month`
+- **الحماية:** تُرجع `0.0` إذا كانت `working_days_per_month <= 0`
+- **يُرجع:** `float` — مُقرّبة لمنزلتين عشريتين
+- **الاستخدام:** `$user->daily_rate`
 
-### 1.2 Computed Accessors (Localization)
+### 1.2 المُحصِّلات المحسوبة (الترجمة)
 
 #### `getNameAttribute(): string`
-- **Purpose:** Return localized name based on app locale
-- **Logic:** `app()->getLocale() === 'ar' ? name_ar : name_en`
-- **Usage:** `$user->name`
+- **الغرض:** إرجاع الاسم المحلي حسب لغة التطبيق
+- **المنطق:** `app()->getLocale() === 'ar' ? name_ar : name_en`
+- **الاستخدام:** `$user->name`
 
 #### `getJobTitleAttribute(): ?string`
-- **Purpose:** Return localized job title
-- **Logic:** Same pattern as `getNameAttribute`
-- **Usage:** `$user->job_title`
+- **الغرض:** إرجاع المسمى الوظيفي المحلي
+- **المنطق:** نفس نمط `getNameAttribute`
+- **الاستخدام:** `$user->job_title`
 
-### 1.3 Financial Methods
+### 1.3 الدوال المالية
 
 #### `calculateDelayCost(int $minutes): float`
-- **Purpose:** Calculate the financial cost of a given number of delay minutes
-- **Formula:** `$minutes × cost_per_minute`
-- **Parameters:** `$minutes` — Number of minutes of delay
-- **Returns:** `float` — Rounded to 2 decimal places
-- **Example:** `$user->calculateDelayCost(15)` → `15 × 0.7576 = 11.36 SAR`
+- **الغرض:** حساب التكلفة المالية لعدد معين من دقائق التأخير
+- **المعادلة:** `$minutes × cost_per_minute`
+- **المعاملات:** `$minutes` — عدد دقائق التأخير
+- **يُرجع:** `float` — مُقرّبة لمنزلتين عشريتين
+- **مثال:** `$user->calculateDelayCost(15)` → `15 × 0.7576 = 11.36 ريال`
 
-### 1.4 RBAC Methods
+### 1.4 دوال التحكم في الوصول (RBAC)
 
 #### `hasPermission(string $slug): bool`
-- **Purpose:** Check if user has a specific permission through their role
-- **Logic:** `is_super_admin → true` (bypass), otherwise checks `role.permissions` for matching slug
-- **Parameters:** `$slug` — Permission identifier (e.g., `'finance.view_all'`)
-- **Returns:** `bool`
+- **الغرض:** التحقق مما إذا كان المستخدم يملك صلاحية محددة عبر دوره
+- **المنطق:** `is_super_admin → true` (تجاوز)، وإلا يتحقق من `role.permissions` للمطابقة
+- **المعاملات:** `$slug` — معرّف الصلاحية (مثال: `'finance.view_all'`)
+- **يُرجع:** `bool`
 
 #### `hasSecurityLevel(int $minimumLevel): bool`
-- **Purpose:** Check if user's security level meets minimum requirement
-- **Logic:** `security_level >= $minimumLevel`
-- **Parameters:** `$minimumLevel` — Integer 1-10
+- **الغرض:** التحقق مما إذا كان المستوى الأمني للمستخدم يستوفي الحد الأدنى
+- **المنطق:** `security_level >= $minimumLevel`
+- **المعاملات:** `$minimumLevel` — عدد صحيح من 1 إلى 10
 
 #### `canManage(User $target): bool`
-- **Purpose:** Determine if current user can manage target user
-- **Logic:** `is_super_admin → true`, otherwise `security_level > target.security_level`
-- **Design:** Uses strict `>` (not `>=`) — peers cannot manage each other
+- **الغرض:** تحديد ما إذا كان المستخدم الحالي يمكنه إدارة المستخدم المستهدف
+- **المنطق:** `is_super_admin → true`، وإلا `security_level > target.security_level`
+- **التصميم:** يستخدم `>` صارمة (وليس `>=`) — الأقران لا يمكنهم إدارة بعضهم
 
-### 1.5 Security Methods (Bypass $fillable)
+### 1.5 الدوال الأمنية (تجاوز $fillable)
 
 #### `setSecurityLevel(int $level): self`
-- **Purpose:** Set user's security level (NOT mass-assignable)
-- **Logic:** Uses `forceFill()` to bypass `$fillable`. Clamps value to 1-10 range via `max(1, min($level, 10))`
-- **Returns:** `self` (chainable)
+- **الغرض:** تعيين المستوى الأمني للمستخدم (غير قابل للتعيين الجماعي)
+- **المنطق:** يستخدم `forceFill()` لتجاوز `$fillable`. يُقيّد القيمة بين 1-10 عبر `max(1, min($level, 10))`
+- **يُرجع:** `self` (قابل للتسلسل)
 
 #### `promoteToSuperAdmin(): self`
-- **Purpose:** Grant super admin privileges
-- **Logic:** Sets `is_super_admin = true` and `security_level = 10` via `forceFill()`
-- **Returns:** `self` (chainable)
+- **الغرض:** منح صلاحيات المدير الأعلى
+- **المنطق:** يضبط `is_super_admin = true` و `security_level = 10` عبر `forceFill()`
+- **يُرجع:** `self` (قابل للتسلسل)
 
 #### `enableTrapMonitoring(): self`
-- **Purpose:** Flag user for psychological trap monitoring
-- **Logic:** Sets `is_trap_target = true` via `forceFill()`
-- **Returns:** `self` (chainable)
+- **الغرض:** تحديد المستخدم لمراقبة المصائد النفسية
+- **المنطق:** يضبط `is_trap_target = true` عبر `forceFill()`
+- **يُرجع:** `self` (قابل للتسلسل)
 
 #### `recordLogin(string $ip): void`
-- **Purpose:** Record successful login (security audit trail)
-- **Logic:** Updates `last_login_at`, `last_login_ip`, resets `failed_login_attempts` and `locked_until`
+- **الغرض:** تسجيل عملية دخول ناجحة (مسار التدقيق الأمني)
+- **المنطق:** يُحدّث `last_login_at`، `last_login_ip`، يُصفّر `failed_login_attempts` و `locked_until`
 
-### 1.6 Static Methods
+### 1.6 الدوال الثابتة (Static)
 
 #### `generateEmployeeId(): string`
-- **Purpose:** Auto-generate unique employee badge number
-- **Format:** `SARH-{YY}-{0001}` (e.g., `SARH-26-0042`)
-- **Logic:** Counts all users (including soft-deleted) + 1, pads to 4 digits
-- **Called:** Automatically in `booted()` via `creating` event
+- **الغرض:** توليد رقم بطاقة موظف فريد تلقائياً
+- **التنسيق:** `SARH-{YY}-{0001}` (مثال: `SARH-26-0042`)
+- **المنطق:** يعد جميع المستخدمين (بما فيهم المحذوفين ناعمياً) + 1، يُكمّل بأصفار لـ 4 أرقام
+- **يُستدعى:** تلقائياً في `booted()` عبر حدث `creating`
 
-### 1.7 Query Scopes
+### 1.7 نطاقات الاستعلام
 
-| Scope | Signature | SQL Effect |
-|-------|-----------|------------|
+| النطاق | التوقيع | التأثير على SQL |
+|--------|---------|----------------|
 | `scopeActive` | `($query)` | `WHERE status = 'active'` |
 | `scopeInBranch` | `($query, int $branchId)` | `WHERE branch_id = ?` |
 | `scopeInDepartment` | `($query, int $departmentId)` | `WHERE department_id = ?` |
 | `scopeWithSecurityLevel` | `($query, int $minLevel)` | `WHERE security_level >= ?` |
 
-### 1.8 Relationships
+### 1.8 العلاقات
 
-| Method | Type | Related Model | FK/Pivot |
-|--------|------|---------------|----------|
+| الدالة | النوع | النموذج المرتبط | المفتاح الأجنبي/الجدول الوسيط |
+|--------|------|-----------------|-------------------------------|
 | `branch()` | `BelongsTo` | `Branch` | `branch_id` |
 | `department()` | `BelongsTo` | `Department` | `department_id` |
 | `role()` | `BelongsTo` | `Role` | `role_id` |
@@ -175,59 +175,59 @@
 | `pointsTransactions()` | `HasMany` | `PointsTransaction` | `user_id` |
 | `trapInteractions()` | `HasMany` | `TrapInteraction` | `user_id` |
 | `shifts()` | `BelongsToMany` | `Shift` | `user_shifts` |
-| `currentShift()` | Method (not relation) | `Shift` | Pivot `is_current = true` |
+| `currentShift()` | دالة (ليست علاقة) | `Shift` | الجدول الوسيط `is_current = true` |
 
-### 1.9 Protected Fields (NOT in `$fillable`)
+### 1.9 الحقول المحمية (ليست ضمن `$fillable`)
 
-| Field | Why Protected | Setter Method |
-|-------|--------------|---------------|
-| `is_super_admin` | Ultimate system privilege | `promoteToSuperAdmin()` |
-| `security_level` | RBAC level — cascading permissions | `setSecurityLevel(int)` |
-| `is_trap_target` | Covert integrity monitoring | `enableTrapMonitoring()` |
-| `last_login_at` | System-managed | `recordLogin(string)` |
-| `last_login_ip` | System-managed | `recordLogin(string)` |
-| `failed_login_attempts` | System-managed | `recordLogin(string)` |
-| `locked_until` | System-managed | `recordLogin(string)` |
+| الحقل | سبب الحماية | دالة التعيين |
+|-------|-------------|--------------|
+| `is_super_admin` | صلاحية النظام النهائية | `promoteToSuperAdmin()` |
+| `security_level` | مستوى RBAC — صلاحيات متتالية | `setSecurityLevel(int)` |
+| `is_trap_target` | مراقبة النزاهة السرية | `enableTrapMonitoring()` |
+| `last_login_at` | يُدار بواسطة النظام | `recordLogin(string)` |
+| `last_login_ip` | يُدار بواسطة النظام | `recordLogin(string)` |
+| `failed_login_attempts` | يُدار بواسطة النظام | `recordLogin(string)` |
+| `locked_until` | يُدار بواسطة النظام | `recordLogin(string)` |
 
 ---
 
-## 2. Branch Model (`App\Models\Branch`)
+## 2. نموذج الفرع (`App\Models\Branch`)
 
-**File:** `app/Models/Branch.php`
-**Table:** `branches`
+**الملف:** `app/Models/Branch.php`
+**الجدول:** `branches`
 
-### 2.1 Geofencing Methods
+### 2.1 دوال السياج الجغرافي
 
 #### `distanceTo(float $lat, float $lng): float`
-- **Purpose:** Calculate distance in meters between branch center and given coordinates
-- **Algorithm:** Haversine Formula
-- **Mathematical Proof:**
+- **الغرض:** حساب المسافة بالأمتار بين مركز الفرع والإحداثيات المُعطاة
+- **الخوارزمية:** صيغة هافرساين (Haversine)
+- **البرهان الرياضي:**
   ```
-  Earth radius (R) = 6,371,000 meters
+  نصف قطر الأرض (R) = 6,371,000 متر
 
   a = sin²(Δlat/2) + cos(lat₁) × cos(lat₂) × sin²(Δlng/2)
   c = 2 × atan2(√a, √(1-a))
-  distance = R × c
+  المسافة = R × c
   ```
-- **Parameters:** `$lat`, `$lng` — GPS coordinates of the employee
-- **Returns:** `float` — Distance in meters, rounded to 2 decimal places
+- **المعاملات:** `$lat`, `$lng` — إحداثيات GPS للموظف
+- **يُرجع:** `float` — المسافة بالأمتار، مُقرّبة لمنزلتين عشريتين
 
 #### `isWithinGeofence(float $lat, float $lng): bool`
-- **Purpose:** Check if coordinates are within the branch's geofence
-- **Logic:** `distanceTo(lat, lng) <= geofence_radius`
-- **Default radius:** 17 meters (configurable per branch)
+- **الغرض:** التحقق مما إذا كانت الإحداثيات داخل السياج الجغرافي للفرع
+- **المنطق:** `distanceTo(lat, lng) <= geofence_radius`
+- **نصف القطر الافتراضي:** 17 متراً (قابل للتخصيص لكل فرع)
 
-### 2.2 Financial Methods
+### 2.2 الدوال المالية
 
 #### `recalculateSalaryBudget(): void`
-- **Purpose:** Refresh cached `monthly_salary_budget` from active employees
-- **Logic:** `SUM(basic_salary) WHERE branch_id = this AND status = 'active'`
-- **Called:** Manually or via scheduled job
+- **الغرض:** تحديث `monthly_salary_budget` المُخزّن مؤقتاً من الموظفين النشطين
+- **المنطق:** `SUM(basic_salary) WHERE branch_id = this AND status = 'active'`
+- **يُستدعى:** يدوياً أو عبر مهمة مجدولة
 
-### 2.3 Relationships
+### 2.3 العلاقات
 
-| Method | Type | Related Model |
-|--------|------|---------------|
+| الدالة | النوع | النموذج المرتبط |
+|--------|------|-----------------|
 | `users()` | `HasMany` | `User` |
 | `departments()` | `HasMany` | `Department` |
 | `attendanceLogs()` | `HasMany` | `AttendanceLog` |
@@ -236,394 +236,394 @@
 
 ---
 
-## 3. AttendanceLog Model (`App\Models\AttendanceLog`)
+## 3. نموذج سجل الحضور (`App\Models\AttendanceLog`)
 
-**File:** `app/Models/AttendanceLog.php`
-**Table:** `attendance_logs`
+**الملف:** `app/Models/AttendanceLog.php`
+**الجدول:** `attendance_logs`
 
-### 3.1 Financial Methods
+### 3.1 الدوال المالية
 
 #### `calculateFinancials(): self`
-- **Purpose:** Snapshot the employee's financial rate and compute all costs
-- **Logic:**
+- **الغرض:** أخذ لقطة فورية من المعدل المالي للموظف وحساب جميع التكاليف
+- **المنطق:**
   ```php
-  cost_per_minute  = user.cost_per_minute  // Snapshot from accessor
+  cost_per_minute  = user.cost_per_minute  // لقطة من المُحصِّل
   delay_cost       = delay_minutes × cost_per_minute
   early_leave_cost = early_leave_minutes × cost_per_minute
-  overtime_value   = overtime_minutes × cost_per_minute × 1.5  // 1.5x rate
+  overtime_value   = overtime_minutes × cost_per_minute × 1.5  // معدل 1.5x
   ```
-- **Returns:** `self` (chainable — call `->save()` after)
-- **Critical:** Must be called at check-in to snapshot the current salary rate
+- **يُرجع:** `self` (قابل للتسلسل — استدعِ `->save()` بعده)
+- **حرج:** يجب استدعاؤها عند تسجيل الحضور لأخذ لقطة من معدل الراتب الحالي
 
 #### `evaluateAttendance(string $shiftStart, int $gracePeriod = 5): self`
-- **Purpose:** Determine attendance status and delay minutes
-- **Logic:**
+- **الغرض:** تحديد حالة الحضور ودقائق التأخير
+- **المنطق:**
   ```
-  IF no check_in_at → status = 'absent'
-  ELSE IF check_in_at ≤ (shift_start + grace_period) → status = 'present', delay = 0
-  ELSE → status = 'late', delay_minutes = diff(check_in_at, shift_start)
+  إذا لا يوجد check_in_at → الحالة = 'غياب'
+  وإلا إذا check_in_at ≤ (بداية_المناوبة + فترة_السماح) → الحالة = 'حاضر'، التأخير = 0
+  وإلا → الحالة = 'متأخر'، دقائق_التأخير = الفرق(check_in_at, بداية_المناوبة)
   ```
-- **Parameters:**
-  - `$shiftStart` — Time string e.g., `'08:00'`
-  - `$gracePeriod` — Grace minutes (default: 5)
+- **المعاملات:**
+  - `$shiftStart` — نص الوقت مثال: `'08:00'`
+  - `$gracePeriod` — دقائق السماح (الافتراضي: 5)
 
-### 3.2 Query Scopes
+### 3.2 نطاقات الاستعلام
 
-| Scope | Effect |
-|-------|--------|
+| النطاق | التأثير |
+|--------|---------|
 | `scopeForDate($query, $date)` | `WHERE attendance_date = ?` |
 | `scopeLate($query)` | `WHERE status = 'late'` |
 | `scopeAbsent($query)` | `WHERE status = 'absent'` |
 | `scopeWithDelayCost($query)` | `WHERE delay_cost > 0` |
-| `scopeTotalDelayCost($query)` | Returns `SUM(delay_cost)` as float |
+| `scopeTotalDelayCost($query)` | تُرجع `SUM(delay_cost)` كعدد عشري |
 
-### 3.3 Relationships
+### 3.3 العلاقات
 
-| Method | Type | Related Model |
-|--------|------|---------------|
+| الدالة | النوع | النموذج المرتبط |
+|--------|------|-----------------|
 | `user()` | `BelongsTo` | `User` |
 | `branch()` | `BelongsTo` | `Branch` |
-| `approvedByUser()` | `BelongsTo` | `User` (via `approved_by`) |
+| `approvedByUser()` | `BelongsTo` | `User` (عبر `approved_by`) |
 
 ---
 
-## 4. FinancialReport Model (`App\Models\FinancialReport`)
+## 4. نموذج التقرير المالي (`App\Models\FinancialReport`)
 
-**File:** `app/Models/FinancialReport.php`
-**Table:** `financial_reports`
+**الملف:** `app/Models/FinancialReport.php`
+**الجدول:** `financial_reports`
 
-### 4.1 Report Generation
+### 4.1 إنشاء التقارير
 
 #### `static generateForEmployee(User $user, string $start, string $end): self`
-- **Purpose:** Build a complete financial report for one employee over a date range
-- **Logic:**
-  1. Query all `AttendanceLogs` for user in date range
-  2. Aggregate: counts by status, sums of minutes and costs
-  3. Calculate `net_financial_impact = delay_cost + early_leave_cost - overtime_cost`
-  4. Calculate `loss_percentage = (total_delay_cost / total_salary_budget) × 100`
-- **Returns:** Unsaved `FinancialReport` instance (call `->save()` to persist)
-- **Note:** `report_code` auto-generated as `FIN-EMP-{employee_id}-{timestamp}`
+- **الغرض:** بناء تقرير مالي شامل لموظف واحد خلال نطاق زمني
+- **المنطق:**
+  1. استعلام جميع `AttendanceLogs` للمستخدم في النطاق الزمني
+  2. تجميع: عدد حسب الحالة، مجاميع الدقائق والتكاليف
+  3. حساب `صافي_الأثر_المالي = تكلفة_التأخير + تكلفة_الخروج_المبكر - تكلفة_العمل_الإضافي`
+  4. حساب `نسبة_الخسارة = (إجمالي_تكلفة_التأخير / ميزانية_الرواتب) × 100`
+- **يُرجع:** مثيل `FinancialReport` غير محفوظ (استدعِ `->save()` للحفظ)
+- **ملاحظة:** `report_code` يُنشأ تلقائياً كـ `FIN-EMP-{employee_id}-{timestamp}`
 
 #### `static generateReportCode(string $scope): string`
-- **Purpose:** Generate unique report identifier
-- **Format:** `FIN-{SCOPE_PREFIX}-{YmdHis}-{random_3_digits}`
-- **Example:** `FIN-BRA-20260207143022-042`
+- **الغرض:** توليد معرّف تقرير فريد
+- **التنسيق:** `FIN-{PREFIX_النطاق}-{YmdHis}-{3_أرقام_عشوائية}`
+- **مثال:** `FIN-BRA-20260207143022-042`
 
-### 4.2 Query Scopes
+### 4.2 نطاقات الاستعلام
 
-| Scope | Effect |
-|-------|--------|
+| النطاق | التأثير |
+|--------|---------|
 | `scopeForPeriod($query, $start, $end)` | `WHERE period_start BETWEEN ? AND ?` |
 | `scopeByScope($query, $scope)` | `WHERE scope = ?` |
 
-### 4.3 Relationships
+### 4.3 العلاقات
 
-| Method | Type | Related Model |
-|--------|------|---------------|
+| الدالة | النوع | النموذج المرتبط |
+|--------|------|-----------------|
 | `user()` | `BelongsTo` | `User` |
 | `branch()` | `BelongsTo` | `Branch` |
 | `department()` | `BelongsTo` | `Department` |
-| `generatedByUser()` | `BelongsTo` | `User` (via `generated_by`) |
+| `generatedByUser()` | `BelongsTo` | `User` (عبر `generated_by`) |
 
 ---
 
-## 5. WhistleblowerReport Model (`App\Models\WhistleblowerReport`)
+## 5. نموذج بلاغ المبلغين (`App\Models\WhistleblowerReport`)
 
-**File:** `app/Models/WhistleblowerReport.php`
+**الملف:** `app/Models/WhistleblowerReport.php`
 
-### 5.1 Encryption Methods
+### 5.1 دوال التشفير
 
 #### `setContent(string $plainText): self`
-- **Purpose:** Encrypt and store report body
-- **Logic:** `encrypted_content = encrypt($plainText)` (Laravel AES-256-CBC)
+- **الغرض:** تشفير وتخزين نص البلاغ
+- **المنطق:** `encrypted_content = encrypt($plainText)` (تشفير Laravel AES-256-CBC)
 
 #### `getContent(): string`
-- **Purpose:** Decrypt and return report body
-- **Logic:** `decrypt($this->encrypted_content)`
+- **الغرض:** فك تشفير وإرجاع نص البلاغ
+- **المنطق:** `decrypt($this->encrypted_content)`
 
-### 5.2 Static Methods
+### 5.2 الدوال الثابتة
 
 #### `static generateTicketNumber(): string`
-- **Format:** `WB-{8_hex_chars}-{yymmdd}`
-- **Example:** `WB-A3F1B2C4-260207`
+- **التنسيق:** `WB-{8_أحرف_ست_عشرية}-{yymmdd}`
+- **مثال:** `WB-A3F1B2C4-260207`
 
 #### `static generateAnonymousToken(): string`
-- **Algorithm:** `SHA-256(random_bytes(32) + microtime)`
-- **Purpose:** Hashed token for anonymous follow-up
+- **الخوارزمية:** `SHA-256(random_bytes(32) + microtime)`
+- **الغرض:** رمز مُشفّر للمتابعة المجهولة
 
 ---
 
-## 6. Role Model (`App\Models\Role`)
+## 6. نموذج الدور (`App\Models\Role`)
 
-### 6.1 Methods
+### 6.1 الدوال
 
-| Method | Signature | Purpose |
-|--------|-----------|---------|
-| `grantPermission` | `(Permission $permission): void` | Add permission via `syncWithoutDetaching` |
-| `revokePermission` | `(Permission $permission): void` | Remove permission via `detach` |
-| `hasPermission` | `(string $slug): bool` | Check if role has a specific permission |
+| الدالة | التوقيع | الغرض |
+|--------|---------|-------|
+| `grantPermission` | `(Permission $permission): void` | إضافة صلاحية عبر `syncWithoutDetaching` |
+| `revokePermission` | `(Permission $permission): void` | إزالة صلاحية عبر `detach` |
+| `hasPermission` | `(string $slug): bool` | التحقق مما إذا كان الدور يملك صلاحية محددة |
 
 ---
 
-## 7. Permission Model (`App\Models\Permission`)
+## 7. نموذج الصلاحية (`App\Models\Permission`)
 
-### 7.1 Scopes
+### 7.1 النطاقات
 
-| Scope | Effect |
-|-------|--------|
+| النطاق | التأثير |
+|--------|---------|
 | `scopeInGroup($query, string $group)` | `WHERE group = ?` |
 
 ---
 
-## 8. Department Model (`App\Models\Department`)
+## 8. نموذج القسم (`App\Models\Department`)
 
-### 8.1 Relationships
+### 8.1 العلاقات
 
-| Method | Type | Related Model |
-|--------|------|---------------|
+| الدالة | النوع | النموذج المرتبط |
+|--------|------|-----------------|
 | `branch()` | `BelongsTo` | `Branch` |
-| `parent()` | `BelongsTo` | `Department` (self) |
-| `children()` | `HasMany` | `Department` (self) |
-| `head()` | `BelongsTo` | `User` (via `head_id`) |
+| `parent()` | `BelongsTo` | `Department` (ذاتي) |
+| `children()` | `HasMany` | `Department` (ذاتي) |
+| `head()` | `BelongsTo` | `User` (عبر `head_id`) |
 | `users()` | `HasMany` | `User` |
 | `financialReports()` | `HasMany` | `FinancialReport` |
 
 ---
 
-## 9-12. Messaging Models
+## 9-12. نماذج المراسلات
 
-### Conversation
+### المحادثة (Conversation)
 
-| Method | Type | Related |
+| الدالة | النوع | المرتبط |
 |--------|------|---------|
-| `creator()` | `BelongsTo` | `User` (via `created_by`) |
-| `participants()` | `BelongsToMany` | `User` (pivot: `conversation_participants`) |
+| `creator()` | `BelongsTo` | `User` (عبر `created_by`) |
+| `participants()` | `BelongsToMany` | `User` (الجدول الوسيط: `conversation_participants`) |
 | `messages()` | `HasMany` | `Message` |
 | `latestMessage()` | `HasOne` | `Message` (`latestOfMany`) |
 
-### Message
-| Method | Type | Related |
+### الرسالة (Message)
+| الدالة | النوع | المرتبط |
 |--------|------|---------|
 | `conversation()` | `BelongsTo` | `Conversation` |
-| `sender()` | `BelongsTo` | `User` (via `sender_id`) |
+| `sender()` | `BelongsTo` | `User` (عبر `sender_id`) |
 
-### Circular
-| Method | Type | Related |
+### التعميم (Circular)
+| الدالة | النوع | المرتبط |
 |--------|------|---------|
-| `creator()` | `BelongsTo` | `User` (via `created_by`) |
+| `creator()` | `BelongsTo` | `User` (عبر `created_by`) |
 | `targetBranch()` | `BelongsTo` | `Branch` |
 | `targetDepartment()` | `BelongsTo` | `Department` |
 | `targetRole()` | `BelongsTo` | `Role` |
 | `acknowledgments()` | `HasMany` | `CircularAcknowledgment` |
 
-**Scopes:** `scopePublished`, `scopeActive` (published + not expired)
+**النطاقات:** `scopePublished`، `scopeActive` (منشور + غير منتهي الصلاحية)
 
 ---
 
-## 13. PerformanceAlert Model
+## 13. نموذج تنبيه الأداء (PerformanceAlert)
 
-### Scopes
-| Scope | Effect |
-|-------|--------|
+### النطاقات
+| النطاق | التأثير |
+|--------|---------|
 | `scopeUnread($query)` | `WHERE is_read = false` |
 | `scopeCritical($query)` | `WHERE severity = 'critical'` |
 
 ---
 
-## 14. Badge Model (`App\Models\Badge`)
+## 14. نموذج الشارة (`App\Models\Badge`)
 
-### Scopes
-| Scope | Effect |
-|-------|--------|
+### النطاقات
+| النطاق | التأثير |
+|--------|---------|
 | `scopeActive($query)` | `WHERE is_active = true` |
 | `scopeByCategory($query, string $category)` | `WHERE category = ?` |
 
 ---
 
-## 15. PointsTransaction Model
+## 15. نموذج حركة النقاط (PointsTransaction)
 
-### Scopes
-| Scope | Effect |
-|-------|--------|
+### النطاقات
+| النطاق | التأثير |
+|--------|---------|
 | `scopeEarned($query)` | `WHERE type = 'earned'` |
 | `scopeDeducted($query)` | `WHERE type = 'deducted'` |
 
-### Polymorphic Relationship
-- `sourceable()` — `MorphTo` — Any model can be the source of points
+### العلاقة متعددة الأشكال
+- `sourceable()` — `MorphTo` — أي نموذج يمكن أن يكون مصدر النقاط
 
 ---
 
-## 16. TrapInteraction Model
+## 16. نموذج تفاعل المصيدة (TrapInteraction)
 
-### Scopes
-| Scope | Effect |
-|-------|--------|
+### النطاقات
+| النطاق | التأثير |
+|--------|---------|
 | `scopeUnreviewed($query)` | `WHERE is_reviewed = false` |
 | `scopeHighRisk($query)` | `WHERE risk_level IN ('high', 'critical')` |
 
 ---
 
-## 17. LeaveRequest Model
+## 17. نموذج طلب الإجازة (LeaveRequest)
 
 #### `calculateCost(): self`
-- **Purpose:** Estimate cost of leave based on daily rate
-- **Formula:** `total_days × user.daily_rate`
+- **الغرض:** تقدير تكلفة الإجازة بناءً على المعدل اليومي
+- **المعادلة:** `إجمالي_الأيام × user.daily_rate`
 
-### Scopes
-| Scope | Effect |
-|-------|--------|
+### النطاقات
+| النطاق | التأثير |
+|--------|---------|
 | `scopePending($query)` | `WHERE status = 'pending'` |
 | `scopeApproved($query)` | `WHERE status = 'approved'` |
 
 ---
 
-## 18. Shift Model (`App\Models\Shift`)
+## 18. نموذج المناوبة (`App\Models\Shift`)
 
 #### `getDurationMinutesAttribute(): int`
-- **Purpose:** Calculate shift duration in minutes
-- **Logic:** Handles overnight shifts (end < start → add 24h)
-- **Usage:** `$shift->duration_minutes`
+- **الغرض:** حساب مدة المناوبة بالدقائق
+- **المنطق:** يتعامل مع المناوبات الليلية (النهاية < البداية → إضافة 24 ساعة)
+- **الاستخدام:** `$shift->duration_minutes`
 
 ---
 
-## 19. AuditLog Model (`App\Models\AuditLog`)
+## 19. نموذج سجل التدقيق (`App\Models\AuditLog`)
 
 #### `static record(string $action, ?Model $model, ?array $old, ?array $new, ?string $description): self`
-- **Purpose:** Quick logging helper — captures user, IP, user-agent automatically
-- **Usage:** `AuditLog::record('update', $user, $oldData, $newData, 'Changed salary')`
+- **الغرض:** مساعد تسجيل سريع — يلتقط المستخدم وعنوان IP ومعرّف المتصفح تلقائياً
+- **الاستخدام:** `AuditLog::record('update', $user, $oldData, $newData, 'تم تغيير الراتب')`
 
-### Scopes
-| Scope | Effect |
-|-------|--------|
-| `scopeForModel($query, string $type, int $id)` | Filter by polymorphic target |
+### النطاقات
+| النطاق | التأثير |
+|--------|---------|
+| `scopeForModel($query, string $type, int $id)` | التصفية حسب الهدف متعدد الأشكال |
 | `scopeByAction($query, string $action)` | `WHERE action = ?` |
 
 ---
 
-## 20. Holiday Model (`App\Models\Holiday`)
+## 20. نموذج العطلة (`App\Models\Holiday`)
 
 #### `static isHoliday(Carbon $date, ?int $branchId = null): bool`
-- **Purpose:** Check if a date is a holiday (globally or for a specific branch)
-- **Logic:** Checks `WHERE date = ? AND (branch_id IS NULL OR branch_id = ?)`
+- **الغرض:** التحقق مما إذا كان تاريخ معين عطلة (عامة أو لفرع محدد)
+- **المنطق:** يتحقق من `WHERE date = ? AND (branch_id IS NULL OR branch_id = ?)`
 
 ---
 
-## 21. GeofencingService (`App\Services\GeofencingService`)
+## 21. خدمة السياج الجغرافي (`App\Services\GeofencingService`)
 
-**File:** `app/Services/GeofencingService.php`
+**الملف:** `app/Services/GeofencingService.php`
 
 #### `validatePosition(Branch $branch, float $lat, float $lng): array`
-- **Purpose:** Validate GPS coordinates against a branch's geofence
-- **Returns:** `['distance_meters' => float, 'within_geofence' => bool]`
-- **Logic:** Delegates to `Branch::distanceTo()` and `Branch::isWithinGeofence()`
-- **Example:** `$result = $service->validatePosition($branch, 24.7136, 46.6753)`
+- **الغرض:** التحقق من إحداثيات GPS مقابل السياج الجغرافي للفرع
+- **يُرجع:** `['distance_meters' => float, 'within_geofence' => bool]`
+- **المنطق:** يُفوّض إلى `Branch::distanceTo()` و `Branch::isWithinGeofence()`
+- **مثال:** `$result = $service->validatePosition($branch, 24.7136, 46.6753)`
 
 #### `static haversineDistance(float $lat1, float $lng1, float $lat2, float $lng2): float`
-- **Purpose:** Static utility for Haversine distance (meters)
-- **Algorithm:** Same as `Branch::distanceTo()` but stateless
-- **Returns:** `float` — meters, rounded to 2 decimals
+- **الغرض:** أداة ثابتة لحساب مسافة هافرساين (بالأمتار)
+- **الخوارزمية:** نفس `Branch::distanceTo()` لكن بدون حالة
+- **يُرجع:** `float` — أمتار، مُقرّبة لمنزلتين عشريتين
 
 ---
 
-## 22. AttendanceService (`App\Services\AttendanceService`)
+## 22. خدمة الحضور (`App\Services\AttendanceService`)
 
-**File:** `app/Services/AttendanceService.php`
+**الملف:** `app/Services/AttendanceService.php`
 
 #### `checkIn(User $user, float $lat, float $lng, ?string $ip, ?string $device): AttendanceLog`
-- **Purpose:** Full check-in flow with geofencing + financial snapshot
-- **Steps:**
-  1. Load user's branch (`$user->branch`)
-  2. Validate geofence via `GeofencingService::validatePosition()`
-  3. Reject if outside geofence (throws `OutOfGeofenceException`)
-  4. Resolve shift via `$user->currentShift()` or branch defaults
-  5. Create `AttendanceLog` with GPS data
-  6. Call `evaluateAttendance(shift_start, grace_period)` → sets status + delay
-  7. Call `calculateFinancials()` → snapshots cost_per_minute + computes costs
-  8. Save and return
-- **Throws:** `OutOfGeofenceException` if `within_geofence === false`
-- **Returns:** Saved `AttendanceLog` instance
+- **الغرض:** سير عملية تسجيل الحضور الكامل مع السياج الجغرافي + اللقطة المالية
+- **الخطوات:**
+  1. تحميل فرع المستخدم (`$user->branch`)
+  2. التحقق من السياج عبر `GeofencingService::validatePosition()`
+  3. الرفض إذا خارج السياج (يرمي `OutOfGeofenceException`)
+  4. تحديد المناوبة عبر `$user->currentShift()` أو الإعدادات الافتراضية للفرع
+  5. إنشاء `AttendanceLog` ببيانات GPS
+  6. استدعاء `evaluateAttendance(shift_start, grace_period)` → تحديد الحالة + التأخير
+  7. استدعاء `calculateFinancials()` → أخذ لقطة تكلفة_الدقيقة + حساب التكاليف
+  8. الحفظ والإرجاع
+- **يرمي:** `OutOfGeofenceException` إذا كان `within_geofence === false`
+- **يُرجع:** مثيل `AttendanceLog` محفوظ
 
 #### `checkOut(User $user, float $lat, float $lng): AttendanceLog`
-- **Purpose:** Full check-out flow with overtime/early-leave calculation
-- **Steps:**
-  1. Find today's `AttendanceLog` for user
-  2. Validate geofence for check-out coordinates
-  3. Calculate `worked_minutes` from check-in/check-out diff
-  4. Compare with shift duration → overtime or early_leave
-  5. Recalculate financials
-  6. Save and return
-- **Throws:** `ModelNotFoundException` if no check-in for today
-- **Returns:** Updated `AttendanceLog` instance
+- **الغرض:** سير عملية تسجيل الانصراف الكامل مع حساب العمل الإضافي/الخروج المبكر
+- **الخطوات:**
+  1. البحث عن `AttendanceLog` اليوم للمستخدم
+  2. التحقق من السياج لإحداثيات الانصراف
+  3. حساب `worked_minutes` من فرق الحضور/الانصراف
+  4. المقارنة مع مدة المناوبة → عمل إضافي أو خروج مبكر
+  5. إعادة حساب البيانات المالية
+  6. الحفظ والإرجاع
+- **يرمي:** `ModelNotFoundException` إذا لم يكن هناك تسجيل حضور لليوم
+- **يُرجع:** مثيل `AttendanceLog` مُحدّث
 
 #### `calculateDelayCost(User $user, int $minutesDelayed): float`
-- **Purpose:** Wrapper for `User::calculateDelayCost()` — available as service method
-- **Formula:** `(basic_salary / working_days / working_hours / 60) × delay_minutes`
-- **Returns:** `float` — rounded to 2 decimals
+- **الغرض:** غلاف لـ `User::calculateDelayCost()` — متاح كدالة خدمية
+- **المعادلة:** `(الراتب_الأساسي / أيام_العمل / ساعات_العمل / 60) × دقائق_التأخير`
+- **يُرجع:** `float` — مُقرّبة لمنزلتين عشريتين
 
 ---
 
-## 23. AttendanceController (`App\Http\Controllers\AttendanceController`)
+## 23. متحكم الحضور (`App\Http\Controllers\AttendanceController`)
 
-**File:** `app/Http/Controllers/AttendanceController.php`
+**الملف:** `app/Http/Controllers/AttendanceController.php`
 
 #### `checkIn(Request $request): JsonResponse`
-- **Route:** `POST /attendance/check-in`
-- **Validation:** `latitude` (required, numeric, -90..90), `longitude` (required, numeric, -180..180)
-- **Auth:** Authenticated user (middleware `auth`)
-- **Returns:** `201` with AttendanceLog JSON or `422` if outside geofence
+- **المسار:** `POST /attendance/check-in`
+- **التحقق:** `latitude` (مطلوب، رقمي، -90..90)، `longitude` (مطلوب، رقمي، -180..180)
+- **المصادقة:** مستخدم مُصادق عليه (وسيط `auth`)
+- **يُرجع:** `201` مع JSON من AttendanceLog أو `422` إذا خارج السياج
 
 #### `checkOut(Request $request): JsonResponse`
-- **Route:** `POST /attendance/check-out`
-- **Validation:** Same GPS fields
-- **Returns:** `200` with updated AttendanceLog JSON
+- **المسار:** `POST /attendance/check-out`
+- **التحقق:** نفس حقول GPS
+- **يُرجع:** `200` مع JSON من AttendanceLog المُحدّث
 
 #### `todayStatus(Request $request): JsonResponse`
-- **Route:** `GET /attendance/today`
-- **Returns:** Today's AttendanceLog or `null` if not checked in
+- **المسار:** `GET /attendance/today`
+- **يُرجع:** سجل حضور اليوم أو `null` إذا لم يُسجّل الحضور
 
 ---
 
-## 24. Trap Model (`App\Models\Trap`)
+## 24. نموذج المصيدة (`App\Models\Trap`)
 
-**File:** `app/Models/Trap.php`
-**Table:** `traps`
+**الملف:** `app/Models/Trap.php`
+**الجدول:** `traps`
 
 #### `getNameAttribute(): string`
-- **Purpose:** Return localized trap name
-- **Logic:** `app()->getLocale() === 'ar' ? name_ar : name_en`
+- **الغرض:** إرجاع اسم المصيدة المحلي
+- **المنطق:** `app()->getLocale() === 'ar' ? name_ar : name_en`
 
 #### `deriveRiskLevel(): string`
-- **Purpose:** Map `risk_weight` (1-10) to human-readable risk level
-- **Logic:**
+- **الغرض:** تحويل `risk_weight` (1-10) إلى مستوى خطورة مقروء
+- **المنطق:**
   ```
-  1-3  → 'low'
-  4-6  → 'medium'
-  7-8  → 'high'
-  9-10 → 'critical'
+  1-3  → 'منخفض' (low)
+  4-6  → 'متوسط' (medium)
+  7-8  → 'مرتفع' (high)
+  9-10 → 'حرج' (critical)
   ```
-- **Returns:** `string` — one of `low`, `medium`, `high`, `critical`
+- **يُرجع:** `string` — إحدى القيم: `low`، `medium`، `high`، `critical`
 
-### Scopes
-| Scope | Effect |
-|-------|--------|
+### النطاقات
+| النطاق | التأثير |
+|--------|---------|
 | `scopeActive($query)` | `WHERE is_active = true` |
 | `scopeByCode($query, string $code)` | `WHERE trap_code = ?` |
 
-### Relationships
-| Method | Type | Related Model |
-|--------|------|---------------|
+### العلاقات
+| الدالة | النوع | النموذج المرتبط |
+|--------|------|-----------------|
 | `interactions()` | `HasMany` | `TrapInteraction` |
 
 ---
 
-## 25. User Model — Trap Risk Extensions
+## 25. نموذج المستخدم — إضافات تقييم مخاطر المصائد
 
-### Risk Scoring Methods
+### دوال تسجيل المخاطر
 
 #### `incrementRiskScore(): int`
-- **Purpose:** Calculate and persist logarithmic risk score after a trap interaction
-- **Formula:** `risk_score = 10 × (2^n − 1)` where `n` = total trap interaction count
-- **Mathematical Proof:**
+- **الغرض:** حساب وحفظ درجة المخاطر اللوغاريتمية بعد تفاعل مع مصيدة
+- **المعادلة:** `risk_score = 10 × (2^n − 1)` حيث `n` = إجمالي عدد تفاعلات المصائد
+- **البرهان الرياضي:**
   ```
   n=1: 10 × (2¹ − 1) =   10
   n=2: 10 × (2² − 1) =   30
@@ -631,311 +631,312 @@
   n=4: 10 × (2⁴ − 1) =  150
   n=5: 10 × (2⁵ − 1) =  310
   ```
-- **Persistence:** Uses `forceFill()` — `risk_score` is NOT in `$fillable`
-- **Returns:** `int` — The new risk score
+- **الحفظ:** يستخدم `forceFill()` — `risk_score` ليس ضمن `$fillable`
+- **يُرجع:** `int` — درجة المخاطر الجديدة
 
 #### `getRiskLevelAttribute(): string`
-- **Purpose:** Human-readable risk category based on cumulative score
-- **Logic:**
+- **الغرض:** تصنيف مخاطر مقروء بناءً على الدرجة التراكمية
+- **المنطق:**
   ```
-  score < 30   → 'low'
-  score < 100  → 'medium'
-  score < 300  → 'high'
-  score >= 300 → 'critical'
+  الدرجة < 30   → 'منخفض' (low)
+  الدرجة < 100  → 'متوسط' (medium)
+  الدرجة < 300  → 'مرتفع' (high)
+  الدرجة >= 300 → 'حرج' (critical)
   ```
 
 ---
 
-## 26. TrapResponseService (`App\Services\TrapResponseService`)
+## 26. خدمة استجابة المصائد (`App\Services\TrapResponseService`)
 
-**File:** `app/Services/TrapResponseService.php`
+**الملف:** `app/Services/TrapResponseService.php`
 
 #### `triggerTrap(User $user, string $trapCode, Request $request): array`
-- **Purpose:** Full trap trigger flow: log interaction → increment risk → generate fake response
-- **Steps:**
-  1. Resolve `Trap` by `trap_code`
-  2. Create `TrapInteraction` record with IP, user-agent, metadata
-  3. Call `User::incrementRiskScore()`
-  4. Call `generateFakeResponse()` for the trap type
-- **Returns:** `array` — Fake response payload for the PWA to display
-- **Throws:** `ModelNotFoundException` if trap_code invalid
+- **الغرض:** سير عملية تفعيل المصيدة الكامل: تسجيل التفاعل → زيادة المخاطر → إنشاء استجابة وهمية
+- **الخطوات:**
+  1. تحديد `Trap` بواسطة `trap_code`
+  2. إنشاء سجل `TrapInteraction` مع IP ومعرّف المتصفح والبيانات الوصفية
+  3. استدعاء `User::incrementRiskScore()`
+  4. استدعاء `generateFakeResponse()` لنوع المصيدة
+- **يُرجع:** `array` — حمولة الاستجابة الوهمية لعرضها في تطبيق PWA
+- **يرمي:** `ModelNotFoundException` إذا كان trap_code غير صالح
 
 #### `generateFakeResponse(Trap $trap): array`
-- **Purpose:** Produce convincing fake UI feedback per trap type
-- **Returns:** Keyed array with trap-specific response:
+- **الغرض:** إنتاج تعليقات واجهة مُقنعة وهمية لكل نوع مصيدة
+- **يُرجع:** مصفوفة مفتاحية مع استجابة خاصة بنوع المصيدة:
   ```php
-  // SALARY_PEEK
-  ['type' => 'table', 'data' => [...fake salary rows...]]
+  // استراق النظر على الرواتب (SALARY_PEEK)
+  ['type' => 'table', 'data' => [...صفوف رواتب وهمية...]]
 
-  // PRIVILEGE_ESCALATION
-  ['type' => 'success', 'message' => 'Temporary admin access granted']
+  // تصعيد الصلاحيات (PRIVILEGE_ESCALATION)
+  ['type' => 'success', 'message' => 'تم منح وصول مؤقت كمدير']
 
-  // SYSTEM_BYPASS
-  ['type' => 'warning', 'message' => 'Attendance system paused for 24h']
+  // تجاوز النظام (SYSTEM_BYPASS)
+  ['type' => 'warning', 'message' => 'تم إيقاف نظام الحضور لمدة 24 ساعة']
 
-  // DATA_EXPORT
+  // تصدير البيانات (DATA_EXPORT)
   ['type' => 'download', 'progress' => 100, 'url' => '/exports/fake_...csv']
   ```
 
 ---
 
-## 27. TrapController (`App\Http\Controllers\TrapController`)
+## 27. متحكم المصائد (`App\Http\Controllers\TrapController`)
 
-**File:** `app/Http/Controllers/TrapController.php`
+**الملف:** `app/Http/Controllers/TrapController.php`
 
 #### `trigger(Request $request): JsonResponse`
-- **Route:** `POST /traps/trigger`
-- **Validation:** `trap_code` (required, exists:traps,trap_code)
-- **Auth:** Authenticated user
-- **Returns:** `200` with fake response payload
+- **المسار:** `POST /traps/trigger`
+- **التحقق:** `trap_code` (مطلوب، موجود في:traps,trap_code)
+- **المصادقة:** مستخدم مُصادق عليه
+- **يُرجع:** `200` مع حمولة الاستجابة الوهمية
 
 ---
 
-## 28. Livewire Components — Employee PWA
+## 28. مكونات Livewire — تطبيق الموظف (PWA)
 
-### EmployeeDashboard (`App\Livewire\EmployeeDashboard`)
-- **Mount:** Loads authenticated user with relationships
-- **View:** `livewire.employee-dashboard` — Container for all 4 widgets
+### لوحة تحكم الموظف (`App\Livewire\EmployeeDashboard`)
+- **التحميل:** يُحمّل المستخدم المُصادق عليه مع العلاقات
+- **العرض:** `livewire.employee-dashboard` — حاوية لجميع الودجات الأربع
 
-### AttendanceWidget (`App\Livewire\AttendanceWidget`)
-- **Purpose:** Show today's attendance status with GPS check-in/out
-- **Properties:** `$status`, `$checkInTime`, `$checkOutTime`
-- **Methods:**
-  - `checkIn()` — Calls AttendanceService with geolocation
-  - `checkOut()` — Calls AttendanceService for check-out
+### ودجة الحضور (`App\Livewire\AttendanceWidget`)
+- **الغرض:** عرض حالة الحضور اليومي مع تسجيل الحضور/الانصراف عبر GPS
+- **الخصائص:** `$status`، `$checkInTime`، `$checkOutTime`
+- **الدوال:**
+  - `checkIn()` — تستدعي AttendanceService مع الموقع الجغرافي
+  - `checkOut()` — تستدعي AttendanceService لتسجيل الانصراف
 
-### GamificationWidget (`App\Livewire\GamificationWidget`)
-- **Purpose:** Display points, current streak, and earned badges
-- **Properties:** `$totalPoints`, `$currentStreak`, `$badges`
+### ودجة التقييم (`App\Livewire\GamificationWidget`)
+- **الغرض:** عرض النقاط والسلسلة الحالية والشارات المكتسبة
+- **الخصائص:** `$totalPoints`، `$currentStreak`، `$badges`
 
-### FinancialWidget (`App\Livewire\FinancialWidget`)
-- **Purpose:** Show "My Discipline Score" — delay cost impact
-- **Properties:** `$delayCost`, `$onTimeRate`, `$monthlyLogs`
+### الودجة المالية (`App\Livewire\FinancialWidget`)
+- **الغرض:** عرض "درجة الانضباط" — تأثير تكلفة التأخير
+- **الخصائص:** `$delayCost`، `$onTimeRate`، `$monthlyLogs`
 
-### CircularsWidget (`App\Livewire\CircularsWidget`)
-- **Purpose:** List active circulars with acknowledgment status
-- **Methods:**
-  - `acknowledge(int $circularId)` — Creates CircularAcknowledgment record
-
----
-
-## 29. Livewire Components — Whistleblower System
-
-### WhistleblowerForm (`App\Livewire\WhistleblowerForm`)
-- **Purpose:** Anonymous encrypted report submission
-- **Properties:** `$category`, `$severity`, `$content`
-- **Methods:**
-  - `submit()` — Encrypts content, generates ticket + token, stores report
-  - Returns ticket_number + anonymous_token (shown ONCE)
-- **Security:** No authentication required. No user FK stored.
-
-### WhistleblowerTrack (`App\Livewire\WhistleblowerTrack`)
-- **Purpose:** Track report status by anonymous token
-- **Properties:** `$token`, `$report`
-- **Methods:**
-  - `track()` — Finds report by anonymous_token, shows status (no content)
+### ودجة التعاميم (`App\Livewire\CircularsWidget`)
+- **الغرض:** عرض قائمة التعاميم النشطة مع حالة الإقرار
+- **الدوال:**
+  - `acknowledge(int $circularId)` — تُنشئ سجل CircularAcknowledgment
 
 ---
 
-## 30. Livewire Components — Messaging
+## 29. مكونات Livewire — نظام البلاغات السرية
 
-### MessagingInbox (`App\Livewire\MessagingInbox`)
-- **Purpose:** List all conversations with latest message preview
-- **Properties:** `$conversations`, `$unreadCount`
-- **Polling:** 5-second refresh for new messages
+### نموذج البلاغ السري (`App\Livewire\WhistleblowerForm`)
+- **الغرض:** تقديم بلاغ مشفّر مجهول
+- **الخصائص:** `$category`، `$severity`، `$content`
+- **الدوال:**
+  - `submit()` — تُشفّر المحتوى، تُنشئ رقم تذكرة + رمز مجهول، تحفظ البلاغ
+  - تُرجع ticket_number + anonymous_token (تُعرض مرة واحدة فقط)
+- **الأمان:** لا تتطلب مصادقة. لا يُخزّن مفتاح أجنبي للمستخدم.
 
-### MessagingChat (`App\Livewire\MessagingChat`)
-- **Purpose:** Single conversation view with message bubbles
-- **Properties:** `$conversation`, `$messages`, `$newMessage`
-- **Methods:**
-  - `sendMessage()` — Creates Message record, marks sender's as read
-  - `markAsRead()` — Updates read status on mount + refresh
-- **Polling:** 3-second refresh for new messages
-
----
-
-## 31. PWA Controllers & Routes
-
-### DashboardController (`App\Http\Controllers\DashboardController`)
-- **Route:** `GET /dashboard` → Employee dashboard
-- **Auth:** Required (middleware `auth`)
-
-### WhistleblowerController (`App\Http\Controllers\WhistleblowerController`)
-- **Routes:**
-  - `GET /whistleblower` → Anonymous report form (NO auth)
-  - `GET /whistleblower/track` → Track report by token (NO auth)
-
-### MessagingController (`App\Http\Controllers\MessagingController`)
-- **Routes:**
-  - `GET /messaging` → Inbox (auth required)
-  - `GET /messaging/{conversation}` → Chat view (auth required)
+### تتبع البلاغ (`App\Livewire\WhistleblowerTrack`)
+- **الغرض:** تتبع حالة البلاغ بالرمز المجهول
+- **الخصائص:** `$token`، `$report`
+- **الدوال:**
+  - `track()` — يبحث عن البلاغ بواسطة anonymous_token، يعرض الحالة (بدون المحتوى)
 
 ---
 
----
+## 30. مكونات Livewire — المراسلات
 
-## §32. FinancialReportingService (Phase 4)
+### صندوق الوارد (`App\Livewire\MessagingInbox`)
+- **الغرض:** عرض قائمة جميع المحادثات مع معاينة آخر رسالة
+- **الخصائص:** `$conversations`، `$unreadCount`
+- **التحديث الدوري:** تحديث كل 5 ثوانٍ للرسائل الجديدة
 
-| Method | Signature | Returns | Description |
-|--------|-----------|---------|-------------|
-| `getDailyLoss` | `(Carbon $date, ?int $branchId): float` | float | Total delay cost across branches for a given date |
-| `getBranchPerformance` | `(Carbon $month): Collection` | Collection | Per-branch stats: total_employees, on_time_rate, geofence_compliance, total_loss |
-| `getDelayImpactAnalysis` | `(string $start, string $end, string $scope, ?int $scopeId): array` | array | ROI analysis: potential_loss, actual_loss, roi_percentage, discipline_savings |
-| `getPredictiveMonthlyLoss` | `(Carbon $month): array` | array | Predictive forecast: avg_daily_loss, accumulated_loss, remaining_days, predicted_total |
-
----
-
-## §33. Filament Dashboard Widgets (Phase 4)
-
-| Widget | Parent Class | Key Methods |
-|--------|-------------|-------------|
-| `RealTimeLossCounter` | StatsOverviewWidget | `getStats()` — today's loss, late count, absent count, loss trend |
-| `BranchPerformanceHeatmap` | TableWidget | `table()` — branch rows with on_time_rate, compliance, loss columns, color-coded |
-| `IntegrityAlertHub` | TableWidget | `table()` — recent trap triggers + whistleblower statuses (Level 10 gate) |
+### المحادثة (`App\Livewire\MessagingChat`)
+- **الغرض:** عرض محادثة واحدة مع فقاعات الرسائل
+- **الخصائص:** `$conversation`، `$messages`، `$newMessage`
+- **الدوال:**
+  - `sendMessage()` — تُنشئ سجل رسالة، تُحدّد رسائل المُرسل كمقروءة
+  - `markAsRead()` — تُحدّث حالة القراءة عند التحميل + التحديث
+- **التحديث الدوري:** تحديث كل 3 ثوانٍ للرسائل الجديدة
 
 ---
 
-## §34. Level 10 Vault Pages (Phase 4)
+## 31. متحكمات ومسارات تطبيق PWA
 
-| Page | Route | Methods |
-|------|-------|---------|
-| `WhistleblowerVaultPage` | `/admin/whistleblower-vault` | `table()` — decrypted report viewing; `viewReport()` — audit-logged decryption |
-| `TrapAuditPage` | `/admin/trap-audit` | `table()` — full interaction audit trail; risk trajectory data |
+### متحكم لوحة التحكم (`App\Http\Controllers\DashboardController`)
+- **المسار:** `GET /dashboard` → لوحة تحكم الموظف
+- **المصادقة:** مطلوبة (وسيط `auth`)
 
----
+### متحكم البلاغات السرية (`App\Http\Controllers\WhistleblowerController`)
+- **المسارات:**
+  - `GET /whistleblower` → نموذج البلاغ المجهول (بدون مصادقة)
+  - `GET /whistleblower/track` → تتبع البلاغ بالرمز (بدون مصادقة)
 
-## Changelog
-
-| Date | Version | Changes |
-|------|---------|--------|
-| 2026-02-07 | 1.0.0 | Initial registry — 20 models, 50+ methods documented |
-| 2026-02-07 | 1.1.0 | Phase 1 — GeofencingService (2 methods), AttendanceService (3 methods), AttendanceController (3 endpoints) |
-| 2026-02-07 | 1.2.0 | Phase 2 — Trap model (2 methods, 2 scopes), User risk extensions (2 methods), TrapResponseService (2 methods), TrapController (1 endpoint) |
-| 2026-02-07 | 1.3.0 | Phase 3 — 8 Livewire components, 3 controllers, 6 routes, PWA layout, whistleblower encryption flow, messaging with read receipts |
-| 2026-02-08 | 1.4.0 | Phase 4 — FinancialReportingService (4 methods), 3 dashboard widgets, 2 Level-10 vault pages, predictive analytics algorithm |
-| 2026-02-08 | 1.5.0 | Phase 5 (Final) — SarhInstallCommand, BranchScope policy, financial caching layer, performance indexes, bilingual hardening |
+### متحكم المراسلات (`App\Http\Controllers\MessagingController`)
+- **المسارات:**
+  - `GET /messaging` → صندوق الوارد (مصادقة مطلوبة)
+  - `GET /messaging/{conversation}` → عرض المحادثة (مصادقة مطلوبة)
 
 ---
 
-## §35. Production Hardening (Phase 5 — Final)
+---
 
-### SarhInstallCommand (`App\Console\Commands\SarhInstallCommand`)
-- **Signature:** `sarh:install`
-- **Purpose:** One-command installation — seeds RBAC, badges, traps, creates initial Super Admin
-- **Steps:**
-  1. `verifyEnvironment()` — Checks PHP version, extensions, APP_KEY, DB connection
-  2. `runMigrations()` — Runs `php artisan migrate --force`
-  3. `seedCoreData()` — Calls RolesAndPermissionsSeeder, BadgesSeeder, TrapsSeeder
-  4. `createSuperAdmin()` — Interactive prompts for name_ar, name_en, email, password → creates user with Level 10
-  5. `finalizeInstallation()` — `storage:link`, `config:cache`, `route:cache`
+## §32. خدمة التقارير المالية (المرحلة 4)
 
-### FinancialReportingService — Caching Layer
-- **Cache TTL:** 300 seconds (5 minutes)
-- **Cached:** `getDailyLoss`, `getBranchPerformance`, `getPredictiveMonthlyLoss`
-- **Non-cached:** `getDelayImpactAnalysis` (on-demand, user-triggered)
-- **Key format:** `sarh.{method}.{date/month}.{branch_id?}`
-
-### BranchScope Security Policy
-- **Applied in:** AttendanceLogResource `getEloquentQuery()`
-- **Logic:** Non-super-admin sees only their `branch_id` data
-- **Super Admin:** No scope restriction
-
-### Performance Indexes (Migration)
-- **Table:** `attendance_logs` — 3 new indexes (delay_cost, user_id+status, attendance_date+delay_cost)
-- **Table:** `trap_interactions` — 3 new indexes (trap_id, created_at, user_id+created_at)
-- **Table:** `audit_logs` — 2 new indexes (user_id, action)
-
-### Bilingual Additions
-- **File:** `lang/{ar,en}/install.php` — 15+ keys for installation command output
+| الدالة | التوقيع | يُرجع | الوصف |
+|--------|---------|-------|-------|
+| `getDailyLoss` | `(Carbon $date, ?int $branchId): float` | float | إجمالي تكلفة التأخير عبر الفروع لتاريخ معين |
+| `getBranchPerformance` | `(Carbon $month): Collection` | Collection | إحصائيات لكل فرع: إجمالي_الموظفين، معدل_الحضور، التزام_السياج، إجمالي_الخسارة |
+| `getDelayImpactAnalysis` | `(string $start, string $end, string $scope, ?int $scopeId): array` | array | تحليل العائد: الخسارة_المحتملة، الخسارة_الفعلية، نسبة_العائد، وفورات_الانضباط |
+| `getPredictiveMonthlyLoss` | `(Carbon $month): array` | array | توقعات تنبؤية: متوسط_الخسارة_اليومية، الخسارة_المتراكمة، الأيام_المتبقية، الإجمالي_المتوقع |
 
 ---
 
-## §36. UI/UX Overhaul — Resource Architecture (v1.6.0)
+## §33. ودجات لوحة تحكم Filament (المرحلة 4)
 
-### UserResource (`App\Filament\Resources\UserResource`)
+| الودجة | الفئة الأب | الدوال الرئيسية |
+|--------|-----------|----------------|
+| `RealTimeLossCounter` | StatsOverviewWidget | `getStats()` — خسارة اليوم، عدد المتأخرين، عدد الغائبين، اتجاه الخسارة |
+| `BranchPerformanceHeatmap` | TableWidget | `table()` — صفوف الفروع مع معدل_الحضور، الالتزام، أعمدة الخسارة، مُلوّنة |
+| `IntegrityAlertHub` | TableWidget | `table()` — آخر تفعيلات المصائد + حالات البلاغات (بوابة المستوى 10) |
 
-| Method | Purpose |
+---
+
+## §34. صفحات القبو للمستوى 10 (المرحلة 4)
+
+| الصفحة | المسار | الدوال |
+|--------|--------|--------|
+| `WhistleblowerVaultPage` | `/admin/whistleblower-vault` | `table()` — عرض البلاغات المُفكّك تشفيرها؛ `viewReport()` — فك تشفير مُسجّل في التدقيق |
+| `TrapAuditPage` | `/admin/trap-audit` | `table()` — مسار التدقيق الكامل للتفاعلات؛ بيانات مسار المخاطر |
+
+---
+
+## سجل التغييرات
+
+| التاريخ | الإصدار | التغييرات |
+|---------|---------|----------|
+| 2026-02-07 | 1.0.0 | السجل الأولي — 20 نموذج، 50+ دالة مُوثّقة |
+| 2026-02-07 | 1.1.0 | المرحلة 1 — خدمة السياج الجغرافي (دالتان)، خدمة الحضور (3 دوال)، متحكم الحضور (3 نقاط وصول) |
+| 2026-02-07 | 1.2.0 | المرحلة 2 — نموذج المصيدة (دالتان، نطاقان)، إضافات مخاطر المستخدم (دالتان)، خدمة استجابة المصائد (دالتان)، متحكم المصائد (نقطة وصول واحدة) |
+| 2026-02-07 | 1.3.0 | المرحلة 3 — 8 مكونات Livewire، 3 متحكمات، 6 مسارات، تخطيط PWA، سير تشفير البلاغات، المراسلات مع إيصالات القراءة |
+| 2026-02-08 | 1.4.0 | المرحلة 4 — خدمة التقارير المالية (4 دوال)، 3 ودجات لوحة تحكم، صفحتا قبو للمستوى 10، خوارزمية التحليلات التنبؤية |
+| 2026-02-08 | 1.5.0 | المرحلة 5 (النهائية) — أمر SarhInstall، سياسة نطاق الفرع، طبقة التخزين المالي المؤقت، فهارس الأداء، تقوية ثنائية اللغة |
+
+---
+
+## §35. تقوية بيئة الإنتاج (المرحلة 5 — النهائية)
+
+### أمر التثبيت (`App\Console\Commands\SarhInstallCommand`)
+- **التوقيع:** `sarh:install`
+- **الغرض:** تثبيت بأمر واحد — يبذر RBAC والشارات والمصائد ويُنشئ المدير الأعلى الأولي
+- **الخطوات:**
+  1. `verifyEnvironment()` — يتحقق من إصدار PHP والإضافات وAPP_KEY واتصال قاعدة البيانات
+  2. `runMigrations()` — يُنفّذ `php artisan migrate --force`
+  3. `seedCoreData()` — يستدعي RolesAndPermissionsSeeder وBadgesSeeder وTrapsSeeder
+  4. `createSuperAdmin()` — يطلب تفاعلياً name_ar وname_en والبريد وكلمة المرور → يُنشئ مستخدم بالمستوى 10
+  5. `finalizeInstallation()` — `storage:link`، `config:cache`، `route:cache`
+
+### خدمة التقارير المالية — طبقة التخزين المؤقت
+- **مدة التخزين:** 300 ثانية (5 دقائق)
+- **يُخزّن مؤقتاً:** `getDailyLoss`، `getBranchPerformance`، `getPredictiveMonthlyLoss`
+- **لا يُخزّن مؤقتاً:** `getDelayImpactAnalysis` (عند الطلب، يُفعّل من المستخدم)
+- **تنسيق المفتاح:** `sarh.{method}.{date/month}.{branch_id?}`
+
+### سياسة نطاق الفرع الأمنية
+- **مُطبّقة في:** `getEloquentQuery()` في AttendanceLogResource
+- **المنطق:** غير المدير الأعلى يرى بيانات `branch_id` الخاص به فقط
+- **المدير الأعلى:** بدون قيود على النطاق
+
+### فهارس الأداء (الترحيل)
+- **الجدول:** `attendance_logs` — 3 فهارس جديدة (delay_cost، user_id+status، attendance_date+delay_cost)
+- **الجدول:** `trap_interactions` — 3 فهارس جديدة (trap_id، created_at، user_id+created_at)
+- **الجدول:** `audit_logs` — فهرسان جديدان (user_id، action)
+
+### إضافات ثنائية اللغة
+- **الملف:** `lang/{ar,en}/install.php` — 15+ مفتاح لمخرجات أمر التثبيت
+
+---
+
+## §36. إعادة هيكلة الواجهة — بنية الموارد (الإصدار 1.6.0)
+
+### مورد المستخدمين (`App\Filament\Resources\UserResource`)
+
+| الدالة | الغرض |
+|--------|-------|
+| `getEloquentQuery()` | نطاق الفرع — غير المدير الأعلى يرى موظفي فرعه فقط |
+| `form()` | مخطط الحقول الأساسية الأربعة: الصورة (مطلوبة)، الاسم بالعربي/الإنجليزي، البريد، كلمة المرور، الراتب الأساسي + قسم تنظيمي قابل للطي |
+| `table()` | عمود الصورة، شارة رقم الموظف، الاسم، البريد، الفرع، الدور، الراتب، شارة المستوى الأمني مُلوّنة، أيقونة الحالة |
+| القيم الافتراضية المخفية | `working_days_per_month=22`، `working_hours_per_day=8`، `locale=ar`، `timezone=Asia/Riyadh` |
+
+### مورد الفروع (`App\Filament\Resources\BranchResource`)
+
+| الدالة | الغرض |
+|--------|-------|
+| `form()` | قسم الهوية + منتقي خريطة Leaflet.js (ViewField) + حقول الإحداثيات/نصف القطر + أقسام قابلة للطي للمناوبة/العنوان/المالية |
+| `table()` | شارة الكود، الأسماء، المدينة، نصف قطر السياج، أوقات المناوبة، فترة السماح، عدد الموظفين، أيقونة النشاط |
+| منتقي الخريطة | `filament.forms.components.map-picker` — Alpine.js + Leaflet.js مع ربط ثنائي الاتجاه للإحداثيات/نصف القطر |
+
+### مكون منتقي الخريطة (`resources/views/filament/forms/components/map-picker.blade.php`)
+
+| الميزة | التنفيذ |
 |--------|---------|
-| `getEloquentQuery()` | Branch scope — non-super-admin sees only their branch employees |
-| `form()` | Core Four schema: avatar (required), name_ar/en, email, password, basic_salary + collapsible organizational section |
-| `table()` | Avatar column, employee_id badge, name, email, branch, role, salary, security_level color-coded badge, status icon |
-| Hidden defaults | `working_days_per_month=22`, `working_hours_per_day=8`, `locale=ar`, `timezone=Asia/Riyadh` |
+| محرك الخرائط | Leaflet.js الإصدار 1.9.4 مع طبقات OpenStreetMap |
+| العلامة | قابلة للسحب، تُحدّث الإحداثيات عند السحب |
+| معالج النقر | النقر على الخريطة يضع العلامة + يُحدّث الإحداثيات |
+| دائرة السياج | برتقالي (#f97316)، شفافية 15%، نصف القطر متزامن مع حقل النموذج |
+| المراقبون | `$watch('radius')`، `$watch('lat')`، `$watch('lng')` — مزامنة ثنائية الاتجاه |
+| المركز الافتراضي | الرياض: 24.7136, 46.6753 |
 
-### BranchResource (`App\Filament\Resources\BranchResource`)
+### AppServiceProvider — بوابات المستوى 10
 
-| Method | Purpose |
-|--------|---------|
-| `form()` | Identity section + Leaflet.js map picker (ViewField) + lat/lng/radius fields + collapsible shift/address/financial sections |
-| `table()` | Code badge, names, city, geofence_radius, shift times, grace period, employees_count, is_active icon |
-| Map Picker | `filament.forms.components.map-picker` — Alpine.js + Leaflet.js with bidirectional lat/lng/radius binding |
+| البوابة | الشرط | التأثير |
+|---------|-------|---------|
+| `Gate::before()` | `security_level === 10 \|\| is_super_admin` | تُرجع `true` لجميع عمليات التحقق من الصلاحيات |
+| `access-whistleblower-vault` | `security_level >= 10` | الوصول لصفحة القبو |
+| `access-trap-audit` | `security_level >= 10` | الوصول لصفحة تدقيق المصائد |
+| `bypass-geofence` | `security_level >= 10 \|\| is_super_admin` | تسجيل حضور من أي موقع |
 
-### Map Picker Component (`resources/views/filament/forms/components/map-picker.blade.php`)
-
-| Feature | Implementation |
-|---------|-----------|
-| Map Engine | Leaflet.js v1.9.4 with OpenStreetMap tiles |
-| Marker | Draggable, updates lat/lng on dragend |
-| Click Handler | Map click places marker + updates coordinates |
-| Geofence Circle | Orange (#f97316), 15% opacity, radius synced with form field |
-| Watchers | `$watch('radius')`, `$watch('lat')`, `$watch('lng')` — bidirectional sync |
-| Default Center | Riyadh: 24.7136, 46.6753 |
-
-### AppServiceProvider — Level 10 Gates
-
-| Gate | Condition | Effect |
-|------|-----------|--------|
-| `Gate::before()` | `security_level === 10 \|\| is_super_admin` | Returns `true` for ALL authorization checks |
-| `access-whistleblower-vault` | `security_level >= 10` | Vault page access |
-| `access-trap-audit` | `security_level >= 10` | Trap audit page access |
-| `bypass-geofence` | `security_level >= 10 \|\| is_super_admin` | Attendance check-in from any location |
-
-### Bilingual Lang Files Added
-- **File:** `lang/{ar,en}/users.php` — 30+ keys for employee management UI
-- **File:** `lang/{ar,en}/branches.php` — 30+ keys for branch management UI
+### ملفات اللغة ثنائية اللغة المُضافة
+- **الملف:** `lang/{ar,en}/users.php` — 30+ مفتاح لواجهة إدارة الموظفين
+- **الملف:** `lang/{ar,en}/branches.php` — 30+ مفتاح لواجهة إدارة الفروع
 
 ---
 
-## §37. Competition Engine — Branch Leaderboard & News Ticker (v1.7.0)
+## §37. محرك المنافسة — لوحة ترتيب الفروع وشريط الأخبار (الإصدار 1.7.0)
 
-### ProjectDataSeeder (`Database\Seeders\ProjectDataSeeder`)
+### بذّار بيانات المشروع (`Database\Seeders\ProjectDataSeeder`)
 
-| Method | Purpose |
-|--------|---------|
-| `run()` | Seeds 5 branches (GPS coordinates + 17m geofence) + 36 users with `updateOrCreate` for idempotency |
-| Branch distribution | FADA-2: 11, FADA-1: 8, SARH-CORNER: 7, SARH-2: 5, SARH-HQ: 4 |
-| Default password | `Goolbx512!!` for all seeded users |
-| Super admin | `abdullah@sarh.app` (emp001) — security_level=10, total_points=500 |
+| الدالة | الغرض |
+|--------|-------|
+| `run()` | يبذر 5 فروع (إحداثيات GPS + سياج 17 متر) + 36 مستخدم مع `updateOrCreate` لضمان عدم التكرار |
+| توزيع الفروع | FADA-2: 11، FADA-1: 8، SARH-CORNER: 7، SARH-2: 5، SARH-HQ: 4 |
+| كلمة المرور الافتراضية | `Goolbx512!!` لجميع المستخدمين المبذورين |
+| المدير الأعلى | `abdullah@sarh.app` (emp001) — security_level=10، total_points=500 |
 
-### BranchLeaderboardPage (`App\Filament\Pages\BranchLeaderboardPage`)
+### صفحة لوحة ترتيب الفروع (`App\Filament\Pages\BranchLeaderboardPage`)
 
-| Method | Purpose |
-|--------|---------|
-| `getBranches()` | Ranks branches by **lowest financial loss** from tardiness. Calculates discipline score for level assignment: base 100, -2/late, -5/missed, +10/perfect employee, +0.1×points. Returns ranked array with 6-tier level assignment |
-| Level tiers | Legendary (≥150), Diamond (≥120), Gold (≥100), Silver (≥80), Bronze (≥60), Starter (<60) |
-| Trophy/Turtle | Leaderboard ranked by lowest financial loss; DailyNewsTicker shows per-branch 🏆 first check-in / 🐢 last check-in |
+| الدالة | الغرض |
+|--------|-------|
+| `getBranches()` | يُرتّب الفروع حسب **أقل خسارة مالية** من التأخير. يحسب درجة الانضباط لتعيين المستوى: الأساس 100، -2/متأخر، -5/غائب، +10/موظف مثالي، +0.1×النقاط. يُرجع مصفوفة مُرتّبة مع تعيين 6 مستويات |
+| مستويات التصنيف | أسطوري (≥150)، ألماسي (≥120)، ذهبي (≥100)، فضي (≥80)، برونزي (≥60)، مبتدئ (<60) |
+| الكأس/السلحفاة | الترتيب حسب أقل خسارة مالية؛ شريط الأخبار يعرض لكل فرع 🏆 أول حضور / 🐢 آخر حضور |
 
-### DailyNewsTicker (`App\Filament\Widgets\DailyNewsTicker`)
+### شريط الأخبار اليومي (`App\Filament\Widgets\DailyNewsTicker`)
 
-| Method | Purpose |
-|--------|---------|
-| `getNewsItems()` | Aggregates today's competition news: per-branch first/last check-in, attendance stats, top scorer, total employees |
-| `getTrophyFirstCheckin()` | Per-branch 🏆 first check-in today (earliest `check_in_at` from AttendanceLog per branch) |
-| `getTurtleLastCheckin()` | Per-branch 🐢 last check-in today (latest `check_in_at` from AttendanceLog per branch) |
+| الدالة | الغرض |
+|--------|-------|
+| `getNewsItems()` | يجمع أخبار المنافسة اليومية: أول/آخر حضور لكل فرع، إحصائيات الحضور، أعلى مُسجّل، إجمالي الموظفين |
+| `getTrophyFirstCheckin()` | 🏆 أول حضور لكل فرع اليوم (أبكر `check_in_at` من AttendanceLog لكل فرع) |
+| `getTurtleLastCheckin()` | 🐢 آخر حضور لكل فرع اليوم (أحدث `check_in_at` من AttendanceLog لكل فرع) |
 
-### UserResource Points Action
+### إجراء النقاط في مورد المستخدمين
 
-| Method | Purpose |
-|--------|---------|
-| `adjust_points` action | Filament table action — Level 10 enters points + reason → `total_points` increment + `PointsTransaction` model record + toast notification |
-| Gate | `adjust-points` — requires security_level ≥ 10 or is_super_admin |
+| الدالة | الغرض |
+|--------|-------|
+| إجراء `adjust_points` | إجراء جدول Filament — المستوى 10 يُدخل النقاط + السبب → زيادة `total_points` + سجل في نموذج `PointsTransaction` + إشعار نخب |
+| البوابة | `adjust-points` — يتطلب security_level ≥ 10 أو is_super_admin |
 
-### AppServiceProvider — Competition Gates (v1.7.0)
+### AppServiceProvider — بوابات المنافسة (الإصدار 1.7.0)
 
-| Gate | Condition | Effect |
-|------|-----------|--------|
-| `manage-competition` | `security_level >= 10 \|\| is_super_admin` | Competition page management |
-| `adjust-points` | `security_level >= 10 \|\| is_super_admin` | Manual points adjustment |
+| البوابة | الشرط | التأثير |
+|---------|-------|---------|
+| `manage-competition` | `security_level >= 10 \|\| is_super_admin` | إدارة صفحة المنافسة |
+| `adjust-points` | `security_level >= 10 \|\| is_super_admin` | تعديل النقاط يدوياً |
 
-### Bilingual Lang Files Added (v1.7.0)
-- **File:** `lang/{ar,en}/competition.php` — 30+ keys for competition UI (leaderboard, levels, ticker, scoring)
-- **File:** `lang/{ar,en}/users.php` — 7 new points management keys added
+### ملفات اللغة ثنائية اللغة المُضافة (الإصدار 1.7.0)
+- **الملف:** `lang/{ar,en}/competition.php` — 30+ مفتاح لواجهة المنافسة (الترتيب، المستويات، الشريط، التسجيل)
+- **الملف:** `lang/{ar,en}/users.php` — 7 مفاتيح جديدة لإدارة النقاط
+

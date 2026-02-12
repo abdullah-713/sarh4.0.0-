@@ -1,0 +1,105 @@
+/**
+ * SARH v1.9.0 — Module 5: Corporate Brand Theme (Admin Panel)
+ *
+ * Palette: Orange (#FF8C00), Black (#000000), White/Grey shades
+ * Applied via Filament's Tailwind theming system.
+ */
+@import '/vendor/filament/filament/resources/css/theme.css';
+
+@config '../../tailwind.config.js';
+
+:root {
+    /* Corporate Orange */
+    --primary-50: #fff7ed;
+    --primary-100: #ffedd5;
+    --primary-200: #fed7aa;
+    --primary-300: #fdba74;
+    --primary-400: #fb923c;
+    --primary-500: #FF8C00;
+    --primary-600: #ea580c;
+    --primary-700: #c2410c;
+    --primary-800: #9a3412;
+    --primary-900: #7c2d12;
+    --primary-950: #431407;
+
+    /* Dark backgrounds */
+    --gray-50: #fafafa;
+    --gray-100: #f5f5f5;
+    --gray-200: #e5e5e5;
+    --gray-300: #d4d4d4;
+    --gray-400: #a3a3a3;
+    --gray-500: #737373;
+    --gray-600: #525252;
+    --gray-700: #404040;
+    --gray-800: #262626;
+    --gray-900: #171717;
+    --gray-950: #0a0a0a;
+}
+
+/* RTL Support */
+[dir="rtl"] .fi-sidebar-nav {
+    direction: rtl;
+}
+
+/* Brand header bar */
+.fi-topbar {
+    border-bottom: 2px solid #FF8C00 !important;
+}
+
+/* Card hover effects */
+.fi-wi-stats-overview-stat {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fi-wi-stats-overview-stat:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 140, 0, 0.15);
+}
+
+/* Mobile-First: Widget grid (Module 4) */
+@media (max-width: 768px) {
+    .fi-wi-stats-overview {
+        grid-template-columns: 1fr !important;
+    }
+
+    .fi-page-header {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .fi-ta-table {
+        font-size: 0.875rem;
+    }
+
+    .fi-sidebar {
+        width: 100% !important;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .fi-wi-stats-overview {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (min-width: 1025px) {
+    .fi-wi-stats-overview {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+}
+
+/* Navigation group styling */
+.fi-sidebar-group-label {
+    font-weight: 700;
+    letter-spacing: -0.025em;
+}
+
+/* Badge styling */
+.fi-badge {
+    font-weight: 600;
+}
+
+/* Table row hover */
+.fi-ta-row:hover {
+    background-color: rgba(255, 140, 0, 0.05) !important;
+}

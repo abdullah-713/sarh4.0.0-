@@ -73,7 +73,8 @@ class UserResource extends Resource
                         ->directory('avatars')
                         ->maxSize(2048)
                         ->required()
-                        ->columnSpanFull(),
+                        ->columnSpanFull()
+                        ->helperText('صورة شخصية واضحة للموظف — تظهر في جميع الأقسام'),
                 ]),
 
             // ── Section 2: Core Four ──────────────────────────────
@@ -83,19 +84,22 @@ class UserResource extends Resource
                     Forms\Components\TextInput::make('name_ar')
                         ->label(__('users.name_ar'))
                         ->required()
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الاسم الكامل كما في الهوية — يظهر في كل الواجهات'),
 
                     Forms\Components\TextInput::make('name_en')
                         ->label(__('users.name_en'))
                         ->required()
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الاسم بالإنجليزية للتقارير الرسمية والنظام'),
 
                     Forms\Components\TextInput::make('email')
                         ->label(__('users.email'))
                         ->email()
                         ->required()
                         ->unique(ignoreRecord: true)
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'البريد المستخدم لتسجيل الدخول واستلام الإشعارات'),
 
                     Forms\Components\TextInput::make('password')
                         ->label(__('users.password'))
@@ -117,25 +121,29 @@ class UserResource extends Resource
                         ->required()
                         ->prefix(__('users.currency_sar'))
                         ->minValue(0)
-                        ->step(100),
+                        ->step(100)
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الراتب الأساسي الشهري — يُستخدم لحساب تكلفة دقيقة التأخير'),
 
                     Forms\Components\TextInput::make('housing_allowance')
                         ->label(__('users.housing_allowance'))
                         ->numeric()
                         ->default(0)
-                        ->prefix(__('users.currency_sar')),
+                        ->prefix(__('users.currency_sar'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'بدل السكن الشهري'),
 
                     Forms\Components\TextInput::make('transport_allowance')
                         ->label(__('users.transport_allowance'))
                         ->numeric()
                         ->default(0)
-                        ->prefix(__('users.currency_sar')),
+                        ->prefix(__('users.currency_sar'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'بدل النقل الشهري'),
 
                     Forms\Components\TextInput::make('other_allowances')
                         ->label(__('users.other_allowances'))
                         ->numeric()
                         ->default(0)
-                        ->prefix(__('users.currency_sar')),
+                        ->prefix(__('users.currency_sar'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'أي بدلات إضافية مثل بدل الهاتف أو الطعام'),
                 ])->columns(2),
 
             // ── Section 4: Organizational (Optional, with smart defaults) ──
@@ -215,86 +223,107 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('avatar')
-                    ->label(__('users.avatar'))
-                    ->circular()
-                    ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->name_ar ?? 'U') . '&background=f97316&color=fff&font-size=0.5'),
+                // ── Module 4: Mobile-First Stack/Split Layout ──────────
+                Tables\Columns\Layout\Split::make([
+                    Tables\Columns\ImageColumn::make('avatar')
+                        ->label(__('users.avatar'))
+                        ->circular()
+                        ->grow(false)
+                        ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->name_ar ?? 'U') . '&background=f97316&color=fff&font-size=0.5'),
 
-                Tables\Columns\TextColumn::make('employee_id')
-                    ->label(__('users.employee_id'))
-                    ->searchable()
-                    ->sortable()
-                    ->badge()
-                    ->color('warning'),
+                    Tables\Columns\Layout\Stack::make([
+                        Tables\Columns\TextColumn::make('name_ar')
+                            ->label(__('users.name_ar'))
+                            ->searchable()
+                            ->sortable()
+                            ->weight('bold')
+                            ->size('lg'),
 
-                Tables\Columns\TextColumn::make('name_ar')
-                    ->label(__('users.name_ar'))
-                    ->searchable()
-                    ->sortable()
-                    ->weight('bold'),
+                        Tables\Columns\TextColumn::make('employee_id')
+                            ->label(__('users.employee_id'))
+                            ->searchable()
+                            ->sortable()
+                            ->badge()
+                            ->color('warning')
+                            ->size('sm'),
+                    ]),
 
-                Tables\Columns\TextColumn::make('name_en')
-                    ->label(__('users.name_en'))
-                    ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    Tables\Columns\Layout\Stack::make([
+                        Tables\Columns\TextColumn::make('branch.name_ar')
+                            ->label(__('users.branch'))
+                            ->sortable()
+                            ->icon('heroicon-m-building-office-2')
+                            ->size('sm'),
 
-                Tables\Columns\TextColumn::make('email')
-                    ->label(__('users.email'))
-                    ->searchable()
-                    ->icon('heroicon-o-envelope'),
+                        Tables\Columns\TextColumn::make('role.name_ar')
+                            ->label(__('users.role'))
+                            ->badge()
+                            ->color('info'),
+                    ])->visibleFrom('md'),
 
-                Tables\Columns\TextColumn::make('branch.name_ar')
-                    ->label(__('users.branch'))
-                    ->sortable(),
+                    Tables\Columns\Layout\Stack::make([
+                        Tables\Columns\TextColumn::make('email')
+                            ->label(__('users.email'))
+                            ->searchable()
+                            ->icon('heroicon-o-envelope')
+                            ->size('sm'),
 
-                Tables\Columns\TextColumn::make('role.name_ar')
-                    ->label(__('users.role'))
-                    ->badge()
-                    ->color('info'),
+                        Tables\Columns\TextColumn::make('name_en')
+                            ->label(__('users.name_en'))
+                            ->searchable()
+                            ->color('gray')
+                            ->size('sm'),
+                    ])->visibleFrom('lg'),
+                ]),
 
-                Tables\Columns\TextColumn::make('basic_salary')
-                    ->label(__('users.basic_salary'))
-                    ->money('SAR')
-                    ->sortable(),
+                // ── Collapsible Detail Panel ──────────
+                Tables\Columns\Layout\Panel::make([
+                    Tables\Columns\Layout\Split::make([
+                        Tables\Columns\TextColumn::make('basic_salary')
+                            ->label(__('users.basic_salary'))
+                            ->money('SAR')
+                            ->sortable(),
 
-                Tables\Columns\TextColumn::make('total_points')
-                    ->label(__('users.total_points'))
-                    ->numeric()
-                    ->sortable()
-                    ->badge()
-                    ->color(fn (?int $state): string => match (true) {
-                        ($state ?? 0) >= 100 => 'success',
-                        ($state ?? 0) >= 50  => 'warning',
-                        ($state ?? 0) > 0    => 'info',
-                        default               => 'gray',
-                    }),
+                        Tables\Columns\TextColumn::make('total_points')
+                            ->label(__('users.total_points'))
+                            ->numeric()
+                            ->sortable()
+                            ->badge()
+                            ->color(fn (?int $state): string => match (true) {
+                                ($state ?? 0) >= 100 => 'success',
+                                ($state ?? 0) >= 50  => 'warning',
+                                ($state ?? 0) > 0    => 'info',
+                                default               => 'gray',
+                            }),
 
-                Tables\Columns\TextColumn::make('security_level')
-                    ->label(__('users.security_level'))
-                    ->badge()
-                    ->color(fn (int $state): string => match (true) {
-                        $state >= 10 => 'danger',
-                        $state >= 7  => 'warning',
-                        $state >= 4  => 'info',
-                        default      => 'gray',
-                    }),
+                        Tables\Columns\TextColumn::make('security_level')
+                            ->label(__('users.security_level'))
+                            ->badge()
+                            ->color(fn (int $state): string => match (true) {
+                                $state >= 10 => 'danger',
+                                $state >= 7  => 'warning',
+                                $state >= 4  => 'info',
+                                default      => 'gray',
+                            }),
 
-                Tables\Columns\IconColumn::make('status')
-                    ->label(__('users.status'))
-                    ->icon(fn (string $state): string => match ($state) {
-                        'active'     => 'heroicon-o-check-circle',
-                        'suspended'  => 'heroicon-o-pause-circle',
-                        'terminated' => 'heroicon-o-x-circle',
-                        'on_leave'   => 'heroicon-o-clock',
-                        default      => 'heroicon-o-question-mark-circle',
-                    })
-                    ->color(fn (string $state): string => match ($state) {
-                        'active'     => 'success',
-                        'suspended'  => 'warning',
-                        'terminated' => 'danger',
-                        'on_leave'   => 'info',
-                        default      => 'gray',
-                    }),
+                        Tables\Columns\IconColumn::make('status')
+                            ->label(__('users.status'))
+                            ->icon(fn (string $state): string => match ($state) {
+                                'active'     => 'heroicon-o-check-circle',
+                                'suspended'  => 'heroicon-o-pause-circle',
+                                'terminated' => 'heroicon-o-x-circle',
+                                'on_leave'   => 'heroicon-o-clock',
+                                default      => 'heroicon-o-question-mark-circle',
+                            })
+                            ->color(fn (string $state): string => match ($state) {
+                                'active'     => 'success',
+                                'suspended'  => 'warning',
+                                'terminated' => 'danger',
+                                'on_leave'   => 'info',
+                                default      => 'gray',
+                            }),
+                    ]),
+                ])->collapsible(),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('users.created_at'))

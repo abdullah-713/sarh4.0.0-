@@ -48,31 +48,37 @@ class BranchResource extends Resource
                     Forms\Components\TextInput::make('name_ar')
                         ->label(__('branches.name_ar'))
                         ->required()
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'اسم الفرع باللغة العربية كما يظهر في الواجهة'),
 
                     Forms\Components\TextInput::make('name_en')
                         ->label(__('branches.name_en'))
                         ->required()
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'اسم الفرع بالإنجليزية للتقارير الرسمية'),
 
                     Forms\Components\TextInput::make('code')
                         ->label(__('branches.code'))
                         ->required()
                         ->unique(ignoreRecord: true)
                         ->maxLength(20)
-                        ->placeholder('RYD-HQ'),
+                        ->placeholder('RYD-HQ')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'رمز مختصر يميّز الفرع — مثال: RYD-HQ'),
 
                     Forms\Components\TextInput::make('phone')
                         ->label(__('branches.phone'))
-                        ->tel(),
+                        ->tel()
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'رقم هاتف الفرع للتواصل'),
 
                     Forms\Components\TextInput::make('email')
                         ->label(__('branches.email'))
-                        ->email(),
+                        ->email()
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'البريد الإلكتروني الرسمي للفرع'),
 
                     Forms\Components\Toggle::make('is_active')
                         ->label(__('branches.is_active'))
-                        ->default(true),
+                        ->default(true)
+                        ->helperText('عند إيقافه لن يظهر الفرع في قوائم الاختيار'),
                 ])->columns(2),
 
             // ── Section 2: Geolocation — Leaflet Map Picker ──────
@@ -92,7 +98,8 @@ class BranchResource extends Resource
                         ->minValue(-90)
                         ->maxValue(90)
                         ->live(onBlur: true)
-                        ->afterStateUpdated(fn (Set $set, ?string $state) => $set('latitude', $state)),
+                        ->afterStateUpdated(fn (Set $set, ?string $state) => $set('latitude', $state))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الإحداثية الجغرافية — تُحدَّد تلقائياً من الخريطة'),
 
                     Forms\Components\TextInput::make('longitude')
                         ->label(__('branches.longitude'))
@@ -102,7 +109,8 @@ class BranchResource extends Resource
                         ->minValue(-180)
                         ->maxValue(180)
                         ->live(onBlur: true)
-                        ->afterStateUpdated(fn (Set $set, ?string $state) => $set('longitude', $state)),
+                        ->afterStateUpdated(fn (Set $set, ?string $state) => $set('longitude', $state))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الإحداثية الجغرافية — تُحدَّد تلقائياً من الخريطة'),
 
                     Forms\Components\TextInput::make('geofence_radius')
                         ->label(__('branches.geofence_radius'))
@@ -112,7 +120,8 @@ class BranchResource extends Resource
                         ->minValue(1)
                         ->maxValue(100000)
                         ->suffix(__('branches.meters'))
-                        ->helperText(__('branches.geofence_radius_help')),
+                        ->helperText(__('branches.geofence_radius_help'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'النطاق الجغرافي الذي يُسمح بتسجيل الحضور منه حول مقر الفرع'),
                 ])->columns(2),
 
             // ── Section 3: Shift & Policy ─────────────────────────
@@ -123,12 +132,14 @@ class BranchResource extends Resource
                     Forms\Components\TimePicker::make('default_shift_start')
                         ->label(__('branches.shift_start'))
                         ->default('08:00')
-                        ->seconds(false),
+                        ->seconds(false)
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الوقت الرسمي لبداية الدوام في هذا الفرع'),
 
                     Forms\Components\TimePicker::make('default_shift_end')
                         ->label(__('branches.shift_end'))
                         ->default('17:00')
-                        ->seconds(false),
+                        ->seconds(false)
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الوقت الرسمي لنهاية الدوام'),
 
                     Forms\Components\TextInput::make('grace_period_minutes')
                         ->label(__('branches.grace_period'))
@@ -136,7 +147,8 @@ class BranchResource extends Resource
                         ->default(15)
                         ->minValue(0)
                         ->maxValue(120)
-                        ->suffix(__('branches.minutes')),
+                        ->suffix(__('branches.minutes'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'المدة المسموحة بعد بداية الدوام قبل احتساب التأخير'),
                 ])->columns(3),
 
             // ── Section 4: Address (Optional) ─────────────────────

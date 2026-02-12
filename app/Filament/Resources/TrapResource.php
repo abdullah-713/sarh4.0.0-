@@ -23,6 +23,20 @@ class TrapResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
+    /**
+     * Module 3: Stealth Visibility — Hidden from navigation unless Level 10.
+     */
+    public static function canAccess(): bool
+    {
+        $user = auth()->user();
+        return $user && ($user->is_super_admin || $user->security_level >= 10);
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return static::canAccess();
+    }
+
     public static function getNavigationLabel(): string
     {
         return __('traps.navigation_label');
@@ -45,17 +59,20 @@ class TrapResource extends Resource
                 ->schema([
                     Forms\Components\TextInput::make('name_ar')
                         ->required()
-                        ->label(__('traps.name_ar')),
+                        ->label(__('traps.name_ar'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'اسم المصيدة الأمنية بالعربية'),
 
                     Forms\Components\TextInput::make('name_en')
                         ->required()
-                        ->label(__('traps.name_en')),
+                        ->label(__('traps.name_en'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'اسم المصيدة بالإنجليزية'),
 
                     Forms\Components\TextInput::make('trap_code')
                         ->required()
                         ->unique(ignoreRecord: true)
                         ->label(__('traps.trap_code'))
-                        ->helperText(__('traps.trap_code_helper')),
+                        ->helperText(__('traps.trap_code_helper'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'كود فريد يُميّز المصيدة في النظام'),
 
                     Forms\Components\Textarea::make('description_ar')
                         ->label(__('traps.description_ar')),
@@ -72,7 +89,8 @@ class TrapResource extends Resource
                         ->maxValue(10)
                         ->default(5)
                         ->required()
-                        ->label(__('traps.risk_weight')),
+                        ->label(__('traps.risk_weight'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'كلما زاد الرقم زادت خطورة التفاعل مع هذه المصيدة'),
 
                     Forms\Components\Select::make('fake_response_type')
                         ->options([
@@ -82,7 +100,8 @@ class TrapResource extends Resource
                         ])
                         ->default('success')
                         ->required()
-                        ->label(__('traps.fake_response_type')),
+                        ->label(__('traps.fake_response_type'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'نوع الرسالة المزيفة التي تظهر للموظف عند التفاعل'),
 
                     Forms\Components\Toggle::make('is_active')
                         ->default(true)

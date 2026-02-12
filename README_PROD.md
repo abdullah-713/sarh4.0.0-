@@ -1,22 +1,22 @@
-# SARH AL-ITQAN — Production Deployment Guide
-> **Version:** 1.0.0 | **Date:** 2026-02-08
-> **Target:** Shared Hosting (Hostinger), VPS, or Dedicated Server
-> **Requirements:** PHP 8.2+, MySQL 8.0+, Composer, Node.js 18+
+# صرح الإتقان — دليل النشر الإنتاجي
+> **الإصدار:** 1.9.0 | **التاريخ:** 2026-02-08
+> **البيئة المستهدفة:** استضافة مشتركة (Hostinger)، خادم VPS، أو خادم مخصص
+> **المتطلبات:** PHP 8.2+، MySQL 8.0+، Composer، Node.js 18+
 
 ---
 
-## 1. Server Requirements
+## 1. متطلبات الخادم
 
-| Requirement | Minimum | Recommended |
-|-------------|---------|-------------|
+| المتطلب | الحد الأدنى | الموصى به |
+|---------|------------|----------|
 | PHP | 8.2 | 8.3+ |
 | MySQL/MariaDB | 8.0 / 10.6 | 8.0+ / 10.11+ |
-| Composer | 2.x | Latest |
+| Composer | 2.x | أحدث إصدار |
 | Node.js | 18.x | 20.x |
-| Disk Space | 500 MB | 1 GB+ |
-| RAM | 512 MB | 1 GB+ |
+| مساحة القرص | 500 ميجابايت | 1 جيجابايت+ |
+| الذاكرة | 512 ميجابايت | 1 جيجابايت+ |
 
-### Required PHP Extensions
+### إضافات PHP المطلوبة
 ```
 openssl, pdo, pdo_mysql, mbstring, tokenizer, xml, ctype, json,
 bcmath, fileinfo, curl, gd
@@ -24,45 +24,45 @@ bcmath, fileinfo, curl, gd
 
 ---
 
-## 2. Deployment Steps
+## 2. خطوات النشر
 
-### 2.1 Upload Project Files
+### 2.1 رفع ملفات المشروع
 
-**Option A: Git Clone (VPS)**
+**الخيار أ: استنساخ Git (خادم VPS)**
 ```bash
 cd /var/www
 git clone <repository_url> sarh
 cd sarh
 ```
 
-**Option B: File Upload (Shared Hosting / Hostinger)**
-1. Upload the project as a ZIP to the home directory
-2. Extract to `/home/user/sarh/`
-3. Set the web root (Document Root) to: `/home/user/sarh/public`
+**الخيار ب: رفع الملفات (استضافة مشتركة / Hostinger)**
+1. ارفع المشروع كملف مضغوط إلى المجلد الرئيسي
+2. فك الضغط إلى `/home/user/sarh/`
+3. اضبط جذر الويب (Document Root) على: `/home/user/sarh/public`
 
-### 2.2 Install Dependencies
+### 2.2 تثبيت المكتبات
 
 ```bash
 cd /path/to/sarh
 
-# PHP dependencies
+# مكتبات PHP
 composer install --no-dev --optimize-autoloader
 
-# Frontend dependencies
+# مكتبات الواجهة
 npm ci
 npm run build
 ```
 
-### 2.3 Environment Configuration
+### 2.3 إعداد ملف البيئة
 
 ```bash
 cp .env.example .env
 php artisan key:generate
 ```
 
-Edit `.env`:
+عدّل ملف `.env`:
 ```ini
-APP_NAME="SARH AL-ITQAN"
+APP_NAME="صرح الإتقان"
 APP_ENV=production
 APP_DEBUG=false
 APP_TIMEZONE=Asia/Riyadh
@@ -75,7 +75,7 @@ DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=sarh
 DB_USERNAME=sarh_user
-DB_PASSWORD=<strong_password>
+DB_PASSWORD=<كلمة_مرور_قوية>
 
 CACHE_STORE=file
 SESSION_DRIVER=file
@@ -84,20 +84,20 @@ QUEUE_CONNECTION=database
 FILAMENT_PATH=admin
 ```
 
-### 2.4 Run SARH Installer
+### 2.4 تشغيل مُثبِّت صرح
 
 ```bash
 php artisan sarh:install
 ```
 
-This will:
-1. Verify environment (PHP version, extensions, database connection)
-2. Run all migrations (26+ tables)
-3. Seed roles (10 levels), permissions (42), badges (8), traps (4)
-4. Prompt you to create the initial Super Admin (Level 10)
-5. Create storage symlink and cache configuration
+سيقوم هذا الأمر بـ:
+1. التحقق من البيئة (إصدار PHP، الإضافات، اتصال قاعدة البيانات)
+2. تشغيل جميع الترحيلات (26+ جدول)
+3. بذر الأدوار (10 مستويات)، الصلاحيات (42)، الشارات (8)، المصائد (4)
+4. طلب إنشاء حساب المدير العام الأولي (المستوى 10)
+5. إنشاء رابط التخزين وتخزين الإعدادات المؤقتة
 
-### 2.5 Directory Permissions
+### 2.5 صلاحيات المجلدات
 
 ```bash
 chmod -R 775 storage bootstrap/cache
@@ -106,20 +106,20 @@ chown -R www-data:www-data storage bootstrap/cache
 
 ---
 
-## 3. Hostinger-Specific Instructions
+## 3. تعليمات خاصة بـ Hostinger
 
-### 3.1 Document Root (Symlink)
+### 3.1 جذر الويب (الرابط الرمزي)
 
-Hostinger shared hosting serves from `public_html/`. Create a symlink:
+استضافة Hostinger المشتركة تخدم الملفات من `public_html/`. أنشئ رابطاً رمزياً:
 
 ```bash
-# From SSH terminal (Hostinger Business plan and above)
+# من طرفية SSH (خطة Hostinger Business فما فوق)
 cd ~/
 rm -rf public_html
 ln -s /home/user/sarh/public public_html
 ```
 
-**If no SSH access:** Use File Manager to rename `public_html` to `public_html_bak`, then create a PHP redirect:
+**إذا لم يتوفر SSH:** استخدم مدير الملفات لإعادة تسمية `public_html` إلى `public_html_bak`، ثم أنشئ إعادة توجيه PHP:
 
 ```php
 // ~/public_html/index.php
@@ -127,31 +127,31 @@ ln -s /home/user/sarh/public public_html
 require __DIR__ . '/../sarh/public/index.php';
 ```
 
-### 3.2 PHP Version
+### 3.2 إصدار PHP
 
-In Hostinger hPanel → **Advanced** → **PHP Configuration**:
-- Set PHP version to **8.2** or **8.3**
-- Enable extensions: `pdo_mysql`, `bcmath`, `fileinfo`, `gd`
+في لوحة تحكم Hostinger (hPanel) → **متقدم** → **إعدادات PHP**:
+- اضبط إصدار PHP على **8.2** أو **8.3**
+- فعّل الإضافات: `pdo_mysql`, `bcmath`, `fileinfo`, `gd`
 
-### 3.3 Cron Jobs (Optional — for Queues)
+### 3.3 المهام المجدولة (اختياري — لمعالجة الطوابير)
 
-In hPanel → **Advanced** → **Cron Jobs**:
+في hPanel → **متقدم** → **المهام المجدولة**:
 ```
 * * * * * cd /home/user/sarh && php artisan schedule:run >> /dev/null 2>&1
 ```
 
-### 3.4 SSL Certificate
+### 3.4 شهادة SSL
 
-Enable SSL in hPanel → **Security** → **SSL** → Let's Encrypt. Then update `.env`:
+فعّل SSL في hPanel → **الأمان** → **SSL** → Let's Encrypt. ثم حدّث `.env`:
 ```ini
 APP_URL=https://yourdomain.com
 ```
 
 ---
 
-## 4. VPS / Dedicated Server (Nginx)
+## 4. خادم VPS / خادم مخصص (Nginx)
 
-### 4.1 Nginx Configuration
+### 4.1 إعدادات Nginx
 
 ```nginx
 server {
@@ -189,7 +189,7 @@ server {
 }
 ```
 
-### 4.2 Supervisor (Queue Worker)
+### 4.2 المشرف (معالج الطوابير — Supervisor)
 
 ```ini
 [program:sarh-worker]
@@ -208,67 +208,67 @@ stopwaitsecs=3600
 
 ---
 
-## 5. Production Optimization Checklist
+## 5. قائمة تحسين الأداء الإنتاجي
 
 ```bash
-# Cache configuration and routes for performance
+# تخزين الإعدادات والمسارات لتحسين الأداء
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 php artisan event:cache
 
-# Optimize Composer autoloader
+# تحسين محمّل Composer التلقائي
 composer install --no-dev --optimize-autoloader
 
-# Build frontend assets
+# بناء أصول الواجهة
 npm run build
 
-# Verify storage link
+# التحقق من رابط التخزين
 php artisan storage:link
 ```
 
 ---
 
-## 6. Security Hardening
+## 6. تصلّب أمني
 
-### 6.1 Environment File
-- [ ] `APP_DEBUG=false` — **NEVER** set to `true` in production
+### 6.1 ملف البيئة
+- [ ] `APP_DEBUG=false` — **لا تضبطه أبداً** على `true` في بيئة الإنتاج
 - [ ] `APP_ENV=production`
-- [ ] Strong `APP_KEY` (generated by `key:generate`)
-- [ ] Strong DB password
+- [ ] مفتاح `APP_KEY` قوي (يُنشأ بأمر `key:generate`)
+- [ ] كلمة مرور قوية لقاعدة البيانات
 
-### 6.2 File Permissions
-- [ ] `.env` file: `chmod 600 .env` (owner read/write only)
-- [ ] `storage/` and `bootstrap/cache/`: `chmod 775`
-- [ ] All other files: `chmod 644`, directories: `chmod 755`
+### 6.2 صلاحيات الملفات
+- [ ] ملف `.env`: `chmod 600 .env` (قراءة/كتابة للمالك فقط)
+- [ ] `storage/` و `bootstrap/cache/`: `chmod 775`
+- [ ] باقي الملفات: `chmod 644`، المجلدات: `chmod 755`
 
-### 6.3 Web Server
-- [ ] Block access to `.env` file via server config
-- [ ] Document root points only to `public/` — never to project root
-- [ ] HTTPS (SSL) enabled
+### 6.3 خادم الويب
+- [ ] حظر الوصول إلى ملف `.env` عبر إعدادات الخادم
+- [ ] جذر الويب يشير فقط إلى `public/` — وليس إلى جذر المشروع
+- [ ] HTTPS (SSL) مفعّل
 
-### 6.4 SARH-Specific
-- [ ] Level 10 vault pages (`/admin/whistleblower-vault`, `/admin/trap-audit`) are gated by `security_level >= 10`
-- [ ] Whistleblower content encrypted with AES-256-CBC
-- [ ] Branch data isolation enforced (non-super-admin sees only their branch)
-- [ ] Audit logging on all vault access
+### 6.4 خاص بنظام صرح
+- [ ] صفحات قبو المستوى 10 (`/admin/whistleblower-vault`، `/admin/trap-audit`) محمية بـ `security_level >= 10`
+- [ ] محتوى البلاغات مشفر بـ AES-256-CBC
+- [ ] عزل بيانات الفروع مفعّل (غير المدير العام يرى فرعه فقط)
+- [ ] سجل المراجعة يوثق كل وصول للقبو
 
 ---
 
-## 7. Backup Strategy
+## 7. استراتيجية النسخ الاحتياطي
 
-### 7.1 Database Backup
+### 7.1 نسخ قاعدة البيانات
 ```bash
-# Daily automated backup
+# نسخ احتياطي يومي تلقائي
 mysqldump -u sarh_user -p sarh > /backups/sarh_$(date +%Y%m%d_%H%M).sql
 
-# Or via Laravel
-php artisan backup:run  # (requires spatie/laravel-backup package)
+# أو عبر Laravel
+php artisan backup:run  # (يتطلب حزمة spatie/laravel-backup)
 ```
 
-### 7.2 File Backup
+### 7.2 نسخ الملفات
 ```bash
-# Backup uploaded files and environment
+# نسخ احتياطي للملفات المرفوعة وملف البيئة
 tar -czf /backups/sarh_files_$(date +%Y%m%d).tar.gz \
     /var/www/sarh/storage/app \
     /var/www/sarh/.env
@@ -276,35 +276,35 @@ tar -czf /backups/sarh_files_$(date +%Y%m%d).tar.gz \
 
 ---
 
-## 8. Maintenance Commands
+## 8. أوامر الصيانة
 
-| Command | Purpose |
-|---------|---------|
-| `php artisan sarh:install` | First-time installation |
-| `php artisan migrate` | Run pending migrations |
-| `php artisan cache:clear` | Clear financial report cache |
-| `php artisan config:cache` | Rebuild config cache |
-| `php artisan route:cache` | Rebuild route cache |
-| `php artisan view:clear` | Clear compiled views |
-| `php artisan queue:restart` | Restart queue workers |
-| `php artisan down` | Maintenance mode |
-| `php artisan up` | Exit maintenance mode |
-
----
-
-## 9. Troubleshooting
-
-| Issue | Solution |
-|-------|---------|
-| 500 Error after deployment | Check `storage/logs/laravel.log`, ensure permissions on `storage/` |
-| Blank page | `APP_DEBUG=true` temporarily, check error, then set back to `false` |
-| CSS/JS not loading | Run `npm run build`, check `public/build/manifest.json` exists |
-| Filament login not working | Verify user exists with `php artisan tinker` → `User::first()` |
-| Vite manifest not found | Run `npm run build` to generate production assets |
-| Database connection refused | Verify DB credentials in `.env`, check MySQL service is running |
-| Storage link error | Remove existing `public/storage` symlink, rerun `php artisan storage:link` |
+| الأمر | الغرض |
+|-------|-------|
+| `php artisan sarh:install` | التثبيت الأولي |
+| `php artisan migrate` | تشغيل الترحيلات المعلقة |
+| `php artisan cache:clear` | مسح كاش التقارير المالية |
+| `php artisan config:cache` | إعادة بناء كاش الإعدادات |
+| `php artisan route:cache` | إعادة بناء كاش المسارات |
+| `php artisan view:clear` | مسح العروض المُجمّعة |
+| `php artisan queue:restart` | إعادة تشغيل معالجات الطوابير |
+| `php artisan down` | وضع الصيانة |
+| `php artisan up` | الخروج من وضع الصيانة |
 
 ---
 
-**SARH AL-ITQAN** — صرح الإتقان
-*Enterprise HR & Financial Intelligence Platform*
+## 9. استكشاف الأخطاء وإصلاحها
+
+| المشكلة | الحل |
+|---------|------|
+| خطأ 500 بعد النشر | افحص `storage/logs/laravel.log`، تأكد من صلاحيات `storage/` |
+| صفحة بيضاء | فعّل `APP_DEBUG=true` مؤقتاً، سجّل الخطأ، ثم أعده إلى `false` |
+| CSS/JS لا يُحمّل | شغّل `npm run build`، تحقق من وجود `public/build/manifest.json` |
+| تسجيل دخول Filament لا يعمل | تحقق من وجود مستخدم بأمر `php artisan tinker` → `User::first()` |
+| "Vite manifest not found" | شغّل `npm run build` لبناء أصول الإنتاج |
+| رفض اتصال قاعدة البيانات | تحقق من بيانات الاتصال في `.env`، تأكد أن MySQL يعمل |
+| خطأ رابط التخزين | احذف الرابط الموجود `public/storage`، أعد تشغيل `php artisan storage:link` |
+
+---
+
+**صرح الإتقان** — SARH AL-ITQAN
+*نظام الموارد البشرية والذكاء المالي المؤسسي*

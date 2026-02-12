@@ -67,22 +67,27 @@ class AttendanceLogResource extends Resource
                         ->searchable()
                         ->preload()
                         ->required()
-                        ->label(__('attendance.employee')),
+                        ->label(__('attendance.employee'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'اختر الموظف المراد تسجيل حضوره'),
 
                     Forms\Components\Select::make('branch_id')
                         ->relationship('branch', 'name_ar')
                         ->required()
-                        ->label(__('attendance.branch')),
+                        ->label(__('attendance.branch'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الفرع الذي سُجّل منه الحضور'),
 
                     Forms\Components\DatePicker::make('attendance_date')
                         ->required()
-                        ->label(__('attendance.date')),
+                        ->label(__('attendance.date'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'تاريخ يوم العمل'),
 
                     Forms\Components\DateTimePicker::make('check_in_at')
-                        ->label(__('attendance.check_in_time')),
+                        ->label(__('attendance.check_in_time'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الوقت الفعلي لتسجيل الدخول'),
 
                     Forms\Components\DateTimePicker::make('check_out_at')
-                        ->label(__('attendance.check_out_time')),
+                        ->label(__('attendance.check_out_time'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الوقت الفعلي لتسجيل الخروج'),
 
                     Forms\Components\Select::make('status')
                         ->options([
@@ -103,27 +108,32 @@ class AttendanceLogResource extends Resource
                     Forms\Components\TextInput::make('delay_minutes')
                         ->numeric()
                         ->default(0)
-                        ->label(__('attendance.delay_minutes')),
+                        ->label(__('attendance.delay_minutes'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'عدد دقائق التأخير عن بداية الدوام'),
 
                     Forms\Components\TextInput::make('cost_per_minute')
                         ->numeric()
                         ->disabled()
-                        ->label(__('attendance.cost_per_minute')),
+                        ->label(__('attendance.cost_per_minute'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'تكلفة الدقيقة الواحدة محسوبة من الراتب'),
 
                     Forms\Components\TextInput::make('delay_cost')
                         ->numeric()
                         ->disabled()
-                        ->label(__('attendance.delay_cost')),
+                        ->label(__('attendance.delay_cost'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الخسارة المالية الناتجة عن التأخير'),
 
                     Forms\Components\TextInput::make('overtime_minutes')
                         ->numeric()
                         ->default(0)
-                        ->label(__('attendance.overtime_minutes')),
+                        ->label(__('attendance.overtime_minutes'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'دقائق العمل الإضافي بعد نهاية الدوام'),
 
                     Forms\Components\TextInput::make('overtime_value')
                         ->numeric()
                         ->disabled()
-                        ->label(__('attendance.overtime_value')),
+                        ->label(__('attendance.overtime_value'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'قيمة العمل الإضافي بمعدل 1.5× من تكلفة الدقيقة'),
                 ])->columns(3),
 
             Forms\Components\Section::make(__('attendance.gps_section'))
@@ -152,56 +162,77 @@ class AttendanceLogResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('attendance_date')
-                    ->date()
-                    ->sortable()
-                    ->label(__('attendance.date')),
+                // Module 4: Mobile-First — stacked layout for responsive design
+                Tables\Columns\Layout\Stack::make([
+                    Tables\Columns\Layout\Split::make([
+                        Tables\Columns\TextColumn::make('attendance_date')
+                            ->date()
+                            ->sortable()
+                            ->label(__('attendance.date'))
+                            ->grow(false),
 
-                Tables\Columns\TextColumn::make('user.name_ar')
-                    ->searchable()
-                    ->sortable()
-                    ->label(__('attendance.employee')),
+                        Tables\Columns\TextColumn::make('user.name_ar')
+                            ->searchable()
+                            ->sortable()
+                            ->label(__('attendance.employee'))
+                            ->weight('bold'),
 
-                Tables\Columns\TextColumn::make('branch.name_ar')
-                    ->sortable()
-                    ->label(__('attendance.branch')),
+                        Tables\Columns\BadgeColumn::make('status')
+                            ->colors([
+                                'success' => 'present',
+                                'warning' => 'late',
+                                'danger'  => 'absent',
+                                'primary' => 'on_leave',
+                                'gray'    => 'holiday',
+                            ])
+                            ->formatStateUsing(fn (string $state): string => __("attendance.status_{$state}"))
+                            ->label(__('attendance.status'))
+                            ->grow(false),
+                    ]),
 
-                Tables\Columns\TextColumn::make('check_in_at')
-                    ->dateTime('H:i')
-                    ->label(__('attendance.check_in_time')),
+                    Tables\Columns\Layout\Split::make([
+                        Tables\Columns\TextColumn::make('branch.name_ar')
+                            ->sortable()
+                            ->label(__('attendance.branch'))
+                            ->icon('heroicon-m-building-office')
+                            ->color('gray'),
 
-                Tables\Columns\TextColumn::make('check_out_at')
-                    ->dateTime('H:i')
-                    ->label(__('attendance.check_out_time')),
+                        Tables\Columns\TextColumn::make('check_in_at')
+                            ->dateTime('H:i')
+                            ->label(__('attendance.check_in_time'))
+                            ->icon('heroicon-m-arrow-left-on-rectangle')
+                            ->color('success'),
 
-                Tables\Columns\BadgeColumn::make('status')
-                    ->colors([
-                        'success' => 'present',
-                        'warning' => 'late',
-                        'danger'  => 'absent',
-                        'primary' => 'on_leave',
-                        'gray'    => 'holiday',
-                    ])
-                    ->formatStateUsing(fn (string $state): string => __("attendance.status_{$state}"))
-                    ->label(__('attendance.status')),
+                        Tables\Columns\TextColumn::make('check_out_at')
+                            ->dateTime('H:i')
+                            ->label(__('attendance.check_out_time'))
+                            ->icon('heroicon-m-arrow-right-on-rectangle')
+                            ->color('danger')
+                            ->placeholder('—'),
+                    ])->visibleFrom('md'),
+                ])->space(2),
 
+                // Desktop-only detailed columns
                 Tables\Columns\TextColumn::make('delay_minutes')
                     ->numeric()
                     ->suffix(' ' . __('attendance.min'))
                     ->color(fn (int $state): string => $state > 0 ? 'danger' : 'success')
-                    ->label(__('attendance.delay_minutes')),
+                    ->label(__('attendance.delay_minutes'))
+                    ->visibleFrom('lg'),
 
                 Tables\Columns\TextColumn::make('delay_cost')
                     ->money('SAR')
                     ->color('danger')
                     ->label(__('attendance.delay_cost'))
-                    ->summarize(Tables\Columns\Summarizers\Sum::make()->money('SAR')),
+                    ->summarize(Tables\Columns\Summarizers\Sum::make()->money('SAR'))
+                    ->visibleFrom('lg'),
 
                 Tables\Columns\TextColumn::make('overtime_value')
                     ->money('SAR')
                     ->color('success')
                     ->label(__('attendance.overtime_value'))
-                    ->summarize(Tables\Columns\Summarizers\Sum::make()->money('SAR')),
+                    ->summarize(Tables\Columns\Summarizers\Sum::make()->money('SAR'))
+                    ->visibleFrom('lg'),
 
                 Tables\Columns\TextColumn::make('cost_per_minute')
                     ->numeric(4)

@@ -65,6 +65,7 @@ class AttendanceResource extends Resource
 
                         Forms\Components\DatePicker::make('attendance_date')
                             ->label('التاريخ')
+                            ->hintIcon('heroicon-m-information-circle', tooltip: 'تاريخ يوم الحضور — يُحدد تلقائياً')
                             ->default(now())
                             ->disabled()
                             ->dehydrated()
@@ -72,6 +73,7 @@ class AttendanceResource extends Resource
 
                         Forms\Components\TimePicker::make('check_in_at')
                             ->label('وقت الحضور')
+                            ->hintIcon('heroicon-m-information-circle', tooltip: 'وقت تسجيل الدخول — يُسجل تلقائياً عند الضغط')
                             ->seconds(false)
                             ->default(now()->format('H:i'))
                             ->disabled()
@@ -92,6 +94,7 @@ class AttendanceResource extends Resource
 
                         Forms\Components\Textarea::make('notes')
                             ->label('ملاحظات')
+                            ->hintIcon('heroicon-m-information-circle', tooltip: 'أضف أي ملاحظة مثل سبب التأخير أو طلب إذن مبكر')
                             ->rows(2)
                             ->maxLength(255)
                             ->placeholder('أضف ملاحظة إن وجدت...'),
@@ -104,77 +107,92 @@ class AttendanceResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('attendance_date')
-                    ->label('التاريخ')
-                    ->date('Y-m-d')
-                    ->sortable()
-                    ->searchable(),
+                // ── Module 4: Mobile-First Stack/Split Layout ──────────
+                Tables\Columns\Layout\Split::make([
+                    Tables\Columns\Layout\Stack::make([
+                        Tables\Columns\TextColumn::make('attendance_date')
+                            ->label('التاريخ')
+                            ->date('Y-m-d')
+                            ->sortable()
+                            ->searchable()
+                            ->weight('bold')
+                            ->size('lg'),
 
-                Tables\Columns\TextColumn::make('check_in_at')
-                    ->label('وقت الحضور')
-                    ->dateTime('H:i')
-                    ->sortable()
-                    ->color('success')
-                    ->icon('heroicon-m-arrow-left-on-rectangle'),
+                        Tables\Columns\TextColumn::make('status')
+                            ->label('الحالة')
+                            ->badge()
+                            ->formatStateUsing(fn (string $state): string => match ($state) {
+                                'present'   => 'حاضر',
+                                'late'      => 'متأخر',
+                                'absent'    => 'غائب',
+                                'excused'   => 'مستأذن',
+                                'vacation'  => 'إجازة',
+                                default     => $state,
+                            })
+                            ->color(fn (string $state): string => match ($state) {
+                                'present'   => 'success',
+                                'late'      => 'warning',
+                                'absent'    => 'danger',
+                                'excused'   => 'info',
+                                'vacation'  => 'primary',
+                                default     => 'gray',
+                            }),
+                    ]),
 
-                Tables\Columns\TextColumn::make('check_out_at')
-                    ->label('وقت الانصراف')
-                    ->dateTime('H:i')
-                    ->sortable()
-                    ->color('danger')
-                    ->icon('heroicon-m-arrow-right-on-rectangle')
-                    ->placeholder('لم يُسجَّل بعد'),
+                    Tables\Columns\Layout\Stack::make([
+                        Tables\Columns\TextColumn::make('check_in_at')
+                            ->label('وقت الحضور')
+                            ->dateTime('H:i')
+                            ->sortable()
+                            ->color('success')
+                            ->icon('heroicon-m-arrow-left-on-rectangle'),
 
-                Tables\Columns\TextColumn::make('worked_minutes')
-                    ->label('ساعات العمل')
-                    ->formatStateUsing(function (?int $state): string {
-                        if ($state === null || $state <= 0) {
-                            return '—';
-                        }
-                        $hours = intdiv($state, 60);
-                        $mins = $state % 60;
-                        return sprintf('%02d:%02d', $hours, $mins);
-                    })
-                    ->badge()
-                    ->color('info'),
+                        Tables\Columns\TextColumn::make('check_out_at')
+                            ->label('وقت الانصراف')
+                            ->dateTime('H:i')
+                            ->sortable()
+                            ->color('danger')
+                            ->icon('heroicon-m-arrow-right-on-rectangle')
+                            ->placeholder('لم يُسجَّل بعد'),
+                    ]),
 
-                Tables\Columns\TextColumn::make('delay_minutes')
-                    ->label('تأخير (دقيقة)')
-                    ->formatStateUsing(fn (?int $state): string => $state > 0 ? "{$state} دقيقة" : '—')
-                    ->color(fn (?int $state): string => ($state ?? 0) > 0 ? 'danger' : 'success'),
+                    Tables\Columns\Layout\Stack::make([
+                        Tables\Columns\TextColumn::make('worked_minutes')
+                            ->label('ساعات العمل')
+                            ->formatStateUsing(function (?int $state): string {
+                                if ($state === null || $state <= 0) {
+                                    return '—';
+                                }
+                                $hours = intdiv($state, 60);
+                                $mins = $state % 60;
+                                return sprintf('%02d:%02d', $hours, $mins);
+                            })
+                            ->badge()
+                            ->color('info'),
 
-                Tables\Columns\TextColumn::make('status')
-                    ->label('الحالة')
-                    ->badge()
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
-                        'present'   => 'حاضر',
-                        'late'      => 'متأخر',
-                        'absent'    => 'غائب',
-                        'excused'   => 'مستأذن',
-                        'vacation'  => 'إجازة',
-                        default     => $state,
-                    })
-                    ->color(fn (string $state): string => match ($state) {
-                        'present'   => 'success',
-                        'late'      => 'warning',
-                        'absent'    => 'danger',
-                        'excused'   => 'info',
-                        'vacation'  => 'primary',
-                        default     => 'gray',
-                    }),
+                        Tables\Columns\TextColumn::make('delay_minutes')
+                            ->label('تأخير (دقيقة)')
+                            ->formatStateUsing(fn (?int $state): string => $state > 0 ? "{$state} دقيقة" : '—')
+                            ->color(fn (?int $state): string => ($state ?? 0) > 0 ? 'danger' : 'success'),
+                    ])->visibleFrom('md'),
+                ]),
 
-                Tables\Columns\IconColumn::make('check_in_within_geofence')
-                    ->label('داخل النطاق')
-                    ->boolean()
-                    ->trueIcon('heroicon-o-check-circle')
-                    ->falseIcon('heroicon-o-x-circle')
-                    ->trueColor('success')
-                    ->falseColor('danger'),
+                // ── Collapsible Detail Panel ──────────
+                Tables\Columns\Layout\Panel::make([
+                    Tables\Columns\Layout\Split::make([
+                        Tables\Columns\IconColumn::make('check_in_within_geofence')
+                            ->label('داخل النطاق')
+                            ->boolean()
+                            ->trueIcon('heroicon-o-check-circle')
+                            ->falseIcon('heroicon-o-x-circle')
+                            ->trueColor('success')
+                            ->falseColor('danger'),
 
-                Tables\Columns\TextColumn::make('notes')
-                    ->label('ملاحظات')
-                    ->limit(30)
-                    ->toggleable(isToggledHiddenByDefault: true),
+                        Tables\Columns\TextColumn::make('notes')
+                            ->label('ملاحظات')
+                            ->limit(50),
+                    ]),
+                ])->collapsible(),
             ])
             ->defaultSort('attendance_date', 'desc')
             ->filters([

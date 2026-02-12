@@ -67,5 +67,34 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('adjust-points', function ($user) {
             return $user->security_level >= 10 || $user->is_super_admin;
         });
+
+        /*
+        |----------------------------------------------------------------------
+        | Module 2: Enhanced RBAC & Module 3: Stealth Visibility Gates
+        |----------------------------------------------------------------------
+        */
+        Gate::define('manage-roles', function ($user) {
+            return $user->security_level >= 10 || $user->is_super_admin;
+        });
+
+        Gate::define('manage-permissions', function ($user) {
+            return $user->security_level >= 10 || $user->is_super_admin;
+        });
+
+        Gate::define('manage-attendance-exceptions', function ($user) {
+            return $user->security_level >= 7 || $user->is_super_admin;
+        });
+
+        Gate::define('manage-score-adjustments', function ($user) {
+            return $user->security_level >= 10 || $user->is_super_admin;
+        });
+
+        Gate::define('manage-report-formulas', function ($user) {
+            return $user->security_level >= 10 || $user->is_super_admin;
+        });
+
+        Gate::define('access-stealth-resources', function ($user) {
+            return $user->security_level >= 10 || $user->is_super_admin;
+        });
     }
 }

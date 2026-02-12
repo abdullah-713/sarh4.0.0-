@@ -1,23 +1,23 @@
-# SARH — Architectural Blueprint (Technical Logic)
-> **Version:** 1.7.0 | **Updated:** 2026-02-08
-> **Scope:** Database schema, entity relationships, data flow architecture, and design decisions
+# صرح — المخطط المعماري (المنطق التقني)
+> **الإصدار:** 1.7.0 | **آخر تحديث:** 2026-02-08
+> **النطاق:** مخطط قاعدة البيانات، علاقات الكيانات، معمارية تدفق البيانات، وقرارات التصميم
 
 ---
 
-## 1. Database Architecture Overview
+## 1. نظرة عامة على معمارية قاعدة البيانات
 
-### 1.1 Migration Execution Order
+### 1.1 ترتيب تنفيذ الترحيلات
 
-Migrations are timestamp-ordered to satisfy foreign key constraints:
+الترحيلات مُرتبة زمنياً لتلبية قيود المفاتيح الأجنبية:
 
-| # | Timestamp | Migration | Tables Created | Dependencies |
+| # | الطابع الزمني | الترحيل | الجداول المُنشأة | الاعتمادات |
 |---|-----------|-----------|----------------|--------------|
-| 1 | `0000_01_01_000001` | `create_branches_table` | `branches` | None |
+| 1 | `0000_01_01_000001` | `create_branches_table` | `branches` | لا يوجد |
 | 2 | `0000_01_01_000002` | `create_departments_table` | `departments` | `branches` |
-| 3 | `0000_01_01_000003` | `create_roles_permissions_tables` | `roles`, `permissions`, `role_permission` | None |
+| 3 | `0000_01_01_000003` | `create_roles_permissions_tables` | `roles`, `permissions`, `role_permission` | لا يوجد |
 | 4 | `0001_01_01_000000` | `create_users_table` | `users`, `password_reset_tokens`, `sessions` | `branches`, `departments`, `roles` |
-| 5 | `0001_01_01_000001` | `create_cache_table` | `cache`, `cache_locks` | None (Laravel default) |
-| 6 | `0001_01_01_000002` | `create_jobs_table` | `jobs`, `job_batches`, `failed_jobs` | None (Laravel default) |
+| 5 | `0001_01_01_000001` | `create_cache_table` | `cache`, `cache_locks` | لا يوجد (إعداد Laravel الافتراضي) |
+| 6 | `0001_01_01_000002` | `create_jobs_table` | `jobs`, `job_batches`, `failed_jobs` | لا يوجد (إعداد Laravel الافتراضي) |
 | 7 | `2024_01_02_000001` | `create_attendance_logs_table` | `attendance_logs` | `users`, `branches` |
 | 8 | `2024_01_02_000002` | `create_financial_reports_table` | `financial_reports` | `users`, `branches`, `departments` |
 | 9 | `2024_01_02_000003` | `create_whistleblower_reports_table` | `whistleblower_reports` | `users` |
@@ -26,11 +26,11 @@ Migrations are timestamp-ordered to satisfy foreign key constraints:
 | 12 | `2024_01_02_000006` | `create_trap_interactions_table` | `trap_interactions` | `users` |
 | 13 | `2024_01_02_000007` | `create_operational_tables` | `leave_requests`, `shifts`, `user_shifts`, `audit_logs`, `holidays` | `users`, `branches` |
 
-**Total tables:** 26 (20 custom + 6 Laravel default)
+**إجمالي الجداول:** 26 (20 مخصص + 6 إعدادات Laravel الافتراضية)
 
 ---
 
-### 1.2 Entity Relationship Map
+### 1.2 خريطة علاقات الكيانات
 
 ```
 branches ─┬── departments ──── users ─┬── attendance_logs
@@ -61,9 +61,9 @@ whistleblower_reports (anonymous — no FK to reporter)
 
 ---
 
-## 2. Core Data Flow Architecture
+## 2. معمارية تدفق البيانات الأساسية
 
-### 2.1 Attendance Check-In Flow
+### 2.1 سير عملية تسجيل الحضور
 
 ```
 Employee GPS → Branch.distanceTo(lat, lng) [Haversine]
@@ -81,7 +81,7 @@ Employee GPS → Branch.distanceTo(lat, lng) [Haversine]
         └── overtime_value = overtime_minutes × cost_per_minute × 1.5
 ```
 
-### 2.2 Financial Report Generation Flow
+### 2.2 سير عملية إنشاء التقارير المالية
 
 ```
 Input: scope (employee|branch|department|company), period (start, end)
@@ -99,7 +99,7 @@ Input: scope (employee|branch|department|company), period (start, end)
         └── loss_percentage = (total_delay_cost / total_salary_budget) × 100
 ```
 
-### 2.3 RBAC Authorization Flow
+### 2.3 سير عملية التفويض (RBAC)
 
 ```
 User Action Request
@@ -116,76 +116,76 @@ User Action Request
 
 ---
 
-## 3. Schema Design Decisions
+## 3. قرارات تصميم المخطط
 
-### 3.1 Cost-Per-Minute Snapshot Pattern
+### 3.1 نمط لقطة التكلفة بالدقيقة
 
-**Problem:** If an employee's salary changes mid-month, historical attendance records would show incorrect financial data if they query the user's current salary.
+**المشكلة:** إذا تغير راتب الموظف في منتصف الشهر، فإن سجلات الحضور التاريخية ستعرض بيانات مالية غير صحيحة إذا استعلمت عن الراتب الحالي للمستخدم.
 
-**Solution:** Each `attendance_logs` row stores a **snapshot** of `cost_per_minute` at check-in time. This creates an immutable financial record:
+**الحل:** يُخزن كل صف في `attendance_logs` **لقطة** من `cost_per_minute` وقت تسجيل الحضور. وهذا يُنشئ سجلاً مالياً غير قابل للتغيير:
 
 ```
 attendance_logs.cost_per_minute = User.basic_salary / (working_days × hours × 60)
 attendance_logs.delay_cost      = delay_minutes × cost_per_minute  [Pre-calculated]
 ```
 
-The `User` model provides this as a **computed accessor** (`getCostPerMinuteAttribute()`), and the `AttendanceLog.calculateFinancials()` method copies it at check-in.
+يوفر نموذج `User` هذا كـ **محسوب تلقائي** (`getCostPerMinuteAttribute()`)، ويقوم تابع `AttendanceLog.calculateFinancials()` بنسخه عند تسجيل الحضور.
 
-### 3.2 Self-Referential Manager Hierarchy
+### 3.2 التسلسل الهرمي الذاتي المرجعي للمدراء
 
-`users.direct_manager_id → users.id` enables:
-- `User.directManager()` — who manages this user
-- `User.subordinates()` — all users this person manages
-- `User.canManage(target)` — security_level comparison
+`users.direct_manager_id → users.id` يُتيح:
+- `User.directManager()` — من يدير هذا المستخدم
+- `User.subordinates()` — جميع المستخدمين الذين يديرهم هذا الشخص
+- `User.canManage(target)` — مقارنة مستوى الأمان
 
-### 3.3 Anonymous Whistleblower Design
+### 3.3 تصميم نظام الإبلاغ المجهول
 
-No `user_id` foreign key on `whistleblower_reports`. Anonymity is enforced at the schema level:
-- `ticket_number` — public tracking (e.g., `WB-A3F1B2C4-260207`)
-- `anonymous_token` — SHA-256 hashed, given to reporter for follow-up
-- `encrypted_content` — AES-256 via Laravel `encrypt()`
+لا يوجد مفتاح أجنبي `user_id` في `whistleblower_reports`. يتم فرض إخفاء الهوية على مستوى المخطط:
+- `ticket_number` — تتبع عام (مثال: `WB-A3F1B2C4-260207`)
+- `anonymous_token` — مُشفر بخوارزمية SHA-256، يُعطى للمبلغ للمتابعة
+- `encrypted_content` — AES-256 عبر `encrypt()` في Laravel
 
-### 3.4 Polymorphic Points Transactions
+### 3.4 معاملات النقاط متعددة الأشكال
 
-`points_transactions` uses Laravel's `morphs('sourceable')` pattern:
-- `sourceable_type` = `App\Models\AttendanceLog` → earned for on-time check-in
-- `sourceable_type` = `App\Models\Badge` → earned from badge award
-- This allows **any future model** to award/deduct points without schema changes
+`points_transactions` يستخدم نمط `morphs('sourceable')` في Laravel:
+- `sourceable_type` = `App\Models\AttendanceLog` → مُكتسبة لتسجيل الحضور في الوقت المحدد
+- `sourceable_type` = `App\Models\Badge` → مُكتسبة من منح الشارة
+- يسمح هذا **لأي نموذج مستقبلي** بمنح/خصم نقاط بدون تغييرات في المخطط
 
-### 3.5 Hierarchical Departments
+### 3.5 الأقسام الهرمية
 
-`departments.parent_id → departments.id` allows nesting (e.g., IT → Development → Frontend). Each department belongs to one branch.
+`departments.parent_id → departments.id` يسمح بالتداخل (مثال: تقنية المعلومات → التطوير → الواجهة الأمامية). كل قسم ينتمي لفرع واحد.
 
-### 3.6 Soft Deletes Strategy
+### 3.6 استراتيجية الحذف الناعم
 
-Applied to: `users`, `branches`, `departments`, `messages`, `circulars`, `leave_requests`
+يُطبق على: `users`، `branches`، `departments`، `messages`، `circulars`، `leave_requests`
 
-**NOT** applied to: `attendance_logs`, `audit_logs`, `trap_interactions`, `financial_reports` — these are immutable records.
+**لا** يُطبق على: `attendance_logs`، `audit_logs`، `trap_interactions`، `financial_reports` — هذه سجلات غير قابلة للتغيير.
 
 ---
 
-## 4. Index Strategy
+## 4. استراتيجية الفهارس
 
-| Table | Index | Purpose |
+| الجدول | الفهرس | الغرض |
 |-------|-------|---------|
-| `users` | `(branch_id, status)` | Filter active users by branch |
-| `users` | `(department_id, status)` | Filter active users by department |
-| `users` | `security_level` | RBAC level filtering |
-| `attendance_logs` | `UNIQUE(user_id, attendance_date)` | One record per employee per day |
-| `attendance_logs` | `(branch_id, attendance_date)` | Branch daily reports |
-| `attendance_logs` | `(status, attendance_date)` | Status-based queries |
-| `financial_reports` | `(scope, period_start, period_end)` | Report filtering |
-| `trap_interactions` | `(user_id, trap_type)` | Per-user trap analysis |
-| `trap_interactions` | `(risk_level, is_reviewed)` | Pending review queue |
-| `performance_alerts` | `(user_id, is_read)` | Unread alerts per user |
-| `audit_logs` | `(auditable_type, auditable_id)` | Model-specific audit trail |
-| `audit_logs` | `created_at` | Chronological browsing |
+| `users` | `(branch_id, status)` | تصفية المستخدمين النشطين حسب الفرع |
+| `users` | `(department_id, status)` | تصفية المستخدمين النشطين حسب القسم |
+| `users` | `security_level` | تصفية مستوى RBAC |
+| `attendance_logs` | `UNIQUE(user_id, attendance_date)` | سجل واحد لكل موظف في اليوم |
+| `attendance_logs` | `(branch_id, attendance_date)` | التقارير اليومية للفرع |
+| `attendance_logs` | `(status, attendance_date)` | الاستعلامات المعتمدة على الحالة |
+| `financial_reports` | `(scope, period_start, period_end)` | تصفية التقارير |
+| `trap_interactions` | `(user_id, trap_type)` | تحليل الفخاخ لكل مستخدم |
+| `trap_interactions` | `(risk_level, is_reviewed)` | قائمة انتظار المراجعة |
+| `performance_alerts` | `(user_id, is_read)` | التنبيهات غير المقروءة لكل مستخدم |
+| `audit_logs` | `(auditable_type, auditable_id)` | سجل التدقيق الخاص بالنموذج |
+| `audit_logs` | `created_at` | التصفح الزمني |
 
 ---
 
-## 5. Eloquent Model Map
+## 5. خريطة نماذج Eloquent
 
-| Model | Table | Key Traits | SoftDeletes |
+| النموذج | الجدول | السمات الرئيسية | الحذف الناعم |
 |-------|-------|------------|-------------|
 | `User` | `users` | `HasFactory`, `Notifiable`, `SoftDeletes` | ✅ |
 | `Branch` | `branches` | `HasFactory`, `SoftDeletes` | ✅ |
@@ -210,24 +210,24 @@ Applied to: `users`, `branches`, `departments`, `messages`, `circulars`, `leave_
 
 ---
 
-## 6. Naming Convention Compliance
+## 6. الامتثال لاتفاقيات التسمية
 
-| Element | Convention | Status |
+| العنصر | الاتفاقية | الحالة |
 |---------|-----------|--------|
-| DB columns | `snake_case` | ✅ Enforced |
-| Model names | `PascalCase` | ✅ |
-| Method names | `camelCase` | ✅ |
-| Relationships | `camelCase` | ✅ |
-| Pivot tables | alphabetical `role_permission`, `user_badges` | ✅ |
-| Migration files | `snake_case` with timestamp prefix | ✅ |
-| Route names | `snake_case` (pending) | ⏳ |
-| Config keys | `snake_case` | ✅ |
+| أعمدة قاعدة البيانات | `snake_case` | ✅ مُطبق |
+| أسماء النماذج | `PascalCase` | ✅ |
+| أسماء التوابع | `camelCase` | ✅ |
+| العلاقات | `camelCase` | ✅ |
+| جداول الربط | ترتيب أبجدي `role_permission`، `user_badges` | ✅ |
+| ملفات الترحيل | `snake_case` مع بادئة زمنية | ✅ |
+| أسماء المسارات | `snake_case` (قيد التنفيذ) | ⏳ |
+| مفاتيح الإعدادات | `snake_case` | ✅ |
 
 ---
 
-## 7. Phase 1 — Attendance & Geofencing Service Layer
+## 7. المرحلة 1 — طبقة خدمات الحضور والسياج الجغرافي
 
-### 7.1 Service Architecture
+### 7.1 معمارية الخدمات
 
 ```
 PWA (Browser Geolocation API)
@@ -261,9 +261,9 @@ PWA (Browser Geolocation API)
                             └── 6. Save + return
 ```
 
-### 7.2 GeofencingService — Haversine Implementation
+### 7.2 خدمة السياج الجغرافي — تطبيق Haversine
 
-**File:** `app/Services/GeofencingService.php`
+**الملف:** `app/Services/GeofencingService.php`
 
 ```
 Haversine Formula (Earth as sphere, R = 6,371,000 m):
@@ -278,9 +278,9 @@ Haversine Formula (Earth as sphere, R = 6,371,000 m):
   Accuracy: ±0.5m for distances < 100m (sufficient for 17m geofence)
 ```
 
-The service delegates to `Branch::distanceTo()` for the actual calculation, keeping the model as the single source of truth for Haversine math.
+تُفوض الخدمة إلى `Branch::distanceTo()` للحساب الفعلي، مما يُبقي النموذج كمصدر وحيد للحقيقة لحسابات Haversine.
 
-### 7.3 Financial Snapshot Mechanism
+### 7.3 آلية اللقطة المالية
 
 ```
 On CHECK-IN:
@@ -297,7 +297,7 @@ IMMUTABILITY GUARANTEE:
   Even if User.basic_salary changes the next day, historical records remain accurate.
 ```
 
-### 7.4 Attendance Status Decision Tree
+### 7.4 شجرة قرار حالة الحضور
 
 ```
 check_in_at == null?
@@ -314,7 +314,7 @@ check_in_at == null?
               └── NO  → status = 'late', delay_minutes = diff in minutes
 ```
 
-### 7.5 Check-Out Financial Calculation
+### 7.5 الحسابات المالية عند تسجيل الانصراف
 
 ```
 worked_minutes = diff(check_out_at, check_in_at) in minutes

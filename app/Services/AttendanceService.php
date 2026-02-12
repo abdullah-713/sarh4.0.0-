@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Exceptions\OutOfGeofenceException;
+use App\Models\AttendanceException;
 use App\Models\AttendanceLog;
 use App\Models\User;
 use Carbon\Carbon;
@@ -35,17 +36,25 @@ class AttendanceService
             throw new \RuntimeException(__('attendance.no_branch_assigned'));
         }
 
-        // 2 — Geofence validation (Level 10 bypasses)
+        // 2 — Geofence validation (Level 10 bypasses + Exception Engine)
         $geo = $this->geofencing->validatePosition($branch, $lat, $lng);
+        $exception = AttendanceException::getActiveForUser($user->id);
 
-        if (!$geo['within_geofence'] && !Gate::forUser($user)->allows('bypass-geofence')) {
+        $geofenceBypassed = Gate::forUser($user)->allows('bypass-geofence')
+                         || ($exception && $exception->bypass_geofence);
+
+        if (!$geo['within_geofence'] && !$geofenceBypassed) {
             throw new OutOfGeofenceException($geo['distance_meters'], $branch->geofence_radius);
         }
 
-        // 3 — Resolve shift (user-specific or branch default)
+        // 3 — Resolve shift (exception override → user-specific → branch default)
         $shift      = $user->currentShift();
-        $shiftStart = $shift?->start_time ?? $branch->default_shift_start;
-        $grace      = $shift?->grace_period_minutes ?? $branch->grace_period_minutes ?? 5;
+        $shiftStart = $exception?->getEffectiveShiftStart()
+                    ?? $shift?->start_time
+                    ?? $branch->default_shift_start;
+        $grace      = $exception?->getEffectiveGracePeriod()
+                    ?? $shift?->grace_period_minutes
+                    ?? $branch->grace_period_minutes ?? 5;
 
         // 4 — Create the attendance log
         $now = Carbon::now();
@@ -57,13 +66,20 @@ class AttendanceService
             'check_in_latitude'        => $lat,
             'check_in_longitude'       => $lng,
             'check_in_distance_meters' => $geo['distance_meters'],
-            'check_in_within_geofence' => $geo['within_geofence'] || Gate::forUser($user)->allows('bypass-geofence'),
+            'check_in_within_geofence' => $geo['within_geofence'] || $geofenceBypassed,
             'check_in_ip'              => $ip,
             'check_in_device'          => $device,
         ]);
 
         // 5 — Evaluate attendance status (present / late / absent)
+        // If exception has bypass_late_flag, force 'present' status
         $log->evaluateAttendance($shiftStart, $grace);
+
+        if ($exception && $exception->bypass_late_flag && $log->status === 'late') {
+            $log->status = 'present';
+            $log->delay_minutes = 0;
+            $log->notes = ($log->notes ? $log->notes . ' | ' : '') . 'استثناء حضور نشط: ' . $exception->exception_type;
+        }
 
         // 6 — Snapshot the financial data (cost_per_minute is FROZEN here)
         $log->calculateFinancials();

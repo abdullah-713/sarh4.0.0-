@@ -75,10 +75,12 @@ class TrapResource extends Resource
                         ->hintIcon('heroicon-m-information-circle', tooltip: 'كود فريد يُميّز المصيدة في النظام'),
 
                     Forms\Components\Textarea::make('description_ar')
-                        ->label(__('traps.description_ar')),
+                        ->label(__('traps.description_ar'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'وصف المصيدة بالعربية'),
 
                     Forms\Components\Textarea::make('description_en')
-                        ->label(__('traps.description_en')),
+                        ->label(__('traps.description_en'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'وصف المصيدة بالإنجليزية'),
                 ])->columns(2),
 
             Forms\Components\Section::make(__('traps.risk_config'))
@@ -105,7 +107,8 @@ class TrapResource extends Resource
 
                     Forms\Components\Toggle::make('is_active')
                         ->default(true)
-                        ->label(__('traps.is_active')),
+                        ->label(__('traps.is_active'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'هل المصيدة نشطة حالياً'),
                 ])->columns(3),
         ]);
     }

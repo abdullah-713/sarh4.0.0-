@@ -61,7 +61,8 @@ class ScoreAdjustmentResource extends Resource
                         ])
                         ->required()
                         ->live()
-                        ->native(false),
+                        ->native(false)
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'حدد ما إذا كان التعديل على فرع أو موظف أو قسم'),
 
                     Forms\Components\Select::make('branch_id')
                         ->label('الفرع')
@@ -69,7 +70,8 @@ class ScoreAdjustmentResource extends Resource
                         ->searchable()
                         ->preload()
                         ->visible(fn (Forms\Get $get) => $get('scope') === 'branch')
-                        ->required(fn (Forms\Get $get) => $get('scope') === 'branch'),
+                        ->required(fn (Forms\Get $get) => $get('scope') === 'branch')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الفرع الذي سيُطبَّق عليه التعديل'),
 
                     Forms\Components\Select::make('user_id')
                         ->label('الموظف')
@@ -77,7 +79,8 @@ class ScoreAdjustmentResource extends Resource
                         ->searchable()
                         ->preload()
                         ->visible(fn (Forms\Get $get) => $get('scope') === 'user')
-                        ->required(fn (Forms\Get $get) => $get('scope') === 'user'),
+                        ->required(fn (Forms\Get $get) => $get('scope') === 'user')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الموظف الذي سيُطبَّق عليه التعديل'),
 
                     Forms\Components\Select::make('department_id')
                         ->label('القسم')
@@ -85,7 +88,8 @@ class ScoreAdjustmentResource extends Resource
                         ->searchable()
                         ->preload()
                         ->visible(fn (Forms\Get $get) => $get('scope') === 'department')
-                        ->required(fn (Forms\Get $get) => $get('scope') === 'department'),
+                        ->required(fn (Forms\Get $get) => $get('scope') === 'department')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'القسم الذي سيُطبَّق عليه التعديل'),
                 ])->columns(2),
 
             Forms\Components\Section::make('التعديل')
@@ -114,14 +118,16 @@ class ScoreAdjustmentResource extends Resource
                             'correction' => 'تصحيح',
                         ])
                         ->default('manual')
-                        ->required(),
+                        ->required()
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'نوع التعديل: يدوي أو مكافأة أو خصم أو تصحيح'),
 
                     Forms\Components\Textarea::make('reason')
                         ->label('السبب')
                         ->required()
                         ->rows(3)
                         ->maxLength(500)
-                        ->columnSpanFull(),
+                        ->columnSpanFull()
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'سبب إجراء هذا التعديل — مطلوب للتوثيق'),
 
                     Forms\Components\Hidden::make('adjusted_by')
                         ->default(fn () => auth()->id()),

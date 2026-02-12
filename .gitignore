@@ -1,18 +1,20 @@
 # ── SARH v1.9.0 Security-Hardened .gitignore ──
+# Strictly excludes credentials, dependencies, and sensitive keys.
 
-# Dependencies
-/vendor
-/node_modules
+# Dependencies (NEVER commit)
+/vendor/
+/node_modules/
 
-# Environment & Credentials
+# Environment & Credentials (NEVER commit)
 .env
-.env.backup
-.env.production
-.env.staging
+.env.*
+!.env.example
 /auth.json
 /storage/*.key
 *.pem
 *.key
+*.p12
+*.pfx
 
 # Laravel Generated
 /public/hot
@@ -33,6 +35,8 @@
 /.zed
 .DS_Store
 Thumbs.db
+*.swp
+*.swo
 
 # Misc
 Homestead.json

@@ -78,6 +78,7 @@ class BranchResource extends Resource
                     Forms\Components\Toggle::make('is_active')
                         ->label(__('branches.is_active'))
                         ->default(true)
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'عند إيقافه لن يظهر الفرع في قوائم الاختيار')
                         ->helperText('عند إيقافه لن يظهر الفرع في قوائم الاختيار'),
                 ])->columns(2),
 
@@ -157,16 +158,20 @@ class BranchResource extends Resource
                 ->collapsed()
                 ->schema([
                     Forms\Components\Textarea::make('address_ar')
-                        ->label(__('branches.address_ar')),
+                        ->label(__('branches.address_ar'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'العنوان الكامل للفرع باللغة العربية'),
 
                     Forms\Components\Textarea::make('address_en')
-                        ->label(__('branches.address_en')),
+                        ->label(__('branches.address_en'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'العنوان بالإنجليزية للتقارير الرسمية'),
 
                     Forms\Components\TextInput::make('city_ar')
-                        ->label(__('branches.city_ar')),
+                        ->label(__('branches.city_ar'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'اسم المدينة بالعربية'),
 
                     Forms\Components\TextInput::make('city_en')
-                        ->label(__('branches.city_en')),
+                        ->label(__('branches.city_en'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'اسم المدينة بالإنجليزية'),
                 ])->columns(2),
 
             // ── Section 5: Financial (Optional) ───────────────────
@@ -178,14 +183,16 @@ class BranchResource extends Resource
                         ->label(__('branches.salary_budget'))
                         ->numeric()
                         ->default(0)
-                        ->prefix(__('branches.currency_sar')),
+                        ->prefix(__('branches.currency_sar'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'إجمالي ميزانية الرواتب الشهرية للفرع'),
 
                     Forms\Components\TextInput::make('monthly_delay_losses')
                         ->label(__('branches.delay_losses'))
                         ->numeric()
                         ->default(0)
                         ->prefix(__('branches.currency_sar'))
-                        ->disabled(),
+                        ->disabled()
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'إجمالي الخسائر المالية من تأخيرات الموظفين'),
                 ])->columns(2),
         ]);
     }

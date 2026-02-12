@@ -2,7 +2,7 @@
 ###############################################################################
 # SARH AL-ITQAN Enterprise v1.9.0 — Production Deployment Script
 # Target: Hostinger Shared Hosting (sarh.online)
-# PHP: /usr/local/bin/php8.3
+# PHP: php (Version 8.3 verified)
 # Project: /home/u850419603/sarh/
 # Public:  ~/domains/sarh.online/public_html/
 ###############################################################################
@@ -10,7 +10,7 @@
 set -euo pipefail
 
 # ── Configuration ────────────────────────────────────────────────────────────
-PHP="/usr/local/bin/php8.3"
+PHP="php"
 PROJECT="/home/u850419603/sarh"
 PUBLIC_HTML="$HOME/domains/sarh.online/public_html"
 ARTISAN="$PHP $PROJECT/artisan"

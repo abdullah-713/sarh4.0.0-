@@ -74,11 +74,13 @@ class ReportFormulaResource extends Resource
                         ->required()
                         ->unique(ignoreRecord: true)
                         ->maxLength(100)
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'معرّف فريد يُستخدم للإشارة لهذه الصيغة')
                         ->helperText('مثال: performance-score, branch-rating'),
 
                     Forms\Components\Toggle::make('is_active')
                         ->label('مفعّلة')
-                        ->default(true),
+                        ->default(true)
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'هل هذه الصيغة نشطة ومتاحة للاستخدام'),
                 ])->columns(2),
 
             Forms\Components\Section::make('الصيغة الحسابية')
@@ -89,6 +91,7 @@ class ReportFormulaResource extends Resource
                         ->required()
                         ->rows(3)
                         ->placeholder('(attendance * 0.4) + (on_time_rate * 0.3) + (total_points * 0.003)')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'اكتب الصيغة الحسابية باستخدام المتغيرات المتاحة')
                         ->helperText('العمليات المدعومة: + - * / () — استخدم أسماء المتغيرات من القائمة أدناه')
                         ->columnSpanFull(),
 
@@ -116,11 +119,13 @@ class ReportFormulaResource extends Resource
                 ->schema([
                     Forms\Components\Textarea::make('description_ar')
                         ->label('الوصف بالعربية')
-                        ->rows(2),
+                        ->rows(2)
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'وصف مختصر لهذه الصيغة بالعربية'),
 
                     Forms\Components\Textarea::make('description_en')
                         ->label('الوصف بالإنجليزية')
-                        ->rows(2),
+                        ->rows(2)
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'وصف مختصر لهذه الصيغة بالإنجليزية'),
                 ])->columns(2),
 
             Forms\Components\Hidden::make('created_by')

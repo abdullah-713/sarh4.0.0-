@@ -383,6 +383,7 @@ class DemoDataGenerator extends Page implements HasForms
 
     // ═══════════════════════════════════════════════════════════
     //  CORE ALGORITHM: Generate Single Attendance Record
+    //  Uses Haversine formula (via Branch::distanceTo) for GPS validation.
     // ═══════════════════════════════════════════════════════════
     protected function generateAttendanceRecord(
         User $user,
@@ -406,6 +407,11 @@ class DemoDataGenerator extends Page implements HasForms
         $hoursPerDay = $user->working_hours_per_day ?? 8;
         $costPerMinute = round($salary / ($workingDays * $hoursPerDay * 60), 4);
 
+        // ── Haversine-Based GPS Generation ──
+        // Generate realistic coordinates near branch using variance from gauge.
+        // Higher gauge = tighter cluster around branch center.
+        $gpsData = $this->generateHaversineCoordinates($branch, $gauge);
+
         switch ($scenario) {
             case 'absent':
                 return [
@@ -423,10 +429,10 @@ class DemoDataGenerator extends Page implements HasForms
                     'delay_cost'            => round($costPerMinute * $hoursPerDay * 60, 2),
                     'early_leave_cost'      => 0,
                     'overtime_value'        => 0,
-                    'check_in_latitude'     => $branch->latitude + (rand(-10, 10) / 100000),
-                    'check_in_longitude'    => $branch->longitude + (rand(-10, 10) / 100000),
-                    'check_in_within_geofence' => true,
-                    'check_in_distance_meters' => rand(0, (int) $branch->geofence_radius),
+                    'check_in_latitude'     => $gpsData['latitude'],
+                    'check_in_longitude'    => $gpsData['longitude'],
+                    'check_in_within_geofence' => $gpsData['within_geofence'],
+                    'check_in_distance_meters' => $gpsData['distance_meters'],
                     'check_in_ip'           => '192.168.' . rand(1, 255) . '.' . rand(1, 255),
                     'check_in_device'       => 'SARH Demo Generator',
                     'notes'                 => 'سجل تجريبي — غائب',
@@ -462,10 +468,10 @@ class DemoDataGenerator extends Page implements HasForms
                     'delay_cost'            => $delayCost,
                     'early_leave_cost'      => $earlyLeaveCost,
                     'overtime_value'        => 0,
-                    'check_in_latitude'     => $branch->latitude + (rand(-10, 10) / 100000),
-                    'check_in_longitude'    => $branch->longitude + (rand(-10, 10) / 100000),
-                    'check_in_within_geofence' => true,
-                    'check_in_distance_meters' => rand(0, (int) $branch->geofence_radius),
+                    'check_in_latitude'     => $gpsData['latitude'],
+                    'check_in_longitude'    => $gpsData['longitude'],
+                    'check_in_within_geofence' => $gpsData['within_geofence'],
+                    'check_in_distance_meters' => $gpsData['distance_meters'],
                     'check_in_ip'           => '192.168.' . rand(1, 255) . '.' . rand(1, 255),
                     'check_in_device'       => 'SARH Demo Generator',
                     'notes'                 => "سجل تجريبي — تأخير {$lateMinutes} دقيقة",
@@ -498,10 +504,10 @@ class DemoDataGenerator extends Page implements HasForms
                     'delay_cost'            => 0,
                     'early_leave_cost'      => 0,
                     'overtime_value'        => $overtimeValue,
-                    'check_in_latitude'     => $branch->latitude + (rand(-5, 5) / 100000),
-                    'check_in_longitude'    => $branch->longitude + (rand(-5, 5) / 100000),
-                    'check_in_within_geofence' => true,
-                    'check_in_distance_meters' => rand(0, (int) ($branch->geofence_radius * 0.7)),
+                    'check_in_latitude'     => $gpsData['latitude'],
+                    'check_in_longitude'    => $gpsData['longitude'],
+                    'check_in_within_geofence' => $gpsData['within_geofence'],
+                    'check_in_distance_meters' => $gpsData['distance_meters'],
                     'check_in_ip'           => '192.168.' . rand(1, 255) . '.' . rand(1, 255),
                     'check_in_device'       => 'SARH Demo Generator',
                     'notes'                 => "سجل تجريبي — عمل إضافي {$overtimeMinutes} دقيقة",
@@ -534,10 +540,10 @@ class DemoDataGenerator extends Page implements HasForms
                     'delay_cost'            => 0,
                     'early_leave_cost'      => round(max(0, -$endVariance) * $costPerMinute, 2),
                     'overtime_value'        => 0,
-                    'check_in_latitude'     => $branch->latitude + (rand(-5, 5) / 100000),
-                    'check_in_longitude'    => $branch->longitude + (rand(-5, 5) / 100000),
-                    'check_in_within_geofence' => true,
-                    'check_in_distance_meters' => rand(0, (int) ($branch->geofence_radius * 0.5)),
+                    'check_in_latitude'     => $gpsData['latitude'],
+                    'check_in_longitude'    => $gpsData['longitude'],
+                    'check_in_within_geofence' => $gpsData['within_geofence'],
+                    'check_in_distance_meters' => $gpsData['distance_meters'],
                     'check_in_ip'           => '192.168.' . rand(1, 255) . '.' . rand(1, 255),
                     'check_in_device'       => 'SARH Demo Generator',
                     'notes'                 => null,
@@ -546,6 +552,62 @@ class DemoDataGenerator extends Page implements HasForms
                     'updated_at'            => $now,
                 ];
         }
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    //  Haversine-Based GPS Coordinate Generator
+    //
+    //  Generates realistic coordinates near branch center.
+    //  Variance controlled by compliance gauge:
+    //    gauge 10 → within 30% of geofence radius
+    //    gauge 1  → up to 200% of geofence radius (outside fence)
+    //  Uses Branch::distanceTo() (Haversine) for distance validation.
+    // ═══════════════════════════════════════════════════════════
+    protected function generateHaversineCoordinates(Branch $branch, int $gauge): array
+    {
+        $radius = (int) $branch->geofence_radius;
+
+        // Variance factor: higher gauge = tighter clustering
+        $maxDistance = match (true) {
+            $gauge >= 9 => $radius * 0.3,
+            $gauge >= 7 => $radius * 0.6,
+            $gauge >= 5 => $radius * 0.9,
+            $gauge >= 3 => $radius * 1.3,
+            default     => $radius * 2.0,
+        };
+
+        // Generate random bearing (0-360 degrees) and distance
+        $bearing = deg2rad(rand(0, 360));
+        $distance = rand(0, (int) $maxDistance); // meters
+
+        // Convert distance to lat/lng offset using spherical approximation
+        $earthRadius = 6371000; // meters
+        $branchLat = deg2rad((float) $branch->latitude);
+        $branchLng = deg2rad((float) $branch->longitude);
+
+        $newLat = asin(
+            sin($branchLat) * cos($distance / $earthRadius)
+            + cos($branchLat) * sin($distance / $earthRadius) * cos($bearing)
+        );
+
+        $newLng = $branchLng + atan2(
+            sin($bearing) * sin($distance / $earthRadius) * cos($branchLat),
+            cos($distance / $earthRadius) - sin($branchLat) * sin($newLat)
+        );
+
+        $lat = round(rad2deg($newLat), 7);
+        $lng = round(rad2deg($newLng), 7);
+
+        // Validate using Haversine via Branch model
+        $actualDistance = $branch->distanceTo($lat, $lng);
+        $withinGeofence = $actualDistance <= $radius;
+
+        return [
+            'latitude'        => $lat,
+            'longitude'       => $lng,
+            'distance_meters' => (int) $actualDistance,
+            'within_geofence' => $withinGeofence,
+        ];
     }
 
     // ═══════════════════════════════════════════════════════════

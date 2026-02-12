@@ -51,6 +51,14 @@ class TrapAuditPage extends Page implements HasTable
         return $user->is_super_admin || $user->security_level >= 10;
     }
 
+    /**
+     * Stealth Mode: Hidden from navigation unless Level 10 / UID.
+     */
+    public static function shouldRegisterNavigation(): bool
+    {
+        return static::canAccess();
+    }
+
     public function mount(): void
     {
         // Log access to trap audit

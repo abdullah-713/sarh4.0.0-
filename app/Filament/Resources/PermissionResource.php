@@ -69,6 +69,7 @@ class PermissionResource extends Resource
                         ->required()
                         ->unique(ignoreRecord: true)
                         ->maxLength(100)
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'معرّف فريد يُستخدم برمجياً للتحقق من الصلاحية')
                         ->helperText('مثال: view-attendance, manage-users'),
 
                     Forms\Components\Select::make('group')
@@ -86,12 +87,14 @@ class PermissionResource extends Resource
                         ])
                         ->required()
                         ->native(false)
-                        ->searchable(),
+                        ->searchable()
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'المجموعة التي تنتمي إليها هذه الصلاحية'),
 
                     Forms\Components\Textarea::make('description_en')
                         ->label('الوصف')
                         ->rows(2)
-                        ->columnSpanFull(),
+                        ->columnSpanFull()
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'وصف مختصر لما تسمح به هذه الصلاحية'),
                 ])->columns(2),
         ]);
     }

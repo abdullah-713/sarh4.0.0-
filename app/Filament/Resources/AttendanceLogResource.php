@@ -100,7 +100,8 @@ class AttendanceLogResource extends Resource
                             'half_day' => __('attendance.status_half_day'),
                         ])
                         ->required()
-                        ->label(__('attendance.status')),
+                        ->label(__('attendance.status'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'حالة الحضور للموظف في هذا اليوم'),
                 ])->columns(3),
 
             Forms\Components\Section::make(__('attendance.financial_section'))
@@ -142,19 +143,23 @@ class AttendanceLogResource extends Resource
                         ->numeric()
                         ->disabled()
                         ->suffix(__('attendance.meters'))
-                        ->label(__('attendance.check_in_distance')),
+                        ->label(__('attendance.check_in_distance'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'المسافة بين موقع الموظف ومقر الفرع عند التسجيل'),
 
                     Forms\Components\Toggle::make('check_in_within_geofence')
                         ->disabled()
-                        ->label(__('attendance.within_geofence')),
+                        ->label(__('attendance.within_geofence'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'هل كان الموظف داخل النطاق الجغرافي المسموح'),
 
                     Forms\Components\Toggle::make('is_manual_entry')
-                        ->label(__('attendance.manual_entry')),
+                        ->label(__('attendance.manual_entry'))
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'هل تم إدخال السجل يدوياً بواسطة الإدارة'),
                 ])->columns(3),
 
             Forms\Components\Textarea::make('notes')
                 ->label(__('attendance.notes'))
-                ->columnSpanFull(),
+                ->columnSpanFull()
+                ->hintIcon('heroicon-m-information-circle', tooltip: 'ملاحظات إضافية حول سجل الحضور'),
         ]);
     }
 

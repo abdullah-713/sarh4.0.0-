@@ -74,6 +74,7 @@ class UserResource extends Resource
                         ->maxSize(2048)
                         ->required()
                         ->columnSpanFull()
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'صورة شخصية واضحة للموظف — تظهر في جميع الأقسام')
                         ->helperText('صورة شخصية واضحة للموظف — تظهر في جميع الأقسام'),
                 ]),
 
@@ -108,7 +109,8 @@ class UserResource extends Resource
                         ->dehydrateStateUsing(fn (string $state): string => Hash::make($state))
                         ->dehydrated(fn (?string $state): bool => filled($state))
                         ->required(fn (string $operation): bool => $operation === 'create')
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'كلمة المرور لتسجيل الدخول — يجب ألا تقل عن 8 أحرف'),
                 ])->columns(2),
 
             // ── Section 3: Financial (Basic Salary — Core for cost-per-minute) ──
@@ -155,33 +157,39 @@ class UserResource extends Resource
                         ->label(__('users.branch'))
                         ->relationship('branch', 'name_ar')
                         ->searchable()
-                        ->preload(),
+                        ->preload()
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الفرع الذي يتبع له الموظف'),
 
                     Forms\Components\Select::make('department_id')
                         ->label(__('users.department'))
                         ->relationship('department', 'name_ar')
                         ->searchable()
-                        ->preload(),
+                        ->preload()
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'القسم الذي يعمل فيه الموظف'),
 
                     Forms\Components\Select::make('role_id')
                         ->label(__('users.role'))
                         ->relationship('role', 'name_ar')
                         ->searchable()
-                        ->preload(),
+                        ->preload()
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الدور الوظيفي الذي يحدد صلاحيات الموظف'),
 
                     Forms\Components\Select::make('direct_manager_id')
                         ->label(__('users.direct_manager'))
                         ->relationship('directManager', 'name_ar')
                         ->searchable()
-                        ->preload(),
+                        ->preload()
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'المدير المباشر المسؤول عن هذا الموظف'),
 
                     Forms\Components\TextInput::make('phone')
                         ->label(__('users.phone'))
-                        ->tel(),
+                        ->tel()
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'رقم الجوال للتواصل مع الموظف'),
 
                     Forms\Components\TextInput::make('employee_id')
                         ->label(__('users.employee_id'))
-                        ->unique(ignoreRecord: true),
+                        ->unique(ignoreRecord: true)
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الرقم الوظيفي الفريد للموظف في النظام'),
 
                     Forms\Components\Select::make('status')
                         ->label(__('users.status'))
@@ -191,7 +199,8 @@ class UserResource extends Resource
                             'terminated' => __('users.status_terminated'),
                             'on_leave'   => __('users.status_on_leave'),
                         ])
-                        ->default('active'),
+                        ->default('active')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'حالة الموظف الحالية — تؤثر على إمكانية الدخول للنظام'),
 
                     Forms\Components\Select::make('employment_type')
                         ->label(__('users.employment_type'))
@@ -201,7 +210,8 @@ class UserResource extends Resource
                             'contract'  => __('users.type_contract'),
                             'intern'    => __('users.type_intern'),
                         ])
-                        ->default('full_time'),
+                        ->default('full_time')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'نوع العقد الوظيفي — يحدد سياسات الدوام والإجازات'),
                 ])->columns(2),
 
             // ── Hidden/Auto Defaults ──────────────────────────────

@@ -79,6 +79,7 @@ class RoleResource extends Resource
                         ->required()
                         ->unique(ignoreRecord: true)
                         ->maxLength(100)
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'معرّف فريد يُستخدم برمجياً للتحقق من الدور')
                         ->helperText('معرّف فريد مثل: hr-manager, branch-admin'),
 
                     Forms\Components\Select::make('level')
@@ -103,15 +104,18 @@ class RoleResource extends Resource
 
                     Forms\Components\Textarea::make('description_ar')
                         ->label('الوصف بالعربية')
-                        ->rows(2),
+                        ->rows(2)
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'وصف مختصر لهذا الدور بالعربية'),
 
                     Forms\Components\Textarea::make('description_en')
                         ->label('الوصف بالإنجليزية')
-                        ->rows(2),
+                        ->rows(2)
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'وصف مختصر لهذا الدور بالإنجليزية'),
 
                     Forms\Components\Toggle::make('is_system')
                         ->label('دور نظامي (لا يمكن حذفه)')
-                        ->disabled(fn (?Role $record) => $record?->is_system ?? false),
+                        ->disabled(fn (?Role $record) => $record?->is_system ?? false)
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الأدوار النظامية لا يمكن حذفها لضمان استقرار النظام'),
                 ])->columns(2),
 
             // ── Permission Matrix ──
@@ -124,6 +128,7 @@ class RoleResource extends Resource
                         ->columns(3)
                         ->bulkToggleable()
                         ->searchable()
+                        ->hintIcon('heroicon-m-information-circle', tooltip: 'اختر الصلاحيات الممنوحة لهذا الدور')
                         ->descriptions(
                             Permission::all()->pluck('description_en', 'id')->toArray()
                         ),

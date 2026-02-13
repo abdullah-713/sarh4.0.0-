@@ -18,36 +18,42 @@ class EfficiencyScoreCardWidget extends Widget
 
     protected static ?int $sort = 4;
 
+    protected static ?string $pollingInterval = '60s';
+
     protected function getViewData(): array
     {
-        [$startDate, $endDate] = $this->getFilterDates();
+        try {
+            [$startDate, $endDate] = $this->getFilterDates();
 
-        $service  = app(AnalyticsService::class);
-        $branches = Branch::where('is_active', true)->get();
-        $scores   = [];
+            $service  = app(AnalyticsService::class);
+            $branches = Branch::where('is_active', true)->get();
+            $scores   = [];
 
-        foreach ($branches as $branch) {
-            $efficiency = $service->calculateEfficiencyScore(
-                $branch,
-                $startDate,
-                $endDate
-            );
+            foreach ($branches as $branch) {
+                $efficiency = $service->calculateEfficiencyScore(
+                    $branch,
+                    $startDate,
+                    $endDate
+                );
 
-            $vpm = $service->calculateVPM($branch);
-            $gap = $service->calculateProductivityGap($branch, $endDate);
+                $vpm = $service->calculateVPM($branch);
+                $gap = $service->calculateProductivityGap($branch, $endDate);
 
-            $scores[] = [
-                'id'         => $branch->id,
-                'name'       => $branch->name_ar,
-                'efficiency' => round($efficiency, 1),
-                'vpm'        => round($vpm, 4),
-                'gap'        => round($gap, 1),
-                'target'     => (float) ($branch->target_attendance_rate ?? 95),
-                'budget'     => (float) ($branch->monthly_salary_budget ?? 0),
-            ];
+                $scores[] = [
+                    'id'         => $branch->id,
+                    'name'       => $branch->name_ar,
+                    'efficiency' => round($efficiency, 1),
+                    'vpm'        => round($vpm, 4),
+                    'gap'        => round($gap, 1),
+                    'target'     => (float) ($branch->target_attendance_rate ?? 95),
+                    'budget'     => (float) ($branch->monthly_salary_budget ?? 0),
+                ];
+            }
+
+            usort($scores, fn ($a, $b) => $b['efficiency'] <=> $a['efficiency']);
+        } catch (\Throwable $e) {
+            $scores = [];
         }
-
-        usort($scores, fn ($a, $b) => $b['efficiency'] <=> $a['efficiency']);
 
         return [
             'scores'      => $scores,

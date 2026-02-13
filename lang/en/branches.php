@@ -49,4 +49,26 @@ return [
     'currency_sar'           => 'SAR',
     'meters'                 => 'meters',
     'minutes'                => 'minutes',
+
+    // Financial Summary Section
+    'financial_summary_section'       => 'Financial & Operational Summary',
+    'financial_summary_description'   => 'Auto-calculated indicators from employee and salary data — read-only',
+    'active_employees_count'          => 'Active Employees',
+    'active_employees_count_hint'     => 'Number of currently active employees in this branch — calculated automatically.',
+    'employee_unit'                   => 'employees',
+    'total_salaries_sum'              => 'Total Basic Salaries',
+    'total_salaries_sum_hint'         => 'Sum of basic salaries for all active employees — used as a reference for budget.',
+    'branch_vpm'                      => 'Value Per Minute (VPM)',
+    'branch_vpm_hint'                 => 'Cost per minute = Budget ÷ (employees × working days × shift hours × 60). Each minute of delay costs the branch this amount.',
+    'minute_unit'                     => 'min',
+    'monthly_loss_rate'               => 'Loss Rate vs Budget',
+    'monthly_loss_rate_hint'          => 'Monthly delay losses as a percentage of salary budget — higher means more waste.',
+
+    // Bulk Actions
+    'bulk_update_geofence'            => 'Bulk Update Geofence',
+    'bulk_geofence_updated'           => 'Geofence Updated',
+    'bulk_geofence_updated_body'      => 'Geofence radius updated for :count branches.',
+    'bulk_change_shift'               => 'Bulk Change Shift',
+    'bulk_shift_updated'              => 'Shift Updated',
+    'bulk_shift_updated_body'         => 'Shift times updated for :count branches.',
 ];

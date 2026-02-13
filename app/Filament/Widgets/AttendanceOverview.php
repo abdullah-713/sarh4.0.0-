@@ -14,21 +14,29 @@ class AttendanceOverview extends BaseWidget
 
     protected static ?int $sort = 1;
 
+    protected static ?string $pollingInterval = '60s';
+
     protected function getStats(): array
     {
-        [$startDate, $endDate] = $this->getFilterDates();
+        try {
+            [$startDate, $endDate] = $this->getFilterDates();
 
-        $logs = AttendanceLog::whereBetween('attendance_date', [
-            $startDate->toDateString(),
-            $endDate->toDateString(),
-        ]);
+            $logs = AttendanceLog::whereBetween('attendance_date', [
+                $startDate->toDateString(),
+                $endDate->toDateString(),
+            ]);
 
-        $totalEmployees   = (clone $logs)->count();
-        $presentCount     = (clone $logs)->where('status', 'present')->count();
-        $lateCount        = (clone $logs)->where('status', 'late')->count();
-        $absentCount      = (clone $logs)->where('status', 'absent')->count();
-        $totalDelayCost   = (clone $logs)->sum('delay_cost');
-        $totalOvertimeVal = (clone $logs)->sum('overtime_value');
+            $totalEmployees   = (clone $logs)->count();
+            $presentCount     = (clone $logs)->where('status', 'present')->count();
+            $lateCount        = (clone $logs)->where('status', 'late')->count();
+            $absentCount      = (clone $logs)->where('status', 'absent')->count();
+            $totalDelayCost   = (clone $logs)->sum('delay_cost');
+            $totalOvertimeVal = (clone $logs)->sum('overtime_value');
+        } catch (\Throwable $e) {
+            return [
+                Stat::make(__('attendance.today_present'), '—')->color('gray'),
+            ];
+        }
 
         $periodLabel = $this->getPeriodLabel();
 

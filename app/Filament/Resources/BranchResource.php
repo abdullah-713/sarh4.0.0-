@@ -4,12 +4,17 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\BranchResource\Pages;
 use App\Models\Branch;
+use App\Models\Setting;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Forms\Set;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Collection;
 
 class BranchResource extends Resource
 {
@@ -194,6 +199,63 @@ class BranchResource extends Resource
                         ->disabled()
                         ->hintIcon('heroicon-m-information-circle', tooltip: __('branches.delay_losses_hint')),
                 ])->columns(['default' => 1, 'lg' => 2]),
+
+            // ── Section 6: الملخص المالي والتشغيلي (Summary) ──────
+            Forms\Components\Section::make(__('branches.financial_summary_section'))
+                ->description(__('branches.financial_summary_description'))
+                ->icon('heroicon-o-calculator')
+                ->collapsible()
+                ->schema([
+                    Forms\Components\Placeholder::make('active_employees_count')
+                        ->label(__('branches.active_employees_count'))
+                        ->content(fn (?Branch $record): string =>
+                            $record?->users()->where('status', 'active')->count() . ' ' . __('branches.employee_unit')
+                        )
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('branches.active_employees_count_hint')),
+
+                    Forms\Components\Placeholder::make('total_salaries_sum')
+                        ->label(__('branches.total_salaries_sum'))
+                        ->content(fn (?Branch $record): string =>
+                            number_format((float) ($record?->users()->where('status', 'active')->sum('basic_salary') ?? 0), 2) . ' ' . __('branches.currency_sar')
+                        )
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('branches.total_salaries_sum_hint')),
+
+                    Forms\Components\Placeholder::make('branch_vpm')
+                        ->label(__('branches.branch_vpm'))
+                        ->content(function (?Branch $record): string {
+                            if (!$record || !$record->monthly_salary_budget) {
+                                return '0.0000 ' . __('branches.currency_sar') . '/' . __('branches.minute_unit');
+                            }
+                            $budget = (float) $record->monthly_salary_budget;
+                            $employeeCount = $record->users()->where('status', 'active')->count();
+                            if ($employeeCount === 0) {
+                                return '0.0000 ' . __('branches.currency_sar') . '/' . __('branches.minute_unit');
+                            }
+                            // Working days & hours from branch shift settings
+                            $workingDays = 26;
+                            $hoursPerDay = 8;
+                            if ($record->default_shift_start && $record->default_shift_end) {
+                                $s = Carbon::parse($record->default_shift_start);
+                                $e = Carbon::parse($record->default_shift_end);
+                                if ($e->lt($s)) $e->addDay();
+                                $hoursPerDay = $s->diffInMinutes($e) / 60;
+                            }
+                            $totalMinutes = $employeeCount * $workingDays * $hoursPerDay * 60;
+                            $vpm = $totalMinutes > 0 ? $budget / $totalMinutes : 0;
+                            return number_format($vpm, 4) . ' ' . __('branches.currency_sar') . '/' . __('branches.minute_unit');
+                        })
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('branches.branch_vpm_hint')),
+
+                    Forms\Components\Placeholder::make('monthly_loss_rate')
+                        ->label(__('branches.monthly_loss_rate'))
+                        ->content(function (?Branch $record): string {
+                            $budget = (float) ($record?->monthly_salary_budget ?? 0);
+                            $losses = (float) ($record?->monthly_delay_losses ?? 0);
+                            if ($budget <= 0) return '0.0%';
+                            return number_format(($losses / $budget) * 100, 1) . '%';
+                        })
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('branches.monthly_loss_rate_hint')),
+                ])->columns(['default' => 1, 'lg' => 2]),
         ]);
     }
 
@@ -270,6 +332,69 @@ class BranchResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+
+                    Tables\Actions\BulkAction::make('bulk_update_geofence')
+                        ->label(__('branches.bulk_update_geofence'))
+                        ->icon('heroicon-o-map-pin')
+                        ->color('info')
+                        ->form([
+                            Forms\Components\TextInput::make('geofence_radius')
+                                ->label(__('branches.geofence_radius'))
+                                ->required()
+                                ->numeric()
+                                ->minValue(1)
+                                ->maxValue(100000)
+                                ->suffix(__('branches.meters'))
+                                ->default(100),
+                        ])
+                        ->action(function (Collection $records, array $data): void {
+                            $records->each(fn (Branch $branch) =>
+                                $branch->update(['geofence_radius' => $data['geofence_radius']])
+                            );
+                            Notification::make()
+                                ->title(__('branches.bulk_geofence_updated'))
+                                ->body(__('branches.bulk_geofence_updated_body', ['count' => $records->count()]))
+                                ->success()
+                                ->send();
+                        })
+                        ->deselectRecordsAfterCompletion(),
+
+                    Tables\Actions\BulkAction::make('bulk_change_shift')
+                        ->label(__('branches.bulk_change_shift'))
+                        ->icon('heroicon-o-clock')
+                        ->color('warning')
+                        ->form([
+                            Forms\Components\TimePicker::make('default_shift_start')
+                                ->label(__('branches.shift_start'))
+                                ->required()
+                                ->seconds(false)
+                                ->default('08:00'),
+                            Forms\Components\TimePicker::make('default_shift_end')
+                                ->label(__('branches.shift_end'))
+                                ->required()
+                                ->seconds(false)
+                                ->default('17:00'),
+                            Forms\Components\TextInput::make('grace_period_minutes')
+                                ->label(__('branches.grace_period'))
+                                ->numeric()
+                                ->default(15)
+                                ->minValue(0)
+                                ->maxValue(120)
+                                ->suffix(__('branches.minutes')),
+                        ])
+                        ->action(function (Collection $records, array $data): void {
+                            $update = ['default_shift_start' => $data['default_shift_start'], 'default_shift_end' => $data['default_shift_end']];
+                            if (isset($data['grace_period_minutes'])) {
+                                $update['grace_period_minutes'] = $data['grace_period_minutes'];
+                            }
+                            $records->each(fn (Branch $branch) => $branch->update($update));
+                            Notification::make()
+                                ->title(__('branches.bulk_shift_updated'))
+                                ->body(__('branches.bulk_shift_updated_body', ['count' => $records->count()]))
+                                ->success()
+                                ->send();
+                        })
+                        ->deselectRecordsAfterCompletion(),
                 ]),
             ])
             ->defaultSort('code');

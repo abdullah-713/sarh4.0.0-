@@ -16,6 +16,8 @@ class RiskWidget extends BaseWidget
 
     protected int|string|array $columnSpan = 'full';
 
+    protected static ?string $pollingInterval = '60s';
+
     public function getHeading(): string
     {
         return __('traps.risk_widget_title');

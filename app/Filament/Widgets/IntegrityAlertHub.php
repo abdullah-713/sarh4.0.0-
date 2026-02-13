@@ -20,6 +20,8 @@ class IntegrityAlertHub extends BaseWidget
 
     protected int|string|array $columnSpan = 'full';
 
+    protected static ?string $pollingInterval = '60s';
+
     /**
      * Only visible to Level 10 (Super Admin) users.
      */

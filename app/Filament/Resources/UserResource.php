@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 
@@ -407,6 +408,96 @@ class UserResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+
+                    Tables\Actions\BulkAction::make('bulk_adjust_salary')
+                        ->label(__('users.bulk_adjust_salary'))
+                        ->icon('heroicon-o-banknotes')
+                        ->color('success')
+                        ->form([
+                            Forms\Components\Select::make('adjustment_type')
+                                ->label(__('users.adjustment_type'))
+                                ->options([
+                                    'set'     => __('users.adjustment_set'),
+                                    'add'     => __('users.adjustment_add'),
+                                    'percent' => __('users.adjustment_percent'),
+                                ])
+                                ->required()
+                                ->default('set'),
+                            Forms\Components\TextInput::make('amount')
+                                ->label(__('users.adjustment_amount'))
+                                ->numeric()
+                                ->required()
+                                ->helperText(__('users.adjustment_amount_helper')),
+                        ])
+                        ->action(function (Collection $records, array $data): void {
+                            $records->each(function (User $user) use ($data) {
+                                $current = (float) $user->basic_salary;
+                                $newSalary = match ($data['adjustment_type']) {
+                                    'set'     => (float) $data['amount'],
+                                    'add'     => $current + (float) $data['amount'],
+                                    'percent' => $current * (1 + (float) $data['amount'] / 100),
+                                    default   => $current,
+                                };
+                                $user->update(['basic_salary' => max(0, round($newSalary, 2))]);
+                            });
+                            Notification::make()
+                                ->title(__('users.bulk_salary_updated'))
+                                ->body(__('users.bulk_salary_updated_body', ['count' => $records->count()]))
+                                ->success()
+                                ->send();
+                        })
+                        ->deselectRecordsAfterCompletion(),
+
+                    Tables\Actions\BulkAction::make('bulk_change_branch')
+                        ->label(__('users.bulk_change_branch'))
+                        ->icon('heroicon-o-building-office-2')
+                        ->color('info')
+                        ->form([
+                            Forms\Components\Select::make('branch_id')
+                                ->label(__('users.branch'))
+                                ->relationship('branch', 'name_ar')
+                                ->searchable()
+                                ->preload()
+                                ->required(),
+                        ])
+                        ->action(function (Collection $records, array $data): void {
+                            $records->each(fn (User $user) =>
+                                $user->update(['branch_id' => $data['branch_id']])
+                            );
+                            Notification::make()
+                                ->title(__('users.bulk_branch_updated'))
+                                ->body(__('users.bulk_branch_updated_body', ['count' => $records->count()]))
+                                ->success()
+                                ->send();
+                        })
+                        ->deselectRecordsAfterCompletion(),
+
+                    Tables\Actions\BulkAction::make('bulk_change_status')
+                        ->label(__('users.bulk_change_status'))
+                        ->icon('heroicon-o-arrow-path')
+                        ->color('warning')
+                        ->form([
+                            Forms\Components\Select::make('status')
+                                ->label(__('users.status'))
+                                ->options([
+                                    'active'     => __('users.status_active'),
+                                    'suspended'  => __('users.status_suspended'),
+                                    'terminated' => __('users.status_terminated'),
+                                    'on_leave'   => __('users.status_on_leave'),
+                                ])
+                                ->required(),
+                        ])
+                        ->action(function (Collection $records, array $data): void {
+                            $records->each(fn (User $user) =>
+                                $user->update(['status' => $data['status']])
+                            );
+                            Notification::make()
+                                ->title(__('users.bulk_status_updated'))
+                                ->body(__('users.bulk_status_updated_body', ['count' => $records->count()]))
+                                ->success()
+                                ->send();
+                        })
+                        ->deselectRecordsAfterCompletion(),
                 ]),
             ])
             ->defaultSort('created_at', 'desc');

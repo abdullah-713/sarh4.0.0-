@@ -21,39 +21,45 @@ class RealTimeLossCounter extends BaseWidget
 
     protected function getStats(): array
     {
-        [$startDate, $endDate] = $this->getFilterDates();
-        $startStr = $startDate->toDateString();
-        $endStr   = $endDate->toDateString();
+        try {
+            [$startDate, $endDate] = $this->getFilterDates();
+            $startStr = $startDate->toDateString();
+            $endStr   = $endDate->toDateString();
 
-        $service = app(FinancialReportingService::class);
+            $service = app(FinancialReportingService::class);
 
-        // Sum loss across the filtered date range
-        $periodLoss = (float) AttendanceLog::whereBetween('attendance_date', [$startStr, $endStr])
-            ->sum('delay_cost');
+            // Sum loss across the filtered date range
+            $periodLoss = (float) AttendanceLog::whereBetween('attendance_date', [$startStr, $endStr])
+                ->sum('delay_cost');
 
-        // Comparison: same duration in the previous period
-        $days         = $startDate->diffInDays($endDate) + 1;
-        $prevEnd      = $startDate->copy()->subDay();
-        $prevStart    = $prevEnd->copy()->subDays($days - 1);
-        $previousLoss = (float) AttendanceLog::whereBetween('attendance_date', [
-            $prevStart->toDateString(),
-            $prevEnd->toDateString(),
-        ])->sum('delay_cost');
+            // Comparison: same duration in the previous period
+            $days         = $startDate->diffInDays($endDate) + 1;
+            $prevEnd      = $startDate->copy()->subDay();
+            $prevStart    = $prevEnd->copy()->subDays($days - 1);
+            $previousLoss = (float) AttendanceLog::whereBetween('attendance_date', [
+                $prevStart->toDateString(),
+                $prevEnd->toDateString(),
+            ])->sum('delay_cost');
 
-        $lossDiff = $periodLoss - $previousLoss;
-        $trendDescription = ($lossDiff >= 0 ? '+' : '-')
-            . number_format(abs($lossDiff), 2) . ' ' . __('command.sar')
-            . ' ' . __('dashboard.vs_previous_period');
+            $lossDiff = $periodLoss - $previousLoss;
+            $trendDescription = ($lossDiff >= 0 ? '+' : '-')
+                . number_format(abs($lossDiff), 2) . ' ' . __('command.sar')
+                . ' ' . __('dashboard.vs_previous_period');
 
-        // Counts for the filtered period
-        $logs        = AttendanceLog::whereBetween('attendance_date', [$startStr, $endStr]);
-        $lateCount   = (clone $logs)->where('status', 'late')->count();
-        $absentCount = (clone $logs)->where('status', 'absent')->count();
+            // Counts for the filtered period
+            $logs        = AttendanceLog::whereBetween('attendance_date', [$startStr, $endStr]);
+            $lateCount   = (clone $logs)->where('status', 'late')->count();
+            $absentCount = (clone $logs)->where('status', 'absent')->count();
 
-        // Predictive (always based on current month)
-        $predictive = $service->getPredictiveMonthlyLoss(Carbon::now());
+            // Predictive (always based on current month)
+            $predictive = $service->getPredictiveMonthlyLoss(Carbon::now());
 
-        $periodLabel = $this->getPeriodLabel();
+            $periodLabel = $this->getPeriodLabel();
+        } catch (\Throwable $e) {
+            return [
+                Stat::make(__('command.today_total_loss'), '—')->color('gray'),
+            ];
+        }
 
         return [
             Stat::make(

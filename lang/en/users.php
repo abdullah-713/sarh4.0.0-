@@ -64,4 +64,21 @@ return [
     'points_reason'          => 'Reason for Adjustment',
     'points_adjusted'        => 'Points Adjusted',
     'points_adjusted_body'   => ':points points added to :name',
+
+    // Bulk Actions
+    'bulk_adjust_salary'              => 'Bulk Adjust Salaries',
+    'adjustment_type'                 => 'Adjustment Type',
+    'adjustment_set'                  => 'Set Fixed Amount',
+    'adjustment_add'                  => 'Add Amount',
+    'adjustment_percent'              => 'Percentage Increase',
+    'adjustment_amount'               => 'Amount / Percentage',
+    'adjustment_amount_helper'        => 'Enter amount in SAR or percentage based on the selected adjustment type',
+    'bulk_salary_updated'             => 'Salaries Updated',
+    'bulk_salary_updated_body'        => 'Salaries updated for :count employees.',
+    'bulk_change_branch'              => 'Transfer to Branch',
+    'bulk_branch_updated'             => 'Employees Transferred',
+    'bulk_branch_updated_body'        => ':count employees transferred to the new branch.',
+    'bulk_change_status'              => 'Bulk Change Status',
+    'bulk_status_updated'             => 'Status Updated',
+    'bulk_status_updated_body'        => 'Status updated for :count employees.',
 ];

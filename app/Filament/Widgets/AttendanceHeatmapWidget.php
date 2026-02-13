@@ -19,6 +19,8 @@ class AttendanceHeatmapWidget extends Widget
 
     protected static ?int $sort = 3;
 
+    protected static ?string $pollingInterval = '60s';
+
     public ?int $selectedBranch = null;
     public array $heatmapData = [];
     public array $branches = [];
@@ -56,10 +58,14 @@ class AttendanceHeatmapWidget extends Widget
             ];
         }
 
-        [$startDate, $endDate] = $this->getFilterDates();
+        try {
+            [$startDate, $endDate] = $this->getFilterDates();
 
-        $service = app(AnalyticsService::class);
-        $heatmapData = $service->generateHeatmapData($branch, $startDate, $endDate);
+            $service = app(AnalyticsService::class);
+            $heatmapData = $service->generateHeatmapData($branch, $startDate, $endDate);
+        } catch (\Throwable $e) {
+            $heatmapData = [];
+        }
 
         return [
             'heatmap'     => $heatmapData,

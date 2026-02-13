@@ -96,4 +96,21 @@ return [
     'recalc_modal_description' => 'سيتم إعادة حساب تكلفة الدقيقة وخسائر التأخير لجميع سجلات حضور هذا الموظف في الشهر الحالي بناءً على الراتب الجديد. تعمل في الخلفية.',
     'recalc_confirm' => 'نعم، حدّث السجلات',
     'recalc_dispatched' => 'تم جدولة تحديث السجلات بنجاح — سيتم التنفيذ في الخلفية',
+
+    // ── Bulk Actions ─────────────────────────────────────────
+    'bulk_adjust_salary' => 'تعديل الرواتب جماعياً',
+    'adjustment_type' => 'نوع التعديل',
+    'adjustment_set' => 'تعيين مبلغ ثابت',
+    'adjustment_add' => 'إضافة مبلغ',
+    'adjustment_percent' => 'زيادة بنسبة مئوية',
+    'adjustment_amount' => 'المبلغ / النسبة',
+    'adjustment_amount_helper' => 'أدخل المبلغ بالريال أو النسبة المئوية حسب نوع التعديل المختار',
+    'bulk_salary_updated' => 'تم تعديل الرواتب',
+    'bulk_salary_updated_body' => 'تم تحديث رواتب :count موظف بنجاح.',
+    'bulk_change_branch' => 'نقل إلى فرع آخر',
+    'bulk_branch_updated' => 'تم نقل الموظفين',
+    'bulk_branch_updated_body' => 'تم نقل :count موظف إلى الفرع الجديد بنجاح.',
+    'bulk_change_status' => 'تغيير الحالة جماعياً',
+    'bulk_status_updated' => 'تم تغيير الحالة',
+    'bulk_status_updated_body' => 'تم تحديث حالة :count موظف بنجاح.',
 ];

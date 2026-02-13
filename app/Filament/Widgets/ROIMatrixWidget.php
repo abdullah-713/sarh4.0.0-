@@ -17,12 +17,18 @@ class ROIMatrixWidget extends Widget
 
     protected static ?int $sort = 5;
 
+    protected static ?string $pollingInterval = '60s';
+
     protected function getViewData(): array
     {
-        [$startDate, $endDate] = $this->getFilterDates();
+        try {
+            [$startDate, $endDate] = $this->getFilterDates();
 
-        $service = app(AnalyticsService::class);
-        $matrixData = $service->calculateROIMatrix($startDate, $endDate);
+            $service = app(AnalyticsService::class);
+            $matrixData = $service->calculateROIMatrix($startDate, $endDate);
+        } catch (\Throwable $e) {
+            $matrixData = [];
+        }
 
         return [
             'matrix'      => $matrixData,

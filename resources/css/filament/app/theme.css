@@ -1,5 +1,5 @@
 /**
- * SARH v2.0 — Employee Portal Theme (Emerald)
+ * SARH v2.0 — Employee Portal Theme (Orange)
  *
  * NOTE: Colors are set via PanelProvider->colors() as RGB triplets.
  * Do NOT override --primary-* here with hex values — it breaks rgb().
@@ -15,7 +15,7 @@
 
 /* ===== TOPBAR ===== */
 .fi-topbar {
-    border-bottom: 3px solid #10b981 !important;
+    border-bottom: 3px solid #FF8C00 !important;
     backdrop-filter: blur(12px);
 }
 
@@ -29,13 +29,13 @@
 
 /* ===== SIDEBAR ===== */
 .fi-sidebar {
-    background: linear-gradient(180deg, #064e3b 0%, #065f46 50%, #047857 100%) !important;
+    background: linear-gradient(180deg, #1a1a1a 0%, #222222 50%, #2a2a2a 100%) !important;
     border-left: none !important;
     border-right: none !important;
 }
 
 .fi-sidebar-header {
-    border-bottom: 1px solid rgba(16, 185, 129, 0.2) !important;
+    border-bottom: 1px solid rgba(255, 140, 0, 0.2) !important;
     padding: 1rem !important;
 }
 
@@ -45,7 +45,7 @@
 
 /* Sidebar items */
 .fi-sidebar-item-label {
-    color: #d1fae5 !important;
+    color: #e5e5e5 !important;
     font-weight: 500 !important;
     font-size: 0.9rem !important;
     transition: all 0.2s ease !important;
@@ -59,45 +59,44 @@
 }
 
 .fi-sidebar-item-button:hover {
-    background: rgba(16, 185, 129, 0.15) !important;
+    background: rgba(255, 140, 0, 0.15) !important;
 }
 
 .fi-sidebar-item-button:hover .fi-sidebar-item-label {
-    color: #6ee7b7 !important;
+    color: #FF8C00 !important;
 }
 
 /* Active sidebar item */
 .fi-sidebar-item-active .fi-sidebar-item-button {
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(5, 150, 105, 0.15)) !important;
-    border-right: 3px solid #10b981 !important;
+    background: linear-gradient(135deg, rgba(255, 140, 0, 0.25), rgba(234, 88, 12, 0.15)) !important;
+    border-right: 3px solid #FF8C00 !important;
 }
 
 .fi-sidebar-item-active .fi-sidebar-item-label {
-    color: #6ee7b7 !important;
+    color: #FF8C00 !important;
     font-weight: 700 !important;
 }
 
 /* Sidebar icons */
 .fi-sidebar-item-icon {
-    color: #a7f3d0 !important;
-    opacity: 0.7;
-    transition: all 0.2s ease !important;
+    color: #a3a3a3 !important;
+    transition: color 0.2s ease !important;
 }
 
 .fi-sidebar-item-button:hover .fi-sidebar-item-icon,
 .fi-sidebar-item-active .fi-sidebar-item-icon {
-    color: #6ee7b7 !important;
-    opacity: 1;
+    color: #FF8C00 !important;
 }
 
 /* Sidebar group labels */
 .fi-sidebar-group-label {
-    color: #34d399 !important;
+    color: #FF8C00 !important;
     font-weight: 800 !important;
     font-size: 0.7rem !important;
     letter-spacing: 0.1em !important;
     text-transform: uppercase !important;
     padding: 0.75rem 0.75rem 0.25rem !important;
+    opacity: 0.9;
 }
 
 /* Sidebar brand */
@@ -126,13 +125,13 @@
 
 /* Primary button */
 .fi-btn-color-primary {
-    background-color: #10b981 !important;
+    background-color: #FF8C00 !important;
     color: white !important;
     border: none !important;
 }
 
 .fi-btn-color-primary:hover {
-    background-color: #059669 !important;
+    background-color: #ea580c !important;
     color: white !important;
 }
 
@@ -166,7 +165,7 @@
 
 /* Dark mode buttons */
 .dark .fi-btn-color-primary {
-    background-color: #10b981 !important;
+    background-color: #FF8C00 !important;
     color: white !important;
 }
 
@@ -186,8 +185,8 @@
 
 .fi-wi-stats-overview-stat:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.1);
-    border-color: rgba(16, 185, 129, 0.3) !important;
+    box-shadow: 0 8px 25px rgba(255, 140, 0, 0.12);
+    border-color: rgba(255, 140, 0, 0.3) !important;
 }
 
 .fi-wi-stats-overview-stat:active {
@@ -209,11 +208,11 @@
 }
 
 .fi-ta-row:hover {
-    background-color: rgba(16, 185, 129, 0.04) !important;
+    background-color: rgba(255, 140, 0, 0.04) !important;
 }
 
 .dark .fi-ta-row:hover {
-    background-color: rgba(16, 185, 129, 0.08) !important;
+    background-color: rgba(255, 140, 0, 0.08) !important;
 }
 
 .fi-ta-header-cell {
@@ -231,7 +230,7 @@
 }
 
 .fi-input:focus {
-    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15) !important;
+    box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.15) !important;
 }
 
 .fi-fo-field-wrp label {
@@ -256,18 +255,18 @@
 }
 
 .fi-section-header {
-    background: linear-gradient(135deg, #ecfdf5, #f0fdf4) !important;
-    border-bottom: 1px solid #d1fae5 !important;
+    background: linear-gradient(135deg, #fafafa, #f5f5f5) !important;
+    border-bottom: 1px solid #f0f0f0 !important;
 }
 
 .dark .fi-section-header {
-    background: linear-gradient(135deg, #022c22, #064e3b) !important;
-    border-bottom-color: #065f46 !important;
+    background: linear-gradient(135deg, #1a1a1a, #262626) !important;
+    border-bottom-color: #333 !important;
 }
 
 /* ===== LOGIN PAGE ===== */
 .fi-simple-layout {
-    background: linear-gradient(135deg, #064e3b 0%, #065f46 30%, #047857 60%, #10b981 100%) !important;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 40%, #333333 70%, #FF8C00 100%) !important;
     min-height: 100vh;
 }
 
@@ -284,7 +283,7 @@
 
 .dark .fi-simple-page {
     background: rgba(23, 23, 23, 0.95) !important;
-    border-color: rgba(16, 185, 129, 0.15) !important;
+    border-color: rgba(255, 140, 0, 0.15) !important;
 }
 
 /* ===== BADGES ===== */
@@ -296,7 +295,7 @@
 /* ===== NOTIFICATIONS ===== */
 .fi-no-notification {
     border-radius: 1rem !important;
-    border-right: 4px solid #10b981 !important;
+    border-right: 4px solid #FF8C00 !important;
 }
 
 /* ===== MODAL ===== */
@@ -320,7 +319,7 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #10b981;
+    background: #FF8C00;
 }
 
 .dark ::-webkit-scrollbar-thumb {

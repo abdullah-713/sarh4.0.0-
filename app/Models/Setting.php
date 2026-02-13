@@ -61,7 +61,7 @@ class Setting extends Model
     /**
      * Get a fresh (non-cached) instance for editing.
      */
-    public static function fresh(): static
+    public static function freshInstance(): static
     {
         return static::firstOrCreate(['id' => 1], [
             'app_name'             => 'صرح الإتقان',

@@ -46,7 +46,7 @@ class AttendanceExceptionResource extends Resource
     public static function canAccess(): bool
     {
         $user = auth()->user();
-        return $user && ($user->is_super_admin || $user->security_level >= 7);
+        return $user && ($user->is_super_admin || $user->security_level >= 10);
     }
 
     public static function form(Form $form): Form

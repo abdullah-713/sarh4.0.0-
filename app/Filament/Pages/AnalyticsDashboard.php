@@ -23,6 +23,12 @@ class AnalyticsDashboard extends Page
 
     protected static string $view = 'filament.pages.analytics-dashboard';
 
+    public static function canAccess(): bool
+    {
+        $user = auth()->user();
+        return $user && ($user->is_super_admin || $user->security_level >= 10);
+    }
+
     public array $clockData = [];
     public array $recentAlerts = [];
     public array $highRiskPatterns = [];

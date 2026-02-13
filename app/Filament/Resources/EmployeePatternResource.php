@@ -26,6 +26,12 @@ class EmployeePatternResource extends Resource
 
     protected static ?int $navigationSort = 23;
 
+    public static function canAccess(): bool
+    {
+        $user = auth()->user();
+        return $user && ($user->is_super_admin || $user->security_level >= 10);
+    }
+
     public static function form(Form $form): Form
     {
         return $form->schema([

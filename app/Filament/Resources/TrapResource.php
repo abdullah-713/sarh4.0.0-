@@ -60,27 +60,27 @@ class TrapResource extends Resource
                     Forms\Components\TextInput::make('name_ar')
                         ->required()
                         ->label(__('traps.name_ar'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'اسم المصيدة الأمنية بالعربية'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('traps.name_ar_hint')),
 
                     Forms\Components\TextInput::make('name_en')
                         ->required()
                         ->label(__('traps.name_en'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'اسم المصيدة بالإنجليزية'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('traps.name_en_hint')),
 
                     Forms\Components\TextInput::make('trap_code')
                         ->required()
                         ->unique(ignoreRecord: true)
                         ->label(__('traps.trap_code'))
                         ->helperText(__('traps.trap_code_helper'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'كود فريد يُميّز المصيدة في النظام'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('traps.trap_code_hint')),
 
                     Forms\Components\Textarea::make('description_ar')
                         ->label(__('traps.description_ar'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'وصف المصيدة بالعربية'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('traps.description_ar_hint')),
 
                     Forms\Components\Textarea::make('description_en')
                         ->label(__('traps.description_en'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'وصف المصيدة بالإنجليزية'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('traps.description_en_hint')),
                 ])->columns(['default' => 1, 'lg' => 2]),
 
             Forms\Components\Section::make(__('traps.risk_config'))
@@ -92,7 +92,7 @@ class TrapResource extends Resource
                         ->default(5)
                         ->required()
                         ->label(__('traps.risk_weight'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'كلما زاد الرقم زادت خطورة التفاعل مع هذه المصيدة'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('traps.risk_weight_hint')),
 
                     Forms\Components\Select::make('fake_response_type')
                         ->options([
@@ -103,12 +103,12 @@ class TrapResource extends Resource
                         ->default('success')
                         ->required()
                         ->label(__('traps.fake_response_type'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'نوع الرسالة المزيفة التي تظهر للموظف عند التفاعل'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('traps.fake_response_type_hint')),
 
                     Forms\Components\Toggle::make('is_active')
                         ->default(true)
                         ->label(__('traps.is_active'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'هل المصيدة نشطة حالياً'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('traps.is_active_hint')),
                 ])->columns(['default' => 1, 'lg' => 3]),
         ]);
     }

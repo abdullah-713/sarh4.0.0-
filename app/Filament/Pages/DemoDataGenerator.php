@@ -86,14 +86,14 @@ class DemoDataGenerator extends Page implements HasForms
                             ->label('من تاريخ')
                             ->required()
                             ->native(false)
-                            ->hintIcon('heroicon-m-information-circle', tooltip: 'أول يوم سيتم توليد بيانات حضور له'),
+                            ->hintIcon('heroicon-m-information-circle', tooltip: __('install.demo_date_from_hint')),
 
                         Forms\Components\DatePicker::make('date_to')
                             ->label('إلى تاريخ')
                             ->required()
                             ->native(false)
                             ->afterOrEqual('date_from')
-                            ->hintIcon('heroicon-m-information-circle', tooltip: 'آخر يوم سيتم توليد بيانات حضور له'),
+                            ->hintIcon('heroicon-m-information-circle', tooltip: __('install.demo_date_to_hint')),
                     ])->columns(['default' => 1, 'lg' => 2]),
 
                 // ── Section 2: Branch Selector ────────────────────────
@@ -107,7 +107,7 @@ class DemoDataGenerator extends Page implements HasForms
                             ->columns(['default' => 1, 'lg' => 3])
                             ->bulkToggleable()
                             ->searchable()
-                            ->hintIcon('heroicon-m-information-circle', tooltip: 'اتركها فارغة لتشمل جميع الفروع النشطة'),
+                            ->hintIcon('heroicon-m-information-circle', tooltip: __('install.demo_branch_ids_hint')),
                     ]),
 
                 // ── Section 3: Shift Settings ─────────────────────────
@@ -120,12 +120,12 @@ class DemoDataGenerator extends Page implements HasForms
                         Forms\Components\TimePicker::make('shift_start')
                             ->label('بداية الدوام')
                             ->seconds(false)
-                            ->hintIcon('heroicon-m-information-circle', tooltip: 'الوقت الرسمي لبداية الدوام — يُستخدم لحساب التأخير'),
+                            ->hintIcon('heroicon-m-information-circle', tooltip: __('install.demo_shift_start_hint')),
 
                         Forms\Components\TimePicker::make('shift_end')
                             ->label('نهاية الدوام')
                             ->seconds(false)
-                            ->hintIcon('heroicon-m-information-circle', tooltip: 'الوقت الرسمي لنهاية الدوام — يُستخدم لحساب ساعات العمل'),
+                            ->hintIcon('heroicon-m-information-circle', tooltip: __('install.demo_shift_end_hint')),
                     ])->columns(['default' => 1, 'lg' => 2]),
 
                 // ── Section 4: Weekend Selector ───────────────────────
@@ -147,7 +147,7 @@ class DemoDataGenerator extends Page implements HasForms
                                 6 => 'السبت',
                             ])
                             ->columns(['default' => 3, 'lg' => 7])
-                            ->hintIcon('heroicon-m-information-circle', tooltip: 'لن يتم توليد سجلات حضور لهذه الأيام'),
+                            ->hintIcon('heroicon-m-information-circle', tooltip: __('install.demo_weekend_days_hint')),
                     ]),
 
                 // ── Section 5: Compliance Gauge ───────────────────────
@@ -178,7 +178,7 @@ class DemoDataGenerator extends Page implements HasForms
                                 default => 'حرّك المؤشر لاختيار المستوى',
                             })
                             ->live()
-                            ->hintIcon('heroicon-m-information-circle', tooltip: 'مقياس الانضباط يتحكم في نسبة التأخيرات والغيابات والانصراف المبكر في البيانات المولّدة'),
+                            ->hintIcon('heroicon-m-information-circle', tooltip: __('install.demo_compliance_hint')),
                     ]),
             ])
             ->statePath('data');

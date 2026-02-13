@@ -65,28 +65,28 @@ class TrapInteractionResource extends Resource
                         ->searchable()
                         ->preload()
                         ->disabled()
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الموظف الذي تفاعل مع المصيدة')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('traps.interaction_user_hint'))
                         ->label(__('traps.employee')),
 
                     Forms\Components\Select::make('trap_id')
                         ->relationship('trap', 'trap_code')
                         ->disabled()
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'رمز المصيدة التي تم التفاعل معها')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('traps.interaction_trap_hint'))
                         ->label(__('traps.trap_code')),
 
                     Forms\Components\TextInput::make('trap_type')
                         ->disabled()
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'نوع المصيدة: رابط مخفي، صفحة وهمية، أو غيرها')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('traps.trap_type_hint'))
                         ->label(__('traps.trap_type')),
 
                     Forms\Components\TextInput::make('page_url')
                         ->disabled()
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'عنوان الصفحة التي حدث فيها التفاعل')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('traps.page_url_hint'))
                         ->label(__('traps.page_url')),
 
                     Forms\Components\TextInput::make('ip_address')
                         ->disabled()
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'عنوان الإنترنت (IP) الخاص بالجهاز المستخدم')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('traps.ip_address_hint'))
                         ->label(__('traps.ip_address')),
 
                     Forms\Components\Select::make('risk_level')
@@ -97,18 +97,18 @@ class TrapInteractionResource extends Resource
                             'critical' => __('traps.risk_levels.critical'),
                         ])
                         ->disabled()
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'مستوى الخطورة: يحدد مدى أهمية هذا التفاعل الأمني')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('traps.risk_level_hint'))
                         ->label(__('traps.risk_level')),
                 ])->columns(['default' => 1, 'lg' => 3]),
 
             Forms\Components\Section::make(__('traps.review_section'))
                 ->schema([
                     Forms\Components\Toggle::make('is_reviewed')
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'حدد ما إذا تمت مراجعة هذا التفاعل من قبل المسؤول')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('traps.is_reviewed_hint'))
                         ->label(__('traps.is_reviewed')),
 
                     Forms\Components\Textarea::make('review_notes')
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'أضف ملاحظات المراجعة والإجراء المتخذ')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('traps.review_notes_hint'))
                         ->label(__('traps.review_notes')),
                 ])->columns(1),
         ]);

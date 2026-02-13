@@ -66,20 +66,20 @@ class RoleResource extends Resource
                         ->label('الاسم بالعربية')
                         ->required()
                         ->maxLength(255)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'اسم الدور الوظيفي كما يظهر في الواجهة'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.role_name_ar_hint')),
 
                     Forms\Components\TextInput::make('name_en')
                         ->label('الاسم بالإنجليزية')
                         ->required()
                         ->maxLength(255)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'اسم الدور بالإنجليزية للتقارير'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.role_name_en_hint')),
 
                     Forms\Components\TextInput::make('slug')
                         ->label('المعرّف')
                         ->required()
                         ->unique(ignoreRecord: true)
                         ->maxLength(100)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'معرّف فريد يُستخدم برمجياً للتحقق من الدور')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.role_slug_hint'))
                         ->helperText('معرّف فريد — مثال: hr-manager'),
 
                     Forms\Components\Select::make('level')
@@ -100,22 +100,22 @@ class RoleResource extends Resource
                         ]))
                         ->required()
                         ->native(false)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'كلما زاد المستوى زادت صلاحيات الوصول إلى الأقسام الحساسة'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.role_level_hint')),
 
                     Forms\Components\Textarea::make('description_ar')
                         ->label('الوصف بالعربية')
                         ->rows(2)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'وصف مختصر لهذا الدور بالعربية'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.role_description_ar_hint')),
 
                     Forms\Components\Textarea::make('description_en')
                         ->label('الوصف بالإنجليزية')
                         ->rows(2)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'وصف مختصر لهذا الدور بالإنجليزية'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.role_description_en_hint')),
 
                     Forms\Components\Toggle::make('is_system')
                         ->label('دور نظامي (لا يمكن حذفه)')
                         ->disabled(fn (?Role $record) => $record?->is_system ?? false)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الأدوار النظامية لا يمكن حذفها لضمان استقرار النظام'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.role_is_system_hint')),
                 ])->columns(['default' => 1, 'lg' => 2]),
 
             // ── Permission Matrix ──
@@ -128,7 +128,7 @@ class RoleResource extends Resource
                         ->columns(['default' => 1, 'lg' => 3])
                         ->bulkToggleable()
                         ->searchable()
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'اختر الصلاحيات الممنوحة لهذا الدور')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.role_permissions_hint'))
                         ->descriptions(
                             Permission::all()->pluck('description_en', 'id')->toArray()
                         ),

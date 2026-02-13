@@ -62,7 +62,7 @@ class ScoreAdjustmentResource extends Resource
                         ->required()
                         ->live()
                         ->native(false)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'حدد ما إذا كان التعديل على فرع أو موظف أو قسم'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('competition.scope_hint')),
 
                     Forms\Components\Select::make('branch_id')
                         ->label('الفرع')
@@ -71,7 +71,7 @@ class ScoreAdjustmentResource extends Resource
                         ->preload()
                         ->visible(fn (Forms\Get $get) => $get('scope') === 'branch')
                         ->required(fn (Forms\Get $get) => $get('scope') === 'branch')
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الفرع الذي سيُطبَّق عليه التعديل'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('competition.scope_branch_hint')),
 
                     Forms\Components\Select::make('user_id')
                         ->label('الموظف')
@@ -80,7 +80,7 @@ class ScoreAdjustmentResource extends Resource
                         ->preload()
                         ->visible(fn (Forms\Get $get) => $get('scope') === 'user')
                         ->required(fn (Forms\Get $get) => $get('scope') === 'user')
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الموظف الذي سيُطبَّق عليه التعديل'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('competition.scope_user_hint')),
 
                     Forms\Components\Select::make('department_id')
                         ->label('القسم')
@@ -89,7 +89,7 @@ class ScoreAdjustmentResource extends Resource
                         ->preload()
                         ->visible(fn (Forms\Get $get) => $get('scope') === 'department')
                         ->required(fn (Forms\Get $get) => $get('scope') === 'department')
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'القسم الذي سيُطبَّق عليه التعديل'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('competition.scope_department_hint')),
                 ])->columns(['default' => 1, 'lg' => 2]),
 
             Forms\Components\Section::make('التعديل')
@@ -100,14 +100,14 @@ class ScoreAdjustmentResource extends Resource
                         ->required()
                         ->helperText('موجب = إضافة، سالب = خصم')
                         ->prefix('±')
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'العدد الذي سيُضاف أو يُخصم من رصيد النقاط'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('competition.points_delta_hint')),
 
                     Forms\Components\TextInput::make('value_delta')
                         ->label('تعديل القيمة المالية (ريال)')
                         ->numeric()
                         ->default(0)
                         ->prefix('±')
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'تعديل مالي إضافي إن وُجِد'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('competition.value_delta_hint')),
 
                     Forms\Components\Select::make('category')
                         ->label('التصنيف')
@@ -119,7 +119,7 @@ class ScoreAdjustmentResource extends Resource
                         ])
                         ->default('manual')
                         ->required()
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'نوع التعديل: يدوي أو مكافأة أو خصم أو تصحيح'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('competition.category_hint')),
 
                     Forms\Components\Textarea::make('reason')
                         ->label('السبب')
@@ -127,7 +127,7 @@ class ScoreAdjustmentResource extends Resource
                         ->rows(3)
                         ->maxLength(500)
                         ->columnSpanFull()
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'سبب إجراء هذا التعديل — مطلوب للتوثيق'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('competition.adjustment_reason_hint')),
 
                     Forms\Components\Hidden::make('adjusted_by')
                         ->default(fn () => auth()->id()),

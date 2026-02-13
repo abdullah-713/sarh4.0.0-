@@ -69,13 +69,13 @@ class GeneralSettingsPage extends Page implements HasForms
                             ->label('اسم التطبيق (عربي)')
                             ->required()
                             ->maxLength(100)
-                            ->hintIcon('heroicon-m-information-circle', tooltip: 'يظهر في شريط العنوان والشعار العلوي'),
+                            ->hintIcon('heroicon-m-information-circle', tooltip: __('install.app_name_hint')),
 
                         Forms\Components\TextInput::make('app_name_en')
                             ->label('اسم التطبيق (إنجليزي)')
                             ->required()
                             ->maxLength(100)
-                            ->hintIcon('heroicon-m-information-circle', tooltip: 'يُستخدم في التقارير الرسمية والميتاداتا'),
+                            ->hintIcon('heroicon-m-information-circle', tooltip: __('install.app_name_en_hint')),
 
                         Forms\Components\FileUpload::make('logo_path')
                             ->label('الشعار (Logo)')
@@ -85,7 +85,7 @@ class GeneralSettingsPage extends Page implements HasForms
                             ->disk('public')
                             ->maxSize(2048)
                             ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/svg+xml', 'image/webp'])
-                            ->hintIcon('heroicon-m-information-circle', tooltip: 'شعار المؤسسة — يظهر في أعلى اللوحة وصفحة الدخول')
+                            ->hintIcon('heroicon-m-information-circle', tooltip: __('install.logo_path_hint'))
                             ->helperText('يُفضل PNG أو SVG بخلفية شفافة — أقصى حجم 2MB'),
 
                         Forms\Components\FileUpload::make('favicon_path')
@@ -95,7 +95,7 @@ class GeneralSettingsPage extends Page implements HasForms
                             ->disk('public')
                             ->maxSize(512)
                             ->acceptedFileTypes(['image/png', 'image/x-icon', 'image/svg+xml'])
-                            ->hintIcon('heroicon-m-information-circle', tooltip: 'أيقونة التبويب — تظهر في شريط المتصفح')
+                            ->hintIcon('heroicon-m-information-circle', tooltip: __('install.favicon_path_hint'))
                             ->helperText('يُفضل PNG مربع 192×192 بكسل'),
                     ])->columns(['default' => 1, 'lg' => 2]),
 
@@ -108,13 +108,13 @@ class GeneralSettingsPage extends Page implements HasForms
                         Forms\Components\TextInput::make('welcome_title')
                             ->label('عنوان الترحيب')
                             ->maxLength(200)
-                            ->hintIcon('heroicon-m-information-circle', tooltip: 'العنوان الرئيسي في صفحة لوحة التحكم'),
+                            ->hintIcon('heroicon-m-information-circle', tooltip: __('install.welcome_title_hint')),
 
                         Forms\Components\Textarea::make('welcome_body')
                             ->label('نص الترحيب')
                             ->rows(3)
                             ->maxLength(500)
-                            ->hintIcon('heroicon-m-information-circle', tooltip: 'نص تعريفي يظهر أسفل العنوان'),
+                            ->hintIcon('heroicon-m-information-circle', tooltip: __('install.welcome_body_hint')),
                     ])->columns(1),
 
                 // ── PWA Metadata ──────────────────────────────────
@@ -127,20 +127,20 @@ class GeneralSettingsPage extends Page implements HasForms
                         Forms\Components\TextInput::make('pwa_name')
                             ->label('اسم التطبيق الكامل')
                             ->maxLength(100)
-                            ->hintIcon('heroicon-m-information-circle', tooltip: 'الاسم الذي يظهر عند تثبيت التطبيق'),
+                            ->hintIcon('heroicon-m-information-circle', tooltip: __('install.pwa_name_hint')),
 
                         Forms\Components\TextInput::make('pwa_short_name')
                             ->label('الاسم المختصر')
                             ->maxLength(20)
-                            ->hintIcon('heroicon-m-information-circle', tooltip: 'يظهر أسفل أيقونة التطبيق على الشاشة الرئيسية'),
+                            ->hintIcon('heroicon-m-information-circle', tooltip: __('install.pwa_short_name_hint')),
 
                         Forms\Components\ColorPicker::make('pwa_theme_color')
                             ->label('لون الثيم')
-                            ->hintIcon('heroicon-m-information-circle', tooltip: 'لون شريط العنوان في المتصفح'),
+                            ->hintIcon('heroicon-m-information-circle', tooltip: __('install.pwa_theme_color_hint')),
 
                         Forms\Components\ColorPicker::make('pwa_background_color')
                             ->label('لون الخلفية')
-                            ->hintIcon('heroicon-m-information-circle', tooltip: 'لون خلفية شاشة التحميل'),
+                            ->hintIcon('heroicon-m-information-circle', tooltip: __('install.pwa_background_color_hint')),
                     ])->columns(['default' => 1, 'lg' => 2]),
             ])
             ->statePath('data');

@@ -65,7 +65,7 @@ class AttendanceResource extends Resource
 
                         Forms\Components\DatePicker::make('attendance_date')
                             ->label('التاريخ')
-                            ->hintIcon('heroicon-m-information-circle', tooltip: 'تاريخ يوم الحضور — يُحدد تلقائياً')
+                            ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.date_hint'))
                             ->default(now())
                             ->disabled()
                             ->dehydrated()
@@ -73,7 +73,7 @@ class AttendanceResource extends Resource
 
                         Forms\Components\TimePicker::make('check_in_at')
                             ->label('وقت الحضور')
-                            ->hintIcon('heroicon-m-information-circle', tooltip: 'وقت تسجيل الدخول — يُسجل تلقائياً عند الضغط')
+                            ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.check_in_time_hint'))
                             ->seconds(false)
                             ->default(now()->format('H:i'))
                             ->disabled()
@@ -94,7 +94,7 @@ class AttendanceResource extends Resource
 
                         Forms\Components\Textarea::make('notes')
                             ->label('ملاحظات')
-                            ->hintIcon('heroicon-m-information-circle', tooltip: 'أضف أي ملاحظة مثل سبب التأخير أو طلب إذن مبكر')
+                            ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.notes_hint'))
                             ->rows(2)
                             ->maxLength(255)
                             ->placeholder('أضف ملاحظة إن وجدت...'),

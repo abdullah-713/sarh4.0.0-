@@ -74,7 +74,7 @@ class UserResource extends Resource
                         ->maxSize(2048)
                         ->required()
                         ->columnSpanFull()
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'صورة شخصية واضحة للموظف — تظهر في جميع الأقسام')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.avatar_hint'))
                         ->helperText('صورة شخصية واضحة للموظف — تظهر في جميع الأقسام'),
                 ]),
 
@@ -86,13 +86,13 @@ class UserResource extends Resource
                         ->label(__('users.name_ar'))
                         ->required()
                         ->maxLength(255)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الاسم الكامل كما في الهوية — يظهر في كل الواجهات'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.name_ar_hint')),
 
                     Forms\Components\TextInput::make('name_en')
                         ->label(__('users.name_en'))
                         ->required()
                         ->maxLength(255)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الاسم بالإنجليزية للتقارير الرسمية والنظام'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.name_en_hint')),
 
                     Forms\Components\TextInput::make('email')
                         ->label(__('users.email'))
@@ -100,7 +100,7 @@ class UserResource extends Resource
                         ->required()
                         ->unique(ignoreRecord: true)
                         ->maxLength(255)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'البريد المستخدم لتسجيل الدخول واستلام الإشعارات'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.email_hint')),
 
                     Forms\Components\TextInput::make('password')
                         ->label(__('users.password'))
@@ -110,7 +110,7 @@ class UserResource extends Resource
                         ->dehydrated(fn (?string $state): bool => filled($state))
                         ->required(fn (string $operation): bool => $operation === 'create')
                         ->maxLength(255)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'كلمة المرور لتسجيل الدخول — يجب ألا تقل عن 8 أحرف'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.password_hint')),
                 ])->columns(['default' => 1, 'lg' => 2]),
 
             // ── Section 3: Financial (Basic Salary — Core for cost-per-minute) ──
@@ -124,28 +124,28 @@ class UserResource extends Resource
                         ->prefix(__('users.currency_sar'))
                         ->minValue(0)
                         ->step(100)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الراتب الأساسي الشهري — يُستخدم لحساب تكلفة دقيقة التأخير'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.basic_salary_hint')),
 
                     Forms\Components\TextInput::make('housing_allowance')
                         ->label(__('users.housing_allowance'))
                         ->numeric()
                         ->default(0)
                         ->prefix(__('users.currency_sar'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'بدل السكن الشهري'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.housing_allowance_hint')),
 
                     Forms\Components\TextInput::make('transport_allowance')
                         ->label(__('users.transport_allowance'))
                         ->numeric()
                         ->default(0)
                         ->prefix(__('users.currency_sar'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'بدل النقل الشهري'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.transport_allowance_hint')),
 
                     Forms\Components\TextInput::make('other_allowances')
                         ->label(__('users.other_allowances'))
                         ->numeric()
                         ->default(0)
                         ->prefix(__('users.currency_sar'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'أي بدلات إضافية مثل بدل الهاتف أو الطعام'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.other_allowances_hint')),
                 ])->columns(['default' => 1, 'lg' => 2]),
 
             // ── Section 4: Organizational (Optional, with smart defaults) ──
@@ -158,38 +158,38 @@ class UserResource extends Resource
                         ->relationship('branch', 'name_ar')
                         ->searchable()
                         ->preload()
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الفرع الذي يتبع له الموظف'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.branch_hint')),
 
                     Forms\Components\Select::make('department_id')
                         ->label(__('users.department'))
                         ->relationship('department', 'name_ar')
                         ->searchable()
                         ->preload()
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'القسم الذي يعمل فيه الموظف'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.department_hint')),
 
                     Forms\Components\Select::make('role_id')
                         ->label(__('users.role'))
                         ->relationship('role', 'name_ar')
                         ->searchable()
                         ->preload()
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الدور الوظيفي الذي يحدد صلاحيات الموظف'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.role_hint')),
 
                     Forms\Components\Select::make('direct_manager_id')
                         ->label(__('users.direct_manager'))
                         ->relationship('directManager', 'name_ar')
                         ->searchable()
                         ->preload()
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'المدير المباشر المسؤول عن هذا الموظف'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.direct_manager_hint')),
 
                     Forms\Components\TextInput::make('phone')
                         ->label(__('users.phone'))
                         ->tel()
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'رقم الجوال للتواصل مع الموظف'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.phone_hint')),
 
                     Forms\Components\TextInput::make('employee_id')
                         ->label(__('users.employee_id'))
                         ->unique(ignoreRecord: true)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الرقم الوظيفي الفريد للموظف في النظام'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.employee_id_hint')),
 
                     Forms\Components\Select::make('status')
                         ->label(__('users.status'))
@@ -200,7 +200,7 @@ class UserResource extends Resource
                             'on_leave'   => __('users.status_on_leave'),
                         ])
                         ->default('active')
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'حالة الموظف الحالية — تؤثر على إمكانية الدخول للنظام'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.status_hint')),
 
                     Forms\Components\Select::make('employment_type')
                         ->label(__('users.employment_type'))
@@ -211,7 +211,7 @@ class UserResource extends Resource
                             'intern'    => __('users.type_intern'),
                         ])
                         ->default('full_time')
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'نوع العقد الوظيفي — يحدد سياسات الدوام والإجازات'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.employment_type_hint')),
                 ])->columns(['default' => 1, 'lg' => 2]),
 
             // ── Hidden/Auto Defaults ──────────────────────────────

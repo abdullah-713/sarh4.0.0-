@@ -56,20 +56,20 @@ class PermissionResource extends Resource
                         ->label('الاسم بالعربية')
                         ->required()
                         ->maxLength(255)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'اسم الصلاحية كما يظهر في الواجهة'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.perm_name_ar_hint')),
 
                     Forms\Components\TextInput::make('name_en')
                         ->label('الاسم بالإنجليزية')
                         ->required()
                         ->maxLength(255)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'اسم الصلاحية بالإنجليزية'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.perm_name_en_hint')),
 
                     Forms\Components\TextInput::make('slug')
                         ->label('المعرّف')
                         ->required()
                         ->unique(ignoreRecord: true)
                         ->maxLength(100)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'معرّف فريد يُستخدم برمجياً للتحقق من الصلاحية')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.perm_slug_hint'))
                         ->helperText('معرّف فريد — مثال: view-attendance'),
 
                     Forms\Components\Select::make('group')
@@ -88,13 +88,13 @@ class PermissionResource extends Resource
                         ->required()
                         ->native(false)
                         ->searchable()
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'المجموعة التي تنتمي إليها هذه الصلاحية'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.perm_group_hint')),
 
                     Forms\Components\Textarea::make('description_en')
                         ->label('الوصف')
                         ->rows(2)
                         ->columnSpanFull()
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'وصف مختصر لما تسمح به هذه الصلاحية'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('users.perm_description_hint')),
                 ])->columns(['default' => 1, 'lg' => 2]),
         ]);
     }

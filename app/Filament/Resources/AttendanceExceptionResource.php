@@ -61,7 +61,7 @@ class AttendanceExceptionResource extends Resource
                         ->searchable()
                         ->preload()
                         ->required()
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'اختر الموظف الذي سيُطبَّق عليه الاستثناء'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.exception_user_hint')),
 
                     Forms\Components\Select::make('exception_type')
                         ->label('نوع الاستثناء')
@@ -75,7 +75,7 @@ class AttendanceExceptionResource extends Resource
                         ->required()
                         ->native(false)
                         ->live()
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'نوع الاستثناء يحدد القواعد المُطبَّقة على الموظف'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.exception_type_hint')),
                 ])->columns(['default' => 1, 'lg' => 2]),
 
             Forms\Components\Section::make('إعدادات الدوام المخصص')
@@ -84,39 +84,39 @@ class AttendanceExceptionResource extends Resource
                     Forms\Components\TimePicker::make('custom_shift_start')
                         ->label('بداية الدوام المخصص')
                         ->seconds(false)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'وقت بداية الدوام المخصص لهذا الموظف')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.custom_shift_start_hint'))
                         ->helperText('اتركه فارغاً لاستخدام الدوام الرسمي'),
 
                     Forms\Components\TimePicker::make('custom_shift_end')
                         ->label('نهاية الدوام المخصص')
                         ->seconds(false)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'وقت نهاية الدوام المخصص لهذا الموظف'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.custom_shift_end_hint')),
 
                     Forms\Components\TextInput::make('custom_grace_minutes')
                         ->label('فترة السماح المخصصة (دقيقة)')
                         ->numeric()
                         ->minValue(0)
                         ->maxValue(120)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'عدد الدقائق المسموحة بعد بداية الدوام'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.custom_grace_minutes_hint')),
                 ])->columns(['default' => 1, 'lg' => 3]),
 
             Forms\Components\Section::make('التجاوزات')
                 ->schema([
                     Forms\Components\Toggle::make('bypass_geofence')
                         ->label('تجاوز السياج الجغرافي')
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'يسمح بتسجيل الحضور من أي موقع جغرافي')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.bypass_geofence_hint'))
                         ->helperText('يسمح بتسجيل الحضور من أي موقع'),
 
                     Forms\Components\Toggle::make('bypass_late_flag')
                         ->label('تجاوز علامة التأخير')
                         ->default(true)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'لا يُسجَّل كمتأخر حتى لو وصل بعد الوقت')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.bypass_late_flag_hint'))
                         ->helperText('لا يُسجَّل كمتأخر حتى لو وصل بعد الوقت'),
 
                     Forms\Components\Toggle::make('is_active')
                         ->label('مفعّل')
                         ->default(true)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'هل هذا الاستثناء نشط حالياً'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.exception_active_hint')),
                 ])->columns(['default' => 1, 'lg' => 3]),
 
             Forms\Components\Section::make('الفترة والسبب')
@@ -125,18 +125,18 @@ class AttendanceExceptionResource extends Resource
                         ->label('تاريخ البداية')
                         ->required()
                         ->default(now())
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'تاريخ بداية سريان الاستثناء'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.exception_start_date_hint')),
 
                     Forms\Components\DatePicker::make('end_date')
                         ->label('تاريخ الانتهاء')
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'اتركه فارغاً لجعل الاستثناء دائماً')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.exception_end_date_hint'))
                         ->helperText('اتركه فارغاً للاستثناء الدائم'),
 
                     Forms\Components\Textarea::make('reason')
                         ->label('السبب')
                         ->rows(3)
                         ->columnSpanFull()
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'سبب منح هذا الاستثناء للموظف'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.exception_reason_hint')),
 
                     Forms\Components\Hidden::make('approved_by')
                         ->default(fn () => auth()->id()),

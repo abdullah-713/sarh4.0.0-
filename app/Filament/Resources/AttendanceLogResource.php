@@ -68,26 +68,26 @@ class AttendanceLogResource extends Resource
                         ->preload()
                         ->required()
                         ->label(__('attendance.employee'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'اختر الموظف المراد تسجيل حضوره'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.employee_hint')),
 
                     Forms\Components\Select::make('branch_id')
                         ->relationship('branch', 'name_ar')
                         ->required()
                         ->label(__('attendance.branch'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الفرع الذي سُجّل منه الحضور'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.branch_hint')),
 
                     Forms\Components\DatePicker::make('attendance_date')
                         ->required()
                         ->label(__('attendance.date'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'تاريخ يوم العمل'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.date_hint')),
 
                     Forms\Components\DateTimePicker::make('check_in_at')
                         ->label(__('attendance.check_in_time'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الوقت الفعلي لتسجيل الدخول'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.check_in_time_hint')),
 
                     Forms\Components\DateTimePicker::make('check_out_at')
                         ->label(__('attendance.check_out_time'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الوقت الفعلي لتسجيل الخروج'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.check_out_time_hint')),
 
                     Forms\Components\Select::make('status')
                         ->options([
@@ -101,7 +101,7 @@ class AttendanceLogResource extends Resource
                         ])
                         ->required()
                         ->label(__('attendance.status'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'حالة الحضور للموظف في هذا اليوم'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.status_hint')),
                 ])->columns(['default' => 1, 'lg' => 3]),
 
             Forms\Components\Section::make(__('attendance.financial_section'))
@@ -110,31 +110,31 @@ class AttendanceLogResource extends Resource
                         ->numeric()
                         ->default(0)
                         ->label(__('attendance.delay_minutes'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'عدد دقائق التأخير عن بداية الدوام'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.delay_minutes_hint')),
 
                     Forms\Components\TextInput::make('cost_per_minute')
                         ->numeric()
                         ->disabled()
                         ->label(__('attendance.cost_per_minute'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'تكلفة الدقيقة الواحدة محسوبة من الراتب'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.cost_per_minute_hint')),
 
                     Forms\Components\TextInput::make('delay_cost')
                         ->numeric()
                         ->disabled()
                         ->label(__('attendance.delay_cost'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الخسارة المالية الناتجة عن التأخير'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.delay_cost_hint')),
 
                     Forms\Components\TextInput::make('overtime_minutes')
                         ->numeric()
                         ->default(0)
                         ->label(__('attendance.overtime_minutes'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'دقائق العمل الإضافي بعد نهاية الدوام'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.overtime_minutes_hint')),
 
                     Forms\Components\TextInput::make('overtime_value')
                         ->numeric()
                         ->disabled()
                         ->label(__('attendance.overtime_value'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'قيمة العمل الإضافي بمعدل 1.5× من تكلفة الدقيقة'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.overtime_value_hint')),
                 ])->columns(['default' => 1, 'lg' => 3]),
 
             Forms\Components\Section::make(__('attendance.gps_section'))
@@ -144,22 +144,22 @@ class AttendanceLogResource extends Resource
                         ->disabled()
                         ->suffix(__('attendance.meters'))
                         ->label(__('attendance.check_in_distance'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'المسافة بين موقع الموظف ومقر الفرع عند التسجيل'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.check_in_distance_hint')),
 
                     Forms\Components\Toggle::make('check_in_within_geofence')
                         ->disabled()
                         ->label(__('attendance.within_geofence'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'هل كان الموظف داخل النطاق الجغرافي المسموح'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.geofence_hint')),
 
                     Forms\Components\Toggle::make('is_manual_entry')
                         ->label(__('attendance.manual_entry'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'هل تم إدخال السجل يدوياً بواسطة الإدارة'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.manual_entry_hint')),
                 ])->columns(['default' => 1, 'lg' => 3]),
 
             Forms\Components\Textarea::make('notes')
                 ->label(__('attendance.notes'))
                 ->columnSpanFull()
-                ->hintIcon('heroicon-m-information-circle', tooltip: 'ملاحظات إضافية حول سجل الحضور'),
+                ->hintIcon('heroicon-m-information-circle', tooltip: __('attendance.notes_hint')),
         ]);
     }
 

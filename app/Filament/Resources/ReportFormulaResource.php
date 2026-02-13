@@ -61,26 +61,26 @@ class ReportFormulaResource extends Resource
                         ->label('الاسم بالعربية')
                         ->required()
                         ->maxLength(255)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'اسم الصيغة كما يظهر في قائمة التقارير'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('analytics.formula_name_ar_hint')),
 
                     Forms\Components\TextInput::make('name_en')
                         ->label('الاسم بالإنجليزية')
                         ->required()
                         ->maxLength(255)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'اسم الصيغة بالإنجليزية'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('analytics.formula_name_en_hint')),
 
                     Forms\Components\TextInput::make('slug')
                         ->label('المعرّف')
                         ->required()
                         ->unique(ignoreRecord: true)
                         ->maxLength(100)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'معرّف فريد يُستخدم للإشارة لهذه الصيغة')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('analytics.formula_slug_hint'))
                         ->helperText('معرّف فريد — مثال: performance-score'),
 
                     Forms\Components\Toggle::make('is_active')
                         ->label('مفعّلة')
                         ->default(true)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'هل هذه الصيغة نشطة ومتاحة للاستخدام'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('analytics.formula_is_active_hint')),
                 ])->columns(['default' => 1, 'lg' => 2]),
 
             Forms\Components\Section::make('الصيغة الحسابية')
@@ -91,7 +91,7 @@ class ReportFormulaResource extends Resource
                         ->required()
                         ->rows(3)
                         ->placeholder('(attendance * 0.4) + (on_time_rate * 0.3) + (total_points * 0.003)')
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'اكتب الصيغة الحسابية باستخدام المتغيرات المتاحة')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('analytics.formula_expression_hint'))
                         ->helperText('العمليات المدعومة: + - * / () — استخدم أسماء المتغيرات من القائمة أدناه')
                         ->columnSpanFull(),
 
@@ -120,12 +120,12 @@ class ReportFormulaResource extends Resource
                     Forms\Components\Textarea::make('description_ar')
                         ->label('الوصف بالعربية')
                         ->rows(2)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'وصف مختصر لهذه الصيغة بالعربية'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('analytics.formula_description_ar_hint')),
 
                     Forms\Components\Textarea::make('description_en')
                         ->label('الوصف بالإنجليزية')
                         ->rows(2)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'وصف مختصر لهذه الصيغة بالإنجليزية'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('analytics.formula_description_en_hint')),
                 ])->columns(['default' => 1, 'lg' => 2]),
 
             Forms\Components\Hidden::make('created_by')

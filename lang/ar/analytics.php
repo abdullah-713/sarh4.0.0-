@@ -159,4 +159,16 @@ return [
     'high_risk_employees'    => 'موظفون عالي المخاطر',
     'today_summary'          => 'ملخص اليوم',
     'run_analytics_now'      => 'تشغيل التحليلات الآن',
+
+    // ── Report Formula Hints (ⓘ) ────────────────────────────
+    'formula_navigation' => 'صيغ التقارير',
+    'formula_model' => 'صيغة تقرير',
+    'formula_plural' => 'صيغ التقارير',
+    'formula_name_ar_hint' => 'اسم الصيغة الحسابية بالعربية — يظهر في قائمة التقارير المتاحة.',
+    'formula_name_en_hint' => 'اسم الصيغة بالإنجليزية — للتقارير الرسمية.',
+    'formula_slug_hint' => 'معرّف فريد يُستخدم برمجياً للإشارة لهذه الصيغة.',
+    'formula_is_active_hint' => 'هل الصيغة نشطة ومتاحة للاستخدام في التقارير — عند الإيقاف لن تظهر.',
+    'formula_expression_hint' => 'الصيغة الحسابية باستخدام المتغيرات المتاحة — مثال: (basic_salary + allowances) / 30.',
+    'formula_description_ar_hint' => 'وصف مختصر لما تحسبه هذه الصيغة ومتى تُستخدم — بالعربية.',
+    'formula_description_en_hint' => 'وصف الصيغة بالإنجليزية — للتوثيق الفني.',
 ];

@@ -49,13 +49,13 @@ class BranchResource extends Resource
                         ->label(__('branches.name_ar'))
                         ->required()
                         ->maxLength(255)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'اسم الفرع باللغة العربية كما يظهر في الواجهة'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('branches.name_ar_hint')),
 
                     Forms\Components\TextInput::make('name_en')
                         ->label(__('branches.name_en'))
                         ->required()
                         ->maxLength(255)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'اسم الفرع بالإنجليزية للتقارير الرسمية'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('branches.name_en_hint')),
 
                     Forms\Components\TextInput::make('code')
                         ->label(__('branches.code'))
@@ -63,22 +63,22 @@ class BranchResource extends Resource
                         ->unique(ignoreRecord: true)
                         ->maxLength(20)
                         ->placeholder('مثال: RYD-01')
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'رمز مختصر يميّز الفرع — مثال: RYD-HQ'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('branches.code_hint')),
 
                     Forms\Components\TextInput::make('phone')
                         ->label(__('branches.phone'))
                         ->tel()
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'رقم هاتف الفرع للتواصل'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('branches.phone_hint')),
 
                     Forms\Components\TextInput::make('email')
                         ->label(__('branches.email'))
                         ->email()
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'البريد الإلكتروني الرسمي للفرع'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('branches.email_hint')),
 
                     Forms\Components\Toggle::make('is_active')
                         ->label(__('branches.is_active'))
                         ->default(true)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'عند إيقافه لن يظهر الفرع في قوائم الاختيار')
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('branches.is_active_hint'))
                         ->helperText('عند إيقافه لن يظهر الفرع في قوائم الاختيار'),
                 ])->columns(['default' => 1, 'lg' => 2]),
 
@@ -100,7 +100,7 @@ class BranchResource extends Resource
                         ->maxValue(90)
                         ->live(onBlur: true)
                         ->afterStateUpdated(fn (Set $set, ?string $state) => $set('latitude', $state))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الإحداثية الجغرافية — تُحدَّد تلقائياً من الخريطة'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('branches.latitude_hint')),
 
                     Forms\Components\TextInput::make('longitude')
                         ->label(__('branches.longitude'))
@@ -111,7 +111,7 @@ class BranchResource extends Resource
                         ->maxValue(180)
                         ->live(onBlur: true)
                         ->afterStateUpdated(fn (Set $set, ?string $state) => $set('longitude', $state))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الإحداثية الجغرافية — تُحدَّد تلقائياً من الخريطة'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('branches.longitude_hint')),
 
                     Forms\Components\TextInput::make('geofence_radius')
                         ->label(__('branches.geofence_radius'))
@@ -122,7 +122,7 @@ class BranchResource extends Resource
                         ->maxValue(100000)
                         ->suffix(__('branches.meters'))
                         ->helperText(__('branches.geofence_radius_help'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'النطاق الجغرافي الذي يُسمح بتسجيل الحضور منه حول مقر الفرع'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('branches.geofence_radius_hint')),
                 ])->columns(['default' => 1, 'lg' => 2]),
 
             // ── Section 3: Shift & Policy ─────────────────────────
@@ -134,13 +134,13 @@ class BranchResource extends Resource
                         ->label(__('branches.shift_start'))
                         ->default('08:00')
                         ->seconds(false)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الوقت الرسمي لبداية الدوام في هذا الفرع'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('branches.shift_start_hint')),
 
                     Forms\Components\TimePicker::make('default_shift_end')
                         ->label(__('branches.shift_end'))
                         ->default('17:00')
                         ->seconds(false)
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'الوقت الرسمي لنهاية الدوام'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('branches.shift_end_hint')),
 
                     Forms\Components\TextInput::make('grace_period_minutes')
                         ->label(__('branches.grace_period'))
@@ -149,7 +149,7 @@ class BranchResource extends Resource
                         ->minValue(0)
                         ->maxValue(120)
                         ->suffix(__('branches.minutes'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'المدة المسموحة بعد بداية الدوام قبل احتساب التأخير'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('branches.grace_period_hint')),
                 ])->columns(['default' => 1, 'lg' => 3]),
 
             // ── Section 4: Address (Optional) ─────────────────────
@@ -159,19 +159,19 @@ class BranchResource extends Resource
                 ->schema([
                     Forms\Components\Textarea::make('address_ar')
                         ->label(__('branches.address_ar'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'العنوان الكامل للفرع باللغة العربية'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('branches.address_ar_hint')),
 
                     Forms\Components\Textarea::make('address_en')
                         ->label(__('branches.address_en'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'العنوان بالإنجليزية للتقارير الرسمية'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('branches.address_en_hint')),
 
                     Forms\Components\TextInput::make('city_ar')
                         ->label(__('branches.city_ar'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'اسم المدينة بالعربية'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('branches.city_ar_hint')),
 
                     Forms\Components\TextInput::make('city_en')
                         ->label(__('branches.city_en'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'اسم المدينة بالإنجليزية'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('branches.city_en_hint')),
                 ])->columns(['default' => 1, 'lg' => 2]),
 
             // ── Section 5: Financial (Optional) ───────────────────
@@ -184,7 +184,7 @@ class BranchResource extends Resource
                         ->numeric()
                         ->default(0)
                         ->prefix(__('branches.currency_sar'))
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'إجمالي ميزانية الرواتب الشهرية للفرع'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('branches.salary_budget_hint')),
 
                     Forms\Components\TextInput::make('monthly_delay_losses')
                         ->label(__('branches.delay_losses'))
@@ -192,7 +192,7 @@ class BranchResource extends Resource
                         ->default(0)
                         ->prefix(__('branches.currency_sar'))
                         ->disabled()
-                        ->hintIcon('heroicon-m-information-circle', tooltip: 'إجمالي الخسائر المالية من تأخيرات الموظفين'),
+                        ->hintIcon('heroicon-m-information-circle', tooltip: __('branches.delay_losses_hint')),
                 ])->columns(['default' => 1, 'lg' => 2]),
         ]);
     }

@@ -21,7 +21,7 @@ Route::get('/', function () {
 */
 Route::get('/manifest.json', function () {
     $s = Setting::instance();
-    $iconUrl = $s->logo_url ?? '/build/assets/icon-512.png';
+    $iconUrl = $s->logo_url ?? '/icon-192.png';
 
     return response()->json([
         'name'             => $s->pwa_name,

@@ -283,7 +283,7 @@ class DeploymentDataPage extends Page
 
         Notification::make()
             ->title('تم تطبيق المناوبة الموحدة')
-            ->body("مناوبة واحدة 08:00—21:00 (عدا الجمعة) مرتبطة بـ {$shift->users()->count()} موظف.")
+            ->body("مناوبة واحدة 08:00—21:00 (عدا الجمعة) مرتبطة بـ {$shift->assignments()->count()} موظف.")
             ->success()
             ->send();
     }

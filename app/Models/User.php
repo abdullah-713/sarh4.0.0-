@@ -278,11 +278,17 @@ class User extends Authenticatable implements FilamentUser
 
     // --- Gamification ---
 
-    public function badges(): BelongsToMany
+    public function badges(): HasMany
     {
-        return $this->belongsToMany(Badge::class, 'user_badges')
-                     ->withPivot('awarded_at', 'awarded_reason')
-                     ->withTimestamps();
+        return $this->hasMany(UserBadge::class);
+    }
+
+    /**
+     * شارات الموظف مع بيانات الشارة الأصلية.
+     */
+    public function awardedBadges(): HasMany
+    {
+        return $this->badges()->with('badge');
     }
 
     public function pointsTransactions(): HasMany
@@ -333,18 +339,33 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(ScoreAdjustment::class);
     }
 
-    public function shifts(): BelongsToMany
+    public function shifts(): HasMany
     {
-        return $this->belongsToMany(Shift::class, 'user_shifts')
-                     ->withPivot('effective_from', 'effective_to', 'is_current')
-                     ->withTimestamps();
+        return $this->hasMany(UserShift::class);
     }
 
+    /**
+     * تعيين الشفت النشط الحالي.
+     */
+    public function activeShift(): ?UserShift
+    {
+        return $this->shifts()->active()->current()->first();
+    }
+
+    /**
+     * الشفت الحالي — يرجع كائن Shift مباشرة (للتوافق مع AttendanceService).
+     */
     public function currentShift(): ?Shift
     {
-        return $this->shifts()
-                     ->wherePivot('is_current', true)
-                     ->first();
+        return $this->activeShift()?->shift;
+    }
+
+    /**
+     * تاريخ الشفتات مرتب من الأحدث.
+     */
+    public function shiftHistory(): HasMany
+    {
+        return $this->shifts()->orderBy('effective_from', 'desc');
     }
 
     /*

@@ -18,7 +18,13 @@ class GamificationWidget extends Component
         $this->totalPoints = $user->total_points ?? 0;
         $this->currentStreak = $user->current_streak ?? 0;
         $this->longestStreak = $user->longest_streak ?? 0;
-        $this->badges = $user->badges()->latest('pivot_created_at')->take(6)->get();
+        $this->badges = $user->badges()
+            ->with('badge')
+            ->latest('awarded_at')
+            ->take(6)
+            ->get()
+            ->map(fn ($ub) => $ub->badge)
+            ->filter();
     }
 
     public function render()

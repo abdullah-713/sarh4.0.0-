@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Shift extends Model
 {
@@ -29,11 +29,20 @@ class Shift extends Model
         ];
     }
 
-    public function users(): BelongsToMany
+    /**
+     * جميع تعيينات هذا الشفت.
+     */
+    public function assignments(): HasMany
     {
-        return $this->belongsToMany(User::class, 'user_shifts')
-                     ->withPivot('effective_from', 'effective_to', 'is_current')
-                     ->withTimestamps();
+        return $this->hasMany(UserShift::class);
+    }
+
+    /**
+     * الموظفون المعينون حالياً على هذا الشفت.
+     */
+    public function currentlyAssignedUsers(): HasMany
+    {
+        return $this->assignments()->active()->current();
     }
 
     public function getNameAttribute(): string

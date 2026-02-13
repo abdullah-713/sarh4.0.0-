@@ -1,9 +1,12 @@
 <x-dynamic-component :component="$getFieldWrapperView()" :field="$field">
-    <div
-        x-data="{
-            lat: $wire.entangle('data.latitude'),
-            lng: $wire.entangle('data.longitude'),
-            radius: $wire.entangle('data.geofence_radius'),
+    {{-- Alpine.js component defined in script to avoid HTML attribute quoting issues --}}
+    @once
+    <script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('sarhMapPicker', () => ({
+            lat: null,
+            lng: null,
+            radius: null,
             map: null,
             marker: null,
             circle: null,
@@ -14,14 +17,12 @@
             loadLeaflet() {
                 return new Promise((resolve, reject) => {
                     if (window.L) { resolve(); return; }
-
-                    if (!document.querySelector('link[href*=\"leaflet\"]')) {
+                    if (!document.querySelector('link[href*="leaflet"]')) {
                         const css = document.createElement('link');
                         css.rel = 'stylesheet';
                         css.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
                         document.head.appendChild(css);
                     }
-
                     const js = document.createElement('script');
                     js.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
                     js.onload = () => resolve();
@@ -33,9 +34,9 @@
             forceResize() {
                 if (!this.map) return;
                 this.map.invalidateSize();
-                setTimeout(() => this.map?.invalidateSize(), 100);
-                setTimeout(() => this.map?.invalidateSize(), 300);
-                setTimeout(() => this.map?.invalidateSize(), 600);
+                setTimeout(() => { if (this.map) this.map.invalidateSize(); }, 100);
+                setTimeout(() => { if (this.map) this.map.invalidateSize(); }, 300);
+                setTimeout(() => { if (this.map) this.map.invalidateSize(); }, 600);
                 setTimeout(() => {
                     if (this.map) {
                         this.map.invalidateSize();
@@ -50,12 +51,12 @@
                 if (!container || container.offsetHeight < 10) return;
 
                 this.mapReady = true;
-                const defaultLat = parseFloat(this.lat) || 24.7136;
-                const defaultLng = parseFloat(this.lng) || 46.6753;
-                const defaultRadius = parseInt(this.radius) || 100;
+                const dLat = parseFloat(this.lat) || 24.7136;
+                const dLng = parseFloat(this.lng) || 46.6753;
+                const dRadius = parseInt(this.radius) || 100;
 
                 this.map = L.map(container, {
-                    center: [defaultLat, defaultLng],
+                    center: [dLat, dLng],
                     zoom: 15,
                     scrollWheelZoom: true,
                     tap: true,
@@ -69,12 +70,10 @@
                     maxZoom: 19,
                 }).addTo(this.map);
 
-                this.marker = L.marker([defaultLat, defaultLng], {
-                    draggable: true,
-                }).addTo(this.map);
+                this.marker = L.marker([dLat, dLng], { draggable: true }).addTo(this.map);
 
-                this.circle = L.circle([defaultLat, defaultLng], {
-                    radius: defaultRadius,
+                this.circle = L.circle([dLat, dLng], {
+                    radius: dRadius,
                     color: '#FF8C00',
                     fillColor: '#FF8C00',
                     fillOpacity: 0.12,
@@ -101,19 +100,19 @@
 
                 this.$watch('lat', (val) => {
                     if (this.marker && val && this.lng) {
-                        const latlng = L.latLng(parseFloat(val), parseFloat(this.lng));
-                        this.marker.setLatLng(latlng);
-                        this.circle.setLatLng(latlng);
-                        this.map.panTo(latlng);
+                        const ll = L.latLng(parseFloat(val), parseFloat(this.lng));
+                        this.marker.setLatLng(ll);
+                        this.circle.setLatLng(ll);
+                        this.map.panTo(ll);
                     }
                 });
 
                 this.$watch('lng', (val) => {
                     if (this.marker && val && this.lat) {
-                        const latlng = L.latLng(parseFloat(this.lat), parseFloat(val));
-                        this.marker.setLatLng(latlng);
-                        this.circle.setLatLng(latlng);
-                        this.map.panTo(latlng);
+                        const ll = L.latLng(parseFloat(this.lat), parseFloat(val));
+                        this.marker.setLatLng(ll);
+                        this.circle.setLatLng(ll);
+                        this.map.panTo(ll);
                     }
                 });
 
@@ -121,6 +120,11 @@
             },
 
             async init() {
+                // Wire entangle bindings
+                this.lat = this.$wire.entangle('data.latitude');
+                this.lng = this.$wire.entangle('data.longitude');
+                this.radius = this.$wire.entangle('data.geofence_radius');
+
                 try {
                     await this.loadLeaflet();
                     this.loaded = true;
@@ -128,8 +132,8 @@
                     this.$nextTick(() => {
                         this.initMap();
 
-                        // IntersectionObserver: initialize map when container becomes visible
-                        const observer = new IntersectionObserver((entries) => {
+                        // IntersectionObserver
+                        const obs = new IntersectionObserver((entries) => {
                             entries.forEach(entry => {
                                 if (entry.isIntersecting) {
                                     this.initMap();
@@ -137,27 +141,21 @@
                                 }
                             });
                         }, { threshold: 0.1 });
-                        observer.observe(this.$refs.map);
+                        if (this.$refs.map) obs.observe(this.$refs.map);
 
-                        // MutationObserver: catch Filament section expand/collapse
+                        // MutationObserver for Filament sections
                         const section = this.$el.closest('.fi-section');
                         if (section) {
                             new MutationObserver(() => {
-                                setTimeout(() => {
-                                    this.initMap();
-                                    this.forceResize();
-                                }, 200);
+                                setTimeout(() => { this.initMap(); this.forceResize(); }, 200);
                             }).observe(section, { attributes: true, childList: true, subtree: true });
                         }
 
-                        // Also watch parent tabs/steps
-                        const tabPanel = this.$el.closest('[role=\"tabpanel\"], .fi-fo-tabs, .fi-fo-wizard-step');
-                        if (tabPanel) {
+                        // Watch tabs/wizard steps
+                        const tabPanel = this.$el.closest('[role="tabpanel"]') || this.$el.closest('.fi-fo-tabs') || this.$el.closest('.fi-fo-wizard-step');
+                        if (tabPanel && tabPanel.parentElement) {
                             new MutationObserver(() => {
-                                setTimeout(() => {
-                                    this.initMap();
-                                    this.forceResize();
-                                }, 300);
+                                setTimeout(() => { this.initMap(); this.forceResize(); }, 300);
                             }).observe(tabPanel.parentElement, { attributes: true, childList: true, subtree: true });
                         }
                     });
@@ -166,7 +164,13 @@
                     console.error('Leaflet load error:', e);
                 }
             }
-        }"
+        }));
+    });
+    </script>
+    @endonce
+
+    <div
+        x-data="sarhMapPicker()"
         wire:ignore
         class="w-full"
     >

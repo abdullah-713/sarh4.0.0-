@@ -1,0 +1,769 @@
+================================================================================
+  ملفات الترجمة العربية — SARH AL-ITQAN
+  تاريخ التصدير: 2026-02-13
+  المسار: lang/ar/
+================================================================================
+
+════════════════════════════════════════════════════════════════════════════════
+  1. lang/ar/analytics.php
+════════════════════════════════════════════════════════════════════════════════
+<?php
+
+return [
+    'title'                  => 'التحليلات',
+    'bi_dashboard'           => 'لوحة الذكاء المؤسسي',
+    'personal_mirror'        => 'المرآة الشخصية',
+    'lost_opportunity_clock' => 'ساعة الفرص الضائعة',
+    'attendance_heatmap'     => 'خريطة الحضور الحرارية',
+    'efficiency_score_card'  => 'بطاقة أداء الكفاءة',
+    'roi_matrix'             => 'مصفوفة العائد مقابل الانضباط',
+
+    'vpm'                    => 'قيمة الدقيقة',
+    'productivity_gap'       => 'فجوة الإنتاجية',
+    'loss_ratio'             => 'نسبة الخسائر',
+    'efficiency_score'       => 'درجة الكفاءة',
+    'roi_discipline'         => 'عائد الانضباط',
+
+    'delay_losses'           => 'خسائر التأخير',
+    'absence_losses'         => 'خسائر الغياب',
+    'early_leave_losses'     => 'خسائر الخروج المبكر',
+    'total_losses'           => 'إجمالي الخسائر',
+    'overtime_cost'          => 'تكلفة العمل الإضافي',
+
+    'alert_threshold_exceeded' => 'تجاوز حد الخسائر',
+    'alert_low_attendance'     => 'انخفاض حاد في الحضور',
+    'alert_mass_late'          => 'تأخير جماعي',
+    'alert_pattern_detected'   => 'نمط مكتشف',
+    'severity_critical'        => 'حرج',
+    'severity_high'            => 'عالي',
+    'severity_medium'          => 'متوسط',
+    'severity_low'             => 'منخفض',
+
+    'pattern_frequent_late'       => 'تأخير متكرر',
+    'pattern_pre_holiday_absence' => 'غياب ما قبل الإجازة',
+    'pattern_monthly_cycle'       => 'نمط شهري',
+    'pattern_burnout_risk'        => 'خطر إرهاق',
+    'pattern_improving'           => 'تحسّن ملحوظ',
+    'pattern_declining'           => 'تراجع مستمر',
+
+    'performance_exceptional' => 'أداء استثنائي! أنت قدوة لزملائك',
+    'performance_excellent'   => 'أداء ممتاز، استمر على هذا المستوى',
+    'performance_good'        => 'أداء جيد، لكن يمكنك التحسن أكثر',
+    'performance_needs_work'  => 'يحتاج لتحسين — التأخير يكلفك مالياً',
+    'performance_poor'        => 'أداء ضعيف — راجع التزامك قبل فوات الأوان',
+
+    'payroll'                => 'كشف الرواتب',
+    'payrolls'               => 'كشوف الرواتب',
+    'gross_salary'           => 'الراتب الإجمالي',
+    'net_salary'             => 'صافي الراتب',
+    'total_deductions'       => 'إجمالي الاستقطاعات',
+    'total_additions'        => 'إجمالي الإضافات',
+    'delay_deductions'       => 'استقطاع التأخير',
+    'absence_deductions'     => 'استقطاع الغياب',
+    'early_leave_deductions' => 'استقطاع الخروج المبكر',
+    'overtime_pay'           => 'أجر العمل الإضافي',
+
+    'quadrant_star'          => 'نجوم',
+    'quadrant_cash_cow'      => 'أبقار نقدية',
+    'quadrant_potential'     => 'إمكانيات',
+    'quadrant_at_risk'       => 'خطر',
+
+    'analytics_generated'    => 'تم توليد التحليلات بنجاح',
+    'payroll_generated'      => 'تم توليد كشوف الرواتب بنجاح',
+
+    'branch_performance'     => 'أداء الفروع',
+    'employee_patterns'      => 'أنماط الموظفين',
+    'loss_alerts'            => 'تنبيهات الخسائر',
+    'unacknowledged_alerts'  => 'تنبيهات لم يتم الاطلاع عليها',
+    'high_risk_employees'    => 'موظفون عالي المخاطر',
+    'today_summary'          => 'ملخص اليوم',
+];
+
+════════════════════════════════════════════════════════════════════════════════
+  2. lang/ar/app.php
+════════════════════════════════════════════════════════════════════════════════
+<?php
+
+return [
+    'brand_name' => 'صرح الإتقان — SARH',
+];
+
+════════════════════════════════════════════════════════════════════════════════
+  3. lang/ar/attendance.php
+════════════════════════════════════════════════════════════════════════════════
+<?php
+
+return [
+    'navigation_group'   => 'الحضور',
+    'navigation_label'   => 'سجل الحضور',
+    'model_label'        => 'سجل حضور',
+    'plural_model_label' => 'سجلات الحضور',
+
+    'check_in_section'  => 'بيانات الحضور',
+    'financial_section' => 'الأثر المالي',
+    'gps_section'       => 'بيانات الموقع الجغرافي',
+
+    'employee'        => 'الموظف',
+    'branch'          => 'الفرع',
+    'date'            => 'التاريخ',
+    'check_in_time'   => 'وقت الحضور',
+    'check_out_time'  => 'وقت الانصراف',
+    'status'          => 'الحالة',
+    'delay_minutes'   => 'دقائق التأخير',
+    'cost_per_minute' => 'تكلفة الدقيقة',
+    'delay_cost'      => 'تكلفة التأخير',
+    'overtime_minutes' => 'دقائق الإضافي',
+    'overtime_value'   => 'قيمة العمل الإضافي',
+    'worked_minutes'   => 'دقائق العمل',
+    'check_in_distance' => 'المسافة عند الحضور',
+    'within_geofence' => 'داخل الحدود الجغرافية',
+    'manual_entry'    => 'إدخال يدوي',
+    'notes'           => 'ملاحظات',
+    'meters'          => 'متر',
+    'min'             => 'د',
+    'sar'             => 'ريال',
+    'sar_min'         => 'ريال/د',
+
+    'status_present'  => 'حاضر',
+    'status_late'     => 'متأخر',
+    'status_absent'   => 'غائب',
+    'status_on_leave' => 'في إجازة',
+    'status_holiday'  => 'عطلة',
+    'status_remote'   => 'عن بُعد',
+    'status_half_day' => 'نصف يوم',
+
+    'from_date'             => 'من تاريخ',
+    'until_date'            => 'إلى تاريخ',
+    'date_range'            => 'نطاق التاريخ',
+    'with_financial_loss'   => 'مع خسائر مالية',
+
+    'today_present'         => 'الحاضرون اليوم',
+    'today_late'            => 'المتأخرون اليوم',
+    'today_absent'          => 'الغائبون اليوم',
+    'today_delay_losses'    => 'خسائر التأخير اليوم',
+    'today_overtime_value'  => 'قيمة العمل الإضافي اليوم',
+    'out_of_total'          => 'من أصل :total موظف',
+    'late_warning'          => 'يوجد تأخير!',
+    'no_late'               => 'لا يوجد تأخير ✓',
+    'financial_impact_today' => 'الأثر المالي لليوم',
+    'overtime_at_1_5x'      => 'بمعدل 1.5× من تكلفة الدقيقة',
+
+    'check_in_success'   => 'تم تسجيل الحضور بنجاح',
+    'check_out_success'  => 'تم تسجيل الانصراف بنجاح',
+    'not_checked_in'     => 'لم يتم تسجيل الحضور اليوم بعد',
+    'today_status'       => 'حالة اليوم',
+    'outside_geofence'   => 'أنت خارج الحدود الجغرافية المسموحة. المسافة: :distance متر (الحد المسموح: :radius متر)',
+    'no_branch_assigned' => 'لا يوجد فرع مُعيّن لهذا الموظف',
+];
+
+════════════════════════════════════════════════════════════════════════════════
+  4. lang/ar/branches.php
+════════════════════════════════════════════════════════════════════════════════
+<?php
+
+return [
+    'navigation_group'       => 'إدارة الموارد البشرية',
+    'navigation_label'       => 'الفروع',
+    'model_label'            => 'فرع',
+    'plural_model_label'     => 'الفروع',
+
+    'identity_section'       => 'هوية الفرع',
+    'geolocation_section'    => 'الموقع الجغرافي والسياج',
+    'geolocation_description'=> 'انقر على الخريطة أو اسحب المؤشر لتحديد موقع الفرع',
+    'shift_section'          => 'الدوام والسياسات',
+    'address_section'        => 'العنوان',
+    'financial_section'      => 'البيانات المالية',
+
+    'name_ar'                => 'الاسم بالعربية',
+    'name_en'                => 'الاسم بالإنجليزية',
+    'code'                   => 'رمز الفرع',
+    'phone'                  => 'الهاتف',
+    'email'                  => 'البريد الإلكتروني',
+    'is_active'              => 'نشط',
+    'latitude'               => 'خط العرض',
+    'longitude'              => 'خط الطول',
+    'geofence_radius'        => 'نصف قطر السياج الجغرافي',
+    'geofence_radius_help'   => 'من 1 متر إلى 100,000 متر — بدون قيود',
+    'map_picker'             => 'اختر الموقع من الخريطة',
+    'map_picker_help'        => 'انقر على الخريطة لوضع المؤشر، أو اسحب المؤشر لضبط الموقع بدقة',
+    'shift_start'            => 'بداية الدوام',
+    'shift_end'              => 'نهاية الدوام',
+    'grace_period'           => 'فترة السماح',
+    'address_ar'             => 'العنوان بالعربية',
+    'address_en'             => 'العنوان بالإنجليزية',
+    'city_ar'                => 'المدينة بالعربية',
+    'city_en'                => 'المدينة بالإنجليزية',
+    'salary_budget'          => 'ميزانية الرواتب الشهرية',
+    'delay_losses'           => 'خسائر التأخير الشهرية',
+    'employees_count'        => 'عدد الموظفين',
+    'created_at'             => 'تاريخ الإنشاء',
+    'currency_sar'           => 'ر.س',
+    'meters'                 => 'متر',
+    'minutes'                => 'دقيقة',
+];
+
+════════════════════════════════════════════════════════════════════════════════
+  5. lang/ar/circulars.php
+════════════════════════════════════════════════════════════════════════════════
+<?php
+
+return [
+    'navigation_group' => 'التواصل',
+    'navigation_label' => 'التعاميم',
+    'model_label'      => 'تعميم',
+    'plural_model_label' => 'التعاميم',
+
+    'section_content'  => 'محتوى التعميم',
+    'section_settings' => 'إعدادات التعميم',
+
+    'title_ar'              => 'العنوان (عربي)',
+    'title_en'              => 'العنوان (إنجليزي)',
+    'body_ar'               => 'النص (عربي)',
+    'body_en'               => 'النص (إنجليزي)',
+    'priority'              => 'الأولوية',
+    'priority_normal'       => 'عادي',
+    'priority_high'         => 'مرتفع',
+    'priority_urgent'       => 'عاجل',
+    'target_scope'          => 'النطاق المستهدف',
+    'scope_all'             => 'جميع الموظفين',
+    'scope_branch'          => 'فرع محدد',
+    'scope_department'      => 'قسم محدد',
+    'scope_role'            => 'دور محدد',
+    'target_branch'         => 'الفرع المستهدف',
+    'target_department'     => 'القسم المستهدف',
+    'target_role'           => 'الدور المستهدف',
+    'requires_acknowledgment' => 'يتطلب تأكيد الاطلاع',
+    'published_at'          => 'تاريخ النشر',
+    'expires_at'            => 'تاريخ الانتهاء',
+    'created_by'            => 'أنشئ بواسطة',
+    'acknowledgments_count' => 'عدد المطلعين',
+];
+
+════════════════════════════════════════════════════════════════════════════════
+  6. lang/ar/command.php
+════════════════════════════════════════════════════════════════════════════════
+<?php
+
+return [
+    'navigation_group'        => 'غرفة القيادة',
+    'financial_reports'       => 'التقارير المالية',
+    'whistleblower_vault'     => 'قبو البلاغات السرية',
+    'trap_audit'              => 'سجل مراجعة المصائد',
+
+    'loss_counter_title'      => 'مؤشرات الخسارة اللحظية',
+    'today_total_loss'        => 'إجمالي خسائر اليوم',
+    'today_late_count'        => 'عدد المتأخرين اليوم',
+    'today_absent_count'      => 'عدد الغائبين اليوم',
+    'loss_trend'              => 'اتجاه الخسارة',
+    'vs_yesterday'            => 'مقارنة بالأمس',
+    'sar'                     => 'ر.س',
+    'employees'               => 'موظف',
+
+    'branch_heatmap_title'    => 'خريطة أداء الفروع',
+    'branch_name'             => 'الفرع',
+    'total_employees'         => 'عدد الموظفين',
+    'on_time_rate'            => 'معدل الانضباط',
+    'geofence_compliance'     => 'امتثال السياج الجغرافي',
+    'monthly_loss'            => 'الخسارة الشهرية',
+    'performance_grade'       => 'التقدير',
+    'grade_excellent'         => 'ممتاز',
+    'grade_good'              => 'جيد',
+    'grade_average'           => 'متوسط',
+    'grade_poor'              => 'ضعيف',
+
+    'integrity_hub_title'     => 'مركز تنبيهات النزاهة',
+    'recent_trap_triggers'    => 'آخر تفاعلات المصائد',
+    'wb_reports_status'       => 'حالة البلاغات السرية',
+    'trap_type'               => 'نوع المصيدة',
+    'triggered_by'            => 'بواسطة',
+    'triggered_at'            => 'التوقيت',
+    'risk_level'              => 'مستوى الخطورة',
+    'wb_ticket'               => 'رقم البلاغ',
+    'wb_category'             => 'التصنيف',
+    'wb_status'               => 'الحالة',
+    'wb_severity'             => 'الخطورة',
+    'no_alerts'               => 'لا توجد تنبيهات',
+    'level_10_only'           => 'متاح لمستوى الأمان 10 فقط',
+
+    'delay_impact_title'      => 'تحليل أثر التأخير',
+    'potential_loss'          => 'الخسارة المحتملة',
+    'actual_loss'             => 'الخسارة الفعلية',
+    'discipline_savings'      => 'وفورات الانضباط',
+    'roi_percentage'          => 'عائد الاستثمار %',
+    'predictive_title'        => 'التنبؤ بالخسارة الشهرية',
+    'avg_daily_loss'          => 'متوسط الخسارة اليومية',
+    'accumulated_loss'        => 'الخسارة المتراكمة',
+    'remaining_days'          => 'الأيام المتبقية',
+    'predicted_total'         => 'الإجمالي المتوقع',
+    'period_start'            => 'بداية الفترة',
+    'period_end'              => 'نهاية الفترة',
+    'scope'                   => 'النطاق',
+    'scope_company'           => 'الشركة',
+    'scope_branch'            => 'الفرع',
+    'scope_department'        => 'القسم',
+    'scope_employee'          => 'الموظف',
+
+    'vault_title'             => 'قبو البلاغات السرية',
+    'vault_subtitle'          => 'عرض مشفر — لا يمكن التصدير',
+    'decrypted_content'       => 'المحتوى (مفكوك التشفير)',
+    'investigator_notes'      => 'ملاحظات المحقق',
+    'assigned_to'             => 'المحقق المعين',
+    'resolution_outcome'      => 'نتيجة المعالجة',
+    'access_logged'           => 'تم تسجيل وصولك في سجل المراجعة',
+    'unauthorized_vault'      => 'وصول غير مصرح — مستوى الأمان غير كافٍ',
+
+    'audit_title'             => 'سجل مراجعة المصائد',
+    'interaction_data'        => 'بيانات التفاعل',
+    'page_url'                => 'صفحة المصدر',
+    'ip_address'              => 'عنوان IP',
+    'user_agent'              => 'وكيل المستخدم',
+    'review_status'           => 'حالة المراجعة',
+    'reviewed_by'             => 'راجعه',
+    'review_notes'            => 'ملاحظات المراجعة',
+    'risk_trajectory'         => 'مسار المخاطر',
+
+    'status_new'              => 'جديد',
+    'status_under_review'     => 'قيد المراجعة',
+    'status_investigating'    => 'قيد التحقيق',
+    'status_resolved'         => 'تمت المعالجة',
+    'status_dismissed'        => 'مرفوض',
+    'severity_critical'       => 'حرج',
+    'severity_high'           => 'مرتفع',
+    'severity_medium'         => 'متوسط',
+    'severity_low'            => 'منخفض',
+    'close'                   => 'إغلاق',
+
+    'audit_vault_access'      => 'تم عرض بلاغ مشفر: :ticket',
+    'audit_trap_reviewed'     => 'تمت مراجعة تفاعل المصيدة',
+    'audit_trap_page_access'  => 'تم الوصول إلى صفحة سجل مراجعة المصائد',
+];
+
+════════════════════════════════════════════════════════════════════════════════
+  7. lang/ar/competition.php
+════════════════════════════════════════════════════════════════════════════════
+<?php
+
+return [
+    'navigation_group'       => 'المنافسة والتميز',
+    'leaderboard_title'      => 'لوحة مستويات الفروع',
+    'leaderboard_subtitle'   => 'تصنيف الفروع حسب أقل خسارة مالية ناتجة عن التأخير',
+
+    'period'                 => 'الفترة',
+
+    'ranking_method'         => 'معيار الترتيب',
+    'ranking_by_loss'        => 'الأقل خسارة مالية أولاً',
+    'financial_loss'         => 'الخسارة المالية',
+    'total_delay'            => 'إجمالي التأخير',
+    'sar'                    => 'ر.س',
+    'min'                    => 'د',
+
+    'level_legendary'        => 'أسطوري',
+    'level_diamond'          => 'ألماسي',
+    'level_gold'             => 'ذهبي',
+    'level_silver'           => 'فضي',
+    'level_bronze'           => 'برونزي',
+    'level_starter'          => 'مبتدئ',
+
+    'score'                  => 'النقاط',
+    'employees'              => 'الموظفون',
+    'late_checkins'          => 'التأخيرات',
+    'missed_days'            => 'أيام الغياب',
+    'perfect_employees'      => 'موظفون مثاليون',
+    'total_points'           => 'نقاط التميز',
+
+    'trophy_winner'          => 'البطل — الأول',
+    'turtle_last'            => 'السلحفاة — الأخير',
+
+    'scoring_legend'         => 'آلية حساب النقاط',
+    'base_score'             => 'النقاط الأساسية',
+    'late_penalty'           => 'خصم لكل تأخير',
+    'missed_penalty'         => 'خصم لكل يوم غياب',
+    'perfect_bonus'          => 'مكافأة لكل موظف بدون تأخير',
+    'points_bonus'           => 'مكافأة نقاط التميز',
+
+    'news_ticker_title'      => 'آخر الأخبار',
+    'trophy_first_title'     => 'أول وآخر حضور اليوم — لكل فرع',
+    'turtle_last_title'      => 'آخر حضور اليوم',
+    'no_turtles'             => 'حضور واحد فقط',
+    'ticker_trophy'          => 'الفرع الأكثر انضباطاً اليوم: :branch',
+    'ticker_turtle'          => 'الفرع الأقل انضباطاً اليوم: :branch',
+    'ticker_attendance'      => 'حضور اليوم: :on_time في الموعد | :late متأخر',
+    'ticker_total_employees' => 'إجمالي الموظفين النشطين: :count',
+    'ticker_top_scorer'      => 'أعلى نقاط: :name (:points نقطة)',
+
+    'no_branches'            => 'لا توجد فروع نشطة للتصنيف',
+    'no_news'                => 'لا توجد أخبار حالياً',
+];
+
+════════════════════════════════════════════════════════════════════════════════
+  8. lang/ar/holidays.php
+════════════════════════════════════════════════════════════════════════════════
+<?php
+
+return [
+    'navigation_group' => 'النظام',
+    'navigation_label' => 'العطل الرسمية',
+    'model_label'      => 'عطلة',
+    'plural_model_label' => 'العطل الرسمية',
+
+    'section_details' => 'بيانات العطلة',
+
+    'name_ar'         => 'الاسم (عربي)',
+    'name_en'         => 'الاسم (إنجليزي)',
+    'date'            => 'التاريخ',
+    'type'            => 'النوع',
+    'type_national'   => 'وطنية',
+    'type_religious'  => 'دينية',
+    'type_company'    => 'خاصة بالشركة',
+    'is_recurring'    => 'متكررة سنوياً',
+    'is_recurring_help' => 'هل تتكرر هذه العطلة في نفس التاريخ كل عام؟',
+    'branch'          => 'الفرع',
+    'all_branches'    => 'جميع الفروع',
+    'branch_help'     => 'اتركه فارغاً ليشمل جميع الفروع',
+];
+
+════════════════════════════════════════════════════════════════════════════════
+  9. lang/ar/install.php
+════════════════════════════════════════════════════════════════════════════════
+<?php
+
+return [
+    'banner'              => '══════════════════════════════════════════',
+    'app_title'           => 'تثبيت نظام صرح الإتقان — SARH AL-ITQAN',
+    'verifying_env'       => 'التحقق من بيئة التشغيل',
+    'running_migrations'  => 'تشغيل عمليات الترحيل',
+    'seeding_roles'       => 'إنشاء الأدوار والصلاحيات (10 مستويات)',
+    'seeding_badges'      => 'إنشاء الشارات (8 شارات)',
+    'seeding_traps'       => 'إنشاء المصائد النفسية (4 مصائد)',
+    'creating_admin'      => 'إنشاء حساب مدير النظام (المستوى 10)',
+    'admin_exists'        => 'يوجد مدير نظام بالفعل — تم التخطي',
+    'admin_created'       => 'تم إنشاء مدير النظام بنجاح: :email',
+    'storage_link'        => 'إنشاء رابط التخزين',
+    'caching_config'      => 'تخزين الإعدادات والمسارات مؤقتاً',
+    'complete'            => '✅ اكتمل التثبيت بنجاح!',
+    'summary_roles'       => 'الأدوار المُنشأة: :count',
+    'summary_admin'       => 'حساب المدير العام جاهز (المستوى 10)',
+    'summary_url'         => 'لوحة التحكم: :url',
+    'missing_ext'         => '❌ امتداد PHP مفقود: :ext',
+    'no_app_key'          => '❌ مفتاح التطبيق غير مُعيّن — نفّذ: php artisan key:generate',
+    'db_failed'           => '❌ فشل الاتصال بقاعدة البيانات: :error',
+    'prompt_name_ar'      => 'الاسم بالعربية',
+    'prompt_name_en'      => 'الاسم بالإنجليزية',
+    'prompt_email'        => 'البريد الإلكتروني',
+    'prompt_password'     => 'كلمة المرور',
+];
+
+════════════════════════════════════════════════════════════════════════════════
+  10. lang/ar/leaves.php
+════════════════════════════════════════════════════════════════════════════════
+<?php
+
+return [
+    'navigation_group'   => 'الإجازات',
+    'navigation_label'   => 'طلبات الإجازة',
+    'model_label'        => 'طلب إجازة',
+    'plural_model_label' => 'طلبات الإجازة',
+
+    'section_request'  => 'بيانات الطلب',
+    'section_decision' => 'قرار الإدارة',
+
+    'employee'         => 'الموظف',
+    'leave_type'       => 'نوع الإجازة',
+    'type_annual'      => 'سنوية',
+    'type_sick'        => 'مرضية',
+    'type_emergency'   => 'اضطرارية',
+    'type_unpaid'      => 'بدون راتب',
+    'type_maternity'   => 'أمومة',
+    'type_paternity'   => 'أبوة',
+    'type_hajj'        => 'حج',
+    'type_death'       => 'وفاة',
+    'type_marriage'    => 'زواج',
+    'start_date'       => 'تاريخ البداية',
+    'end_date'         => 'تاريخ النهاية',
+    'total_days'       => 'عدد الأيام',
+    'reason'           => 'السبب',
+    'attachment'       => 'المرفقات',
+    'status'           => 'الحالة',
+    'status_pending'   => 'قيد المراجعة',
+    'status_approved'  => 'مقبول',
+    'status_rejected'  => 'مرفوض',
+    'rejection_reason' => 'سبب الرفض',
+    'submitted_at'     => 'تاريخ التقديم',
+
+    'btn_approve'      => 'قبول',
+    'btn_reject'       => 'رفض',
+    'approved_success' => 'تم قبول طلب الإجازة',
+    'rejected_success' => 'تم رفض طلب الإجازة',
+];
+
+════════════════════════════════════════════════════════════════════════════════
+  11. lang/ar/pwa.php
+════════════════════════════════════════════════════════════════════════════════
+<?php
+
+return [
+    'app_title'       => 'صَرْح الإتقان',
+    'app_name'        => 'صَرْح',
+    'app_subtitle'    => 'منصة الموارد البشرية',
+
+    'dashboard'          => 'لوحة التحكم',
+    'nav_dashboard'      => 'الرئيسية',
+    'nav_messages'       => 'الرسائل',
+    'nav_whistleblower'  => 'الإبلاغ السري',
+
+    'welcome'            => 'مرحباً',
+    'welcome_subtitle'   => 'إليك ملخص يومك',
+
+    'attendance_title'   => 'الحضور والانصراف',
+    'status_checked_in'  => 'تم تسجيل الحضور',
+    'status_checked_out' => 'تم تسجيل الانصراف',
+    'status_absent'      => 'لم يتم التسجيل',
+    'status_not_checked_in' => 'لم يسجّل بعد',
+    'btn_check_in'       => 'تسجيل حضور',
+    'btn_check_out'      => 'تسجيل انصراف',
+    'btn_done'           => 'اكتمل اليوم',
+    'check_in_time'      => 'وقت الحضور',
+    'check_out_time'     => 'وقت الانصراف',
+    'check_in_success'   => 'تم تسجيل الحضور بنجاح',
+    'check_out_success'  => 'تم تسجيل الانصراف بنجاح',
+    'gps_acquiring'      => 'جارٍ تحديد الموقع...',
+    'gps_error'          => 'تعذر تحديد الموقع الجغرافي',
+    'inside_geofence'    => 'داخل نطاق العمل',
+    'outside_geofence'   => 'خارج نطاق العمل',
+    'meters'             => 'م',
+
+    'gamification_title' => 'الإنجازات والنقاط',
+    'points'             => 'النقاط',
+    'current_streak'     => 'تتابع حالي',
+    'longest_streak'     => 'أفضل تتابع',
+    'days'               => 'يوم',
+    'badges'             => 'الأوسمة',
+    'no_badges'          => 'لم تحصل على أوسمة بعد',
+
+    'financial_title'    => 'المؤشرات المالية',
+    'on_time_rate'       => 'معدل الانضباط',
+    'delay_cost'         => 'تكلفة التأخير',
+    'currency'           => 'ر.س',
+    'late_days'          => 'أيام التأخير',
+    'this_month'         => 'هذا الشهر',
+
+    'circulars_title'    => 'التعاميم',
+    'acknowledge'        => 'اطلعت',
+    'acknowledged'       => 'تم الاطلاع',
+    'no_circulars'       => 'لا توجد تعاميم حالياً',
+    'priority_urgent'    => 'عاجل',
+    'priority_high'      => 'مرتفع',
+    'priority_normal'    => 'عادي',
+
+    'wb_title'           => 'الإبلاغ السري',
+    'wb_subtitle'        => 'بلاغ مجهول الهوية ومشفر بالكامل',
+    'wb_security_title'  => 'حماية هويتك',
+    'wb_security_1'      => 'لا يتم تسجيل هويتك أو عنوان IP الخاص بك',
+    'wb_security_2'      => 'محتوى البلاغ مشفر بتقنية AES-256-CBC',
+    'wb_security_3'      => 'احتفظ برمز التتبع السري لمتابعة بلاغك',
+    'wb_category'        => 'التصنيف',
+    'wb_select_category' => 'اختر التصنيف',
+    'wb_cat_fraud'       => 'احتيال مالي',
+    'wb_cat_corruption'  => 'فساد إداري',
+    'wb_cat_harassment'  => 'تحرش أو تنمر',
+    'wb_cat_safety'      => 'مخالفة أمن وسلامة',
+    'wb_cat_discrimination' => 'تمييز عنصري',
+    'wb_cat_other'       => 'أخرى',
+    'wb_severity'        => 'مستوى الخطورة',
+    'wb_sev_low'         => 'منخفض',
+    'wb_sev_medium'      => 'متوسط',
+    'wb_sev_high'        => 'مرتفع',
+    'wb_sev_critical'    => 'حرج',
+    'wb_content'         => 'تفاصيل البلاغ',
+    'wb_content_placeholder' => 'اكتب تفاصيل البلاغ بوضوح. كلما زادت التفاصيل كان التحقيق أسرع...',
+    'wb_submit'          => 'إرسال البلاغ',
+    'wb_success_title'   => 'تم إرسال البلاغ بنجاح',
+    'wb_ticket'          => 'رقم البلاغ',
+    'wb_secret_token'    => 'رمز التتبع السري',
+    'wb_token_warning'   => 'احفظ هذا الرمز فوراً! لن يظهر مرة أخرى ولا يمكن استرجاعه.',
+    'wb_new_report'      => 'إرسال بلاغ جديد',
+
+    'wb_track_title'     => 'متابعة البلاغ',
+    'wb_track_subtitle'  => 'أدخل رمز التتبع السري لمعرفة حالة بلاغك',
+    'wb_enter_token'     => 'رمز التتبع',
+    'wb_token_placeholder' => 'أدخل رمز التتبع السري',
+    'wb_track_btn'       => 'استعلام',
+    'wb_report_status'   => 'حالة البلاغ',
+    'wb_status'          => 'الحالة',
+    'wb_status_pending'  => 'قيد المراجعة',
+    'wb_status_investigating' => 'قيد التحقيق',
+    'wb_status_resolved' => 'تم المعالجة',
+    'wb_status_dismissed' => 'مرفوض',
+    'wb_submitted_at'    => 'تاريخ الإرسال',
+    'wb_resolved_at'     => 'تاريخ المعالجة',
+    'wb_not_found'       => 'لم يتم العثور على بلاغ بهذا الرمز',
+
+    'messaging_title'    => 'الرسائل',
+    'msg_group'          => 'مجموعة',
+    'msg_unknown'        => 'مستخدم',
+    'msg_no_messages'    => 'لا رسائل بعد',
+    'msg_empty'          => 'لا توجد محادثات',
+    'msg_participants'   => 'مشاركين',
+    'msg_type_message'   => 'اكتب رسالتك...',
+
+    'trap_salary_peek'   => 'كشف الرواتب',
+    'trap_data_export'   => 'تصدير البيانات',
+    'exporting'          => 'جارٍ التصدير',
+    'export_complete'    => 'اكتمل التصدير',
+
+    'competition_title'      => 'منافسة الفروع',
+    'your_branch'            => 'فرعك',
+    'top_branches'           => 'أفضل الفروع',
+
+    'branch_progress_title'  => 'تقدم الفرع',
+    'branch_attendance_rate' => 'معدل الحضور',
+    'max_level'              => 'أعلى مستوى',
+    'no_branch_assigned'     => 'لم يتم تعيين فرع',
+
+    'attendance_stats_title' => 'إحصائيات الحضور',
+    'present'                => 'حاضر',
+    'late'                   => 'متأخر',
+    'absent'                 => 'غائب',
+    'streak'                 => 'تتابع',
+    'avg_delay'              => 'متوسط التأخير',
+    'hours_worked'           => 'ساعات العمل',
+    'overtime_hours'         => 'ساعات إضافية',
+    'weekly_breakdown'       => 'التفصيل الأسبوعي',
+    'week'                   => 'أسبوع',
+    'no_attendance_data'     => 'لا توجد بيانات حضور',
+    'on_time_days'           => 'أيام منضبطة',
+
+    'loading'            => 'جارٍ التحميل',
+];
+
+════════════════════════════════════════════════════════════════════════════════
+  12. lang/ar/traps.php
+════════════════════════════════════════════════════════════════════════════════
+<?php
+
+return [
+    'navigation_group'      => 'الأمان',
+    'navigation_label'      => 'المصائد الأمنية',
+    'model_label'           => 'مصيدة',
+    'plural_model_label'    => 'المصائد',
+    'interactions_label'    => 'تفاعلات المصائد',
+    'interaction_model_label' => 'تفاعل',
+    'interaction_plural_label' => 'التفاعلات',
+
+    'trap_details'    => 'تفاصيل المصيدة',
+    'risk_config'     => 'إعدادات المخاطر',
+    'name_ar'         => 'الاسم بالعربية',
+    'name_en'         => 'الاسم بالإنجليزية',
+    'trap_code'       => 'كود المصيدة',
+    'trap_code_helper' => 'مثال: SALARY_PEEK',
+    'description_ar'  => 'الوصف بالعربية',
+    'description_en'  => 'الوصف بالإنجليزية',
+    'risk_weight'     => 'وزن الخطورة',
+    'fake_response_type' => 'نوع الاستجابة المزيفة',
+    'is_active'       => 'مفعّلة',
+    'total_triggers'  => 'إجمالي التفعيلات',
+
+    'interaction_details' => 'تفاصيل التفاعل',
+    'review_section'   => 'المراجعة',
+    'employee'         => 'الموظف',
+    'employee_id'      => 'رقم الموظف',
+    'trap_type'        => 'نوع المصيدة',
+    'page_url'         => 'رابط الصفحة',
+    'ip_address'       => 'عنوان IP',
+    'risk_level'       => 'مستوى الخطورة',
+    'risk_score'       => 'نقاط المخاطر',
+    'is_reviewed'      => 'تمت المراجعة',
+    'review_notes'     => 'ملاحظات المراجعة',
+    'triggered_at'     => 'وقت التفعيل',
+
+    'risk_levels' => [
+        'low'      => 'منخفض',
+        'medium'   => 'متوسط',
+        'high'     => 'مرتفع',
+        'critical' => 'حرج',
+    ],
+
+    'response_types' => [
+        'success' => 'نجاح',
+        'error'   => 'خطأ',
+        'warning' => 'تحذير',
+    ],
+
+    'risk_widget_title' => 'أعلى الموظفين خطورة',
+
+    'responses' => [
+        'salary_title'     => 'جدول رواتب الزملاء',
+        'privilege_granted' => 'تم منحك صلاحيات مؤقتة — سيتم التفعيل خلال 60 ثانية',
+        'system_paused'    => 'تم تعطيل نظام الحضور مؤقتاً لمدة 24 ساعة',
+        'export_complete'  => 'اكتمل التصدير — جارٍ تحميل الملف',
+        'generic_success'  => 'تمت العملية بنجاح',
+    ],
+
+    'fake_names' => [
+        'employee_1' => 'أحمد الفهد',
+        'employee_2' => 'سارة القحطاني',
+        'employee_3' => 'فهد العتيبي',
+    ],
+];
+
+════════════════════════════════════════════════════════════════════════════════
+  13. lang/ar/users.php
+════════════════════════════════════════════════════════════════════════════════
+<?php
+
+return [
+    'navigation_group'       => 'إدارة الموارد البشرية',
+    'navigation_label'       => 'الموظفون',
+    'model_label'            => 'موظف',
+    'plural_model_label'     => 'الموظفون',
+
+    'profile_section'        => 'الصورة الشخصية',
+    'core_info_section'      => 'البيانات الأساسية',
+    'core_info_description'  => 'الأربعة الأساسية: الاسم، البريد، كلمة المرور، والراتب',
+    'financial_section'      => 'البيانات المالية',
+    'financial_description'  => 'الراتب الأساسي ضروري لحساب تكلفة الدقيقة',
+    'organization_section'   => 'البيانات التنظيمية',
+
+    'avatar'                 => 'الصورة الشخصية',
+    'name_ar'                => 'الاسم بالعربية',
+    'name_en'                => 'الاسم بالإنجليزية',
+    'email'                  => 'البريد الإلكتروني',
+    'password'               => 'كلمة المرور',
+    'basic_salary'           => 'الراتب الأساسي',
+    'housing_allowance'      => 'بدل السكن',
+    'transport_allowance'    => 'بدل النقل',
+    'other_allowances'       => 'بدلات أخرى',
+    'branch'                 => 'الفرع',
+    'department'             => 'القسم',
+    'role'                   => 'الدور',
+    'direct_manager'         => 'المدير المباشر',
+    'phone'                  => 'الهاتف',
+    'employee_id'            => 'الرقم الوظيفي',
+    'security_level'         => 'المستوى الأمني',
+    'status'                 => 'الحالة',
+    'employment_type'        => 'نوع التوظيف',
+    'created_at'             => 'تاريخ الإنشاء',
+    'currency_sar'           => 'ر.س',
+
+    'status_active'          => 'نشط',
+    'status_suspended'       => 'موقوف',
+    'status_terminated'      => 'منتهي',
+    'status_on_leave'        => 'في إجازة',
+
+    'type_full_time'         => 'دوام كامل',
+    'type_part_time'         => 'دوام جزئي',
+    'type_contract'          => 'عقد',
+    'type_intern'            => 'متدرب',
+
+    'total_points'           => 'نقاط التميز',
+    'adjust_points'          => 'تعديل النقاط',
+    'points_amount'          => 'عدد النقاط',
+    'points_helper'          => 'رقم موجب للإضافة، سالب للخصم',
+    'points_reason'          => 'سبب التعديل',
+    'points_adjusted'        => 'تم تعديل النقاط',
+    'points_adjusted_body'   => 'تم إضافة :points نقطة لـ :name',
+];
+
+================================================================================
+  نهاية الملف — 13 ملف ترجمة عربي
+================================================================================

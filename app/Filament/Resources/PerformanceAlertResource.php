@@ -19,6 +19,24 @@ class PerformanceAlertResource extends Resource
 
     protected static ?int $navigationSort = 15;
 
+    /**
+     * Access control: security_level >= 5 or super_admin.
+     */
+    public static function canAccess(): bool
+    {
+        $user = auth()->user();
+
+        return $user && ($user->is_super_admin || $user->security_level >= 5);
+    }
+
+    /**
+     * Hide navigation for unauthorized users.
+     */
+    public static function shouldRegisterNavigation(): bool
+    {
+        return static::canAccess();
+    }
+
     public static function getNavigationGroup(): ?string
     {
         return __('users.navigation_group');

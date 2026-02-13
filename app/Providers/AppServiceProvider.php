@@ -2,14 +2,18 @@
 
 namespace App\Providers;
 
+use App\Events\AttendanceRecorded;
 use App\Events\BadgeAwarded;
 use App\Events\TrapTriggered;
+use App\Listeners\HandleAttendanceRecorded;
 use App\Listeners\HandleBadgePoints;
 use App\Listeners\LogTrapInteraction;
 use App\Models\AttendanceLog;
 use App\Models\User;
 use App\Policies\AttendanceLogPolicy;
 use App\Policies\UserPolicy;
+use Dedoc\Scramble\Scramble;
+use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
@@ -37,6 +41,18 @@ class AppServiceProvider extends ServiceProvider
         */
         Event::listen(BadgeAwarded::class, HandleBadgePoints::class);
         Event::listen(TrapTriggered::class, LogTrapInteraction::class);
+        Event::listen(AttendanceRecorded::class, HandleAttendanceRecorded::class);
+
+        /*
+        |----------------------------------------------------------------------
+        | Scramble API Docs — include attendance/traps/telemetry routes
+        |----------------------------------------------------------------------
+        */
+        Scramble::routes(function (RoutingRoute $route) {
+            return str_starts_with($route->uri, 'attendance')
+                || str_starts_with($route->uri, 'traps')
+                || str_starts_with($route->uri, 'telemetry');
+        });
 
         /*
         |----------------------------------------------------------------------

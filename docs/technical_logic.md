@@ -1,5 +1,5 @@
 # صرح — المخطط المعماري (المنطق التقني)
-> **الإصدار:** 1.7.0 | **آخر تحديث:** 2026-02-08
+> **الإصدار:** 3.4.1 | **آخر تحديث:** 2026-02-13
 > **النطاق:** مخطط قاعدة البيانات، علاقات الكيانات، معمارية تدفق البيانات، وقرارات التصميم
 
 ---
@@ -25,8 +25,11 @@
 | 11 | `2024_01_02_000005` | `create_gamification_tables` | `badges`, `user_badges`, `points_transactions` | `users` |
 | 12 | `2024_01_02_000006` | `create_trap_interactions_table` | `trap_interactions` | `users` |
 | 13 | `2024_01_02_000007` | `create_operational_tables` | `leave_requests`, `shifts`, `user_shifts`, `audit_logs`, `holidays` | `users`, `branches` |
+| 14 | `2026_02_13_000001` | `add_audit_columns_to_pivot_tables` | — (تعديل `user_shifts` و `user_badges`) | `users`, `shifts`, `badges` |
 
 **إجمالي الجداول:** 26 (20 مخصص + 6 إعدادات Laravel الافتراضية)
+
+> **ملاحظة v3.4:** الترحيل #14 يُضيف أعمدة تدقيق (`assigned_by`, `approved_at`, `approved_by`, `reason`, `effective_from`, `effective_to`, `is_current`) إلى `user_shifts` وأعمدة (`awarded_at`, `awarded_reason`, `awarded_by`) إلى `user_badges`. هذا التحويل يجعلهما **نماذج كيانات مستقلة** بدلاً من جداول ربط بسيطة.
 
 ---
 
@@ -51,9 +54,9 @@ branches ─┬── departments ──── users ─┬── attendance_log
 
 roles ─── role_permission ─── permissions
 
-users ─── user_badges ─── badges
+users ─── user_badges ─── badges          ← v3.4: UserBadge كيان مستقل (HasMany)
 users ─── conversation_participants ─── conversations ─── messages
-users ─── user_shifts ─── shifts
+users ─── user_shifts ─── shifts          ← v3.4: UserShift كيان مستقل (HasMany)
 users ─── circular_acknowledgments ─── circulars
 
 whistleblower_reports (anonymous — no FK to reporter)
@@ -205,6 +208,8 @@ attendance_logs.delay_cost      = delay_minutes × cost_per_minute  [Pre-calcula
 | `TrapInteraction` | `trap_interactions` | `HasFactory` | ❌ |
 | `LeaveRequest` | `leave_requests` | `HasFactory`, `SoftDeletes` | ✅ |
 | `Shift` | `shifts` | `HasFactory` | ❌ |
+| `UserShift` | `user_shifts` | `HasFactory` | ❌ |
+| `UserBadge` | `user_badges` | `HasFactory` | ❌ |
 | `AuditLog` | `audit_logs` | `HasFactory` | ❌ |
 | `Holiday` | `holidays` | `HasFactory` | ❌ |
 
@@ -218,7 +223,7 @@ attendance_logs.delay_cost      = delay_minutes × cost_per_minute  [Pre-calcula
 | أسماء النماذج | `PascalCase` | ✅ |
 | أسماء التوابع | `camelCase` | ✅ |
 | العلاقات | `camelCase` | ✅ |
-| جداول الربط | ترتيب أبجدي `role_permission`، `user_badges` | ✅ |
+| جداول الربط / الكيانات | ترتيب أبجدي `role_permission`؛ `user_badges` و `user_shifts` أصبحا كيانات مستقلة (v3.4) | ✅ |
 | ملفات الترحيل | `snake_case` مع بادئة زمنية | ✅ |
 | أسماء المسارات | `snake_case` (قيد التنفيذ) | ⏳ |
 | مفاتيح الإعدادات | `snake_case` | ✅ |
@@ -555,6 +560,14 @@ Trap Interaction Audit:
 | 2026-02-07 | 1.3.0 | Phase 3 — Employee PWA: Livewire 3 components (dashboard, widgets, messaging, whistleblower), Tailwind RTL layout, Tajawal font, trap integration, circular acknowledgments |
 | 2026-02-08 | 1.4.0 | Phase 4 — Command Center: FinancialReportingService, 3 dashboard widgets (RealTimeLossCounter, BranchPerformanceHeatmap, IntegrityAlertHub), WhistleblowerVault + TrapAuditLog Filament pages, predictive analytics, security gate for Level 10 |
 | 2026-02-08 | 1.5.0 | Phase 5 (Final) — Production Hardening: BranchScope policy, caching layer for financial queries, performance indexes migration, sarh:install Artisan command, Vite prod optimization, bilingual audit, README_PROD.md deployment guide |
+| 2026-02-09 | 1.6.0 | UI/UX Overhaul: Orange theme, Tajawal → Cairo font, collapsible sidebar, UserResource Core Four, BranchResource Leaflet.js map, Level 10 God Mode via Gate::before() |
+| 2026-02-09 | 1.7.0 | Competition Engine: ProjectDataSeeder (5 branches + 36 users), BranchLeaderboardPage, DailyNewsTicker, manual points adjustment |
+| 2026-02-10 | 3.0.0 | BI Overhaul: لوحة التحكم الجديدة مع فلاتر ديناميكية، تقارير مالية متقدمة، ودجات BI |
+| 2026-02-11 | 3.1.0 | Dashboard Filters: فلاتر الفرع والفترة في الودجات، ملخص مالي للفروع |
+| 2026-02-12 | 3.2.0 | Dynamic Logic: منطق ديناميكي للودجات، إجراءات جماعية |
+| 2026-02-12 | 3.3.0 | Dashboard Fix: إصلاح خطأ 500 في لوحة التحكم، إجراءات جماعية في موارد Filament |
+| 2026-02-13 | 3.4.0 | **Architectural Refactor**: إنشاء UserShift و UserBadge ككيانات مستقلة، تحويل BelongsToMany→HasMany، ترحيل أعمدة التدقيق |
+| 2026-02-13 | 3.4.1 | Factories & Tests: مصانع (ShiftFactory, BadgeFactory, UserShiftFactory, UserBadgeFactory)، اختبارات (UserShiftTest 11, UserBadgeTest 9)، FixUserShiftsDataSeeder |
 
 ---
 
@@ -805,3 +818,60 @@ Score = 100 (base)
 - **To:** Cairo (v1.7.0)
 - **Locations:** `AdminPanelProvider->font('Cairo')`, `resources/css/app.css` Google Fonts import
 - **Weights:** 300, 400, 500, 600, 700, 800, 900
+
+---
+
+## 15. المعيار المعماري: متى تُنشئ نموذج كيان مستقل؟ (v3.4)
+
+### 15.1 الإشكالية
+
+في v1.0–v3.3، كان `user_shifts` و `user_badges` يُعاملان كجداول ربط (Pivot) عبر `BelongsToMany` رغم احتوائهما على بيانات تتجاوز مفتاحين أجنبيين. هذا أنتج:
+
+- عدم القدرة على استخدام Query Scopes مباشرة
+- صعوبة كتابة اختبارات وحدة لمنطق الأعمال
+- عدم وجود مصانع (Factories) لبيانات الاختبار
+- اختلاط مسؤوليات الـ Model
+
+### 15.2 شجرة القرار المعتمدة
+
+```
+هل الجدول الوسيط يحتوي فقط على FK₁ + FK₂؟
+├── نعم → BelongsToMany بدون نموذج (مثل: role_permission)
+└── لا → هل يحتوي على حقول وصفية بسيطة؟
+    ├── نعم → BelongsToMany مع withPivot (مثل: pivot بتاريخ إنشاء فقط)
+    └── لا → هل يحتوي على أي من:
+        ├── صلاحية زمنية (effective_from/to)
+        ├── منطق أعمال (terminate, makeCurrent, award)
+        ├── تدقيق إداري (assigned_by, approved_by)
+        └── نطاقات استعلام خاصة (active, current, forUserInPeriod)
+            └── نعم → ✅ نموذج كيان مستقل + HasMany (إلزامي)
+```
+
+### 15.3 النماذج المنشأة
+
+| الكيان | الملف | الجدول | صلاحية زمنية | منطق أعمال | تدقيق |
+|--------|-------|--------|:------------:|:----------:|:-----:|
+| `UserShift` | `app/Models/UserShift.php` | `user_shifts` | ✅ | ✅ `terminate()`, `makeCurrent()`, `isValidOn()` | ✅ `assigned_by`, `approved_by` |
+| `UserBadge` | `app/Models/UserBadge.php` | `user_badges` | — | ✅ `award()` مع تكامل النقاط | ✅ `awarded_by`, `awarded_reason` |
+
+### 15.4 تحويل العلاقات
+
+| النموذج | العلاقة القديمة (v1.0–3.3) | العلاقة الجديدة (v3.4+) |
+|---------|--------------------------|------------------------|
+| `User` | `badges() → BelongsToMany(Badge)` | `badges() → HasMany(UserBadge)` |
+| `User` | `shifts() → BelongsToMany(Shift)` | `shifts() → HasMany(UserShift)` |
+| `User` | — | `activeShift() → ?UserShift` |
+| `User` | — | `awardedBadges() → HasMany(UserBadge).with('badge')` |
+| `User` | — | `shiftHistory() → HasMany(UserShift).with('shift')` |
+| `User` | `currentShift() → ?Shift` (via pivot) | `currentShift() → ?Shift` (via UserShift — **backward compatible**) |
+| `Shift` | — | `assignments() → HasMany(UserShift)` |
+| `Shift` | — | `currentlyAssignedUsers() → HasManyThrough` |
+| `Badge` | — | `awards() → HasMany(UserBadge)` |
+
+### 15.5 FixUserShiftsDataSeeder (v3.4.1)
+
+بذرة إصلاح بيانات تُشغّل مرة واحدة على الإنتاج لضمان:
+- كل `user_shift` له `effective_from` (يُعيّن من `created_at` إن كان فارغاً)
+- أحدث تعيين لكل موظف يُعلّم كـ `is_current = true`
+
+**النتائج على الإنتاج:** 38 سجل `user_shift` محدّث، 0 سجل `user_badge`

@@ -1,6 +1,6 @@
 # الميثاق الوظيفي لنظام صرح — SARH Functional Charter
 
-> **إصدار:** 1.7.0 | **تاريخ التحديث:** 2026-02-08
+> **إصدار:** 3.4.1 | **تاريخ التحديث:** 2026-02-13
 > **نطاق هذا المستند:** شرح كامل لكل وحدة في النظام وقيمتها التجارية للإدارة
 
 ---
@@ -30,6 +30,7 @@
 | `branches`        | بيانات الفروع مع الإحداثيات الجغرافية (خط الطول والعرض) ونصف قطر الحدود الجغرافية |
 | `attendance_logs` | سجل كامل لكل تسجيل حضور بإحداثيات GPS والمسافة من المركز والحالة المالية                    |
 | `shifts`          | جداول المناوبات مع فترة السماح                                                                                              |
+| `user_shifts`     | تعيينات المناوبات للموظفين — كيان مستقل بصلاحية زمنية وتدقيق (v3.4)                                               |
 | `holidays`        | العطل الرسمية لحساب أيام الغياب المبرر                                                                               |
 
 **كيف يمنع الهدر المالي؟**
@@ -169,6 +170,8 @@
 | سيد الانضباط     | شهر كامل بدون تأخير             | 200          |
 | سلسلة حديدية (7) | 7 أيام متتالية                       | 70           |
 | سلسلة ذهبية (30)  | 30 يوم متتالي                          | 500          |
+
+> **ملاحظة v3.4:** الشارات الآن تُمنح عبر نموذج `UserBadge` المستقل — كل منحة تُسجَّل فيها: من منحها (`awarded_by`)، سبب المنح (`awarded_reason`)، ووقت المنح (`awarded_at`). النقاط تُضاف تلقائياً عبر `UserBadge::award()`.
 | صفر خسائر           | شهر بدون خسارة مالية           | 300          |
 | موفر التكاليف   | 50+ ساعة عمل إضافي                  | 150          |
 | الأداء المتميز | أفضل موظف في الفرع               | 500          |
@@ -392,6 +395,12 @@
 | 2026-02-07     | 1.3.0          | المرحلة الثالثة — بوابة الموظف PWA (Livewire 3 + Alpine.js)، البلاغات السرية المشفرة، المراسلات الذكية، تكامل المصائد بالواجهة                                               |
 | 2026-02-08     | 1.4.0          | المرحلة الرابعة — غرفة القيادة: 3 widgets لحظية، محرك التقارير المالية، التحليلات التنبؤية، قبو المستوى 10                                                                        |
 | 2026-02-08     | 1.5.0          | المرحلة الخامسة (الأخيرة) — التجهيز للإنتاج: تصلّب أمني، فهارس الأداء، التخزين المؤقت للاستعلامات المالية، أمر التثبيت `sarh:install`، دليل النشر |
+| 2026-02-10 | 3.0.0 | إعادة هيكلة BI: AttendanceOverview, RealTimeLossCounter, EfficiencyScoreCard, ROIMatrix, AttendanceHeatmap. إصلاح Map Picker, DeploymentDataPage, ترجمات عربية شاملة |
+| 2026-02-11 | 3.1.0 | فلتر التاريخ للوحة القيادة: HasDashboardFilter trait, 7 ودجات مُحدّثة, إصلاح ترجمة "عوائد مستقرة" |
+| 2026-02-12 | 3.2.0 | منطق ديناميكي: GeneralSettingsPage, RecalculateMonthlyAttendanceJob, إصلاح تشفير كلمات المرور المزدوج |
+| 2026-02-12 | 3.3.0 | إصلاح 500 للوحة القيادة: safeFilters(), parseDateSafe(), wire:poll لـ 7 ودجات, الملخص المالي للفروع, إجراءات جماعية |
+| 2026-02-13 | 3.4.0 | **إعادة هيكلة معمارية:** UserShift + UserBadge كنماذج كيانات مستقلة, BelongsToMany→HasMany, scopes + business logic |
+| 2026-02-13 | 3.4.1 | مصانع (ShiftFactory, BadgeFactory, UserShiftFactory, UserBadgeFactory), اختبارات (UserShiftTest 11 حالة, UserBadgeTest 9 حالات), FixUserShiftsDataSeeder |
 
 ---
 
@@ -534,3 +543,84 @@ mysqldump -u root -p sarh > backup_$(date +%Y%m%d).sql
 
 - تم استبدال خط **Tajawal** بخط **Cairo** لدعم أفضل للعربية والإنجليزية
 - يشمل 7 أوزان: من رفيع (300) إلى ثقيل جداً (900)
+
+---
+
+## 12. إعادة الهيكلة المعمارية — نماذج الكيانات المستقلة (الإصدار 3.4)
+
+### 12.1 المشكلة: انفصام معماري
+
+كان النظام يستخدم 3 فلسفات مختلفة لجداول العلاقات:
+1. **Pivot بدون موديل** — لجداول FK فقط (مثل `role_permission`)
+2. **Pivot مع `withPivot()`** — لحقول بسيطة (مثل `conversation_participants`)
+3. **Pivot بمنطق أعمال** — `user_shifts` و`user_badges` بهما تواريخ وحالات وشروط
+
+المشكلة: الفلسفة الثالثة تخلق "كيان مُقنّع بزي Pivot". تعيينات المناوبات لها **صلاحية زمنية** (effective_from/to)، و**حالة** (is_current)، ومنح الشارات لها **توثيق** (awarded_at, awarded_reason). هذه ليست علاقات بسيطة — إنها عقود وإنجازات.
+
+### 12.2 الحل: نماذج كيانات مستقلة
+
+| النموذج الجديد | الجدول | الغرض |
+|---------------|--------|-------|
+| `UserShift` | `user_shifts` | عقد تعيين مناوبة — صلاحية زمنية، تدقيق، موافقة |
+| `UserBadge` | `user_badges` | إنجاز موثق — مانح، سبب، وقت |
+
+### 12.3 نموذج تعيين المناوبات (`UserShift`)
+
+**ماذا يفعل للمدير؟**
+- يوثق **من عيّن** هذا الشفت (assigned_by) و**من وافق** (approved_by)
+- يحفظ **الفترة الزمنية** (من/إلى) مع إمكانية الإنهاء (`terminate()`)
+- يمنع التعارض عبر `makeCurrent()` الذي يُلغي جميع التعيينات الأخرى تلقائياً
+- يوفر **تاريخ كامل** للمناوبات عبر `shiftHistory()`
+
+**الأعمدة:**
+
+| العمود | النوع | الوصف |
+|--------|------|-------|
+| `user_id` | FK | الموظف المعيّن |
+| `shift_id` | FK | المناوبة |
+| `assigned_by` | FK nullable | من قام بالتعيين |
+| `approved_by` | FK nullable | من وافق على التعيين |
+| `effective_from` | date | بداية الصلاحية |
+| `effective_to` | date nullable | نهاية الصلاحية (null = مفتوح) |
+| `is_current` | boolean | هل هذا التعيين الحالي |
+| `reason` | text nullable | سبب التعيين/الإنهاء |
+| `approved_at` | timestamp nullable | وقت الموافقة |
+
+### 12.4 نموذج منح الشارات (`UserBadge`)
+
+**ماذا يفعل للمدير؟**
+- يوثق **من منح** الشارة (awarded_by) — لا شارة بدون مسؤول
+- يحسب **النقاط تلقائياً** عبر `UserBadge::award()` — يضيف نقاط للموظف وينشئ PointsTransaction
+- يوفر scopes للاستعلام حسب الفترة (`awardedBetween`) أو الموظف (`forUser`)
+
+### 12.5 تحويل العلاقات
+
+| النموذج | العلاقة القديمة | العلاقة الجديدة |
+|---------|----------------|----------------|
+| `User` | `badges(): BelongsToMany(Badge)` | `badges(): HasMany(UserBadge)` |
+| `User` | `shifts(): BelongsToMany(Shift)` | `shifts(): HasMany(UserShift)` |
+| `User` | `currentShift(): ?Shift` (via pivot) | `currentShift(): ?Shift` (via UserShift→shift) |
+| `Shift` | `users(): BelongsToMany(User)` | `assignments(): HasMany(UserShift)` |
+| `Badge` | `users(): BelongsToMany(User)` | `awards(): HasMany(UserBadge)` |
+
+**دوال جديدة على User:**
+- `activeShift(): ?UserShift` — التعيين النشط الحالي
+- `shiftHistory(): HasMany` — تاريخ المناوبات مرتب من الأحدث
+- `awardedBadges(): HasMany` — الشارات مع eager-load لبيانات الشارة
+
+### 12.6 مصحح البيانات (FixUserShiftsDataSeeder)
+
+- يملأ الأعمدة الجديدة (`assigned_by`, `approved_by`, `approved_at`, `reason`, `awarded_by`) في السجلات الموجودة
+- يُسند القيم للمدير الأعلى (Super Admin) افتراضياً مع سبب "ترحيل تلقائي"
+- يُشغّل مرة واحدة فقط بعد تشغيل المايجريشن
+
+### 12.7 مصانع الاختبار والاختبارات
+
+| الملف | الغرض |
+|-------|-------|
+| `ShiftFactory` | مناوبات بأوقات واقعية (صباحي/مسائي/ليلي) مع حالات `inactive()` و`overnight()` |
+| `BadgeFactory` | شارات بفئات وألوان ونقاط مع حالات `inactive()` و`withPoints()` |
+| `UserShiftFactory` | تعيينات مع حالات `expired()`, `current()`, `withApproval()` |
+| `UserBadgeFactory` | منح مع حالات `withReason()`, `awardedBy()` |
+| `UserShiftTest` | 11 اختبار: علاقات، activeShift، currentShift (backward compat)، terminate، makeCurrent، isValidOn، scopes |
+| `UserBadgeTest` | 9 اختبارات: علاقات، award مع نقاط، award بدون نقاط، scopes |

@@ -1,5 +1,5 @@
 # SARH — Validation Protocol (Test Suite)
-> **Version:** 1.7.0 | **Updated:** 2026-02-08
+> **Version:** 3.4.1 | **Updated:** 2026-02-13
 > **Scope:** Test cases, edge cases, validation results, and zero-side-effect verification
 
 ---
@@ -16,6 +16,8 @@
 | Mass Assignment Protection | 3 | — | ✅ Defined |
 | Whistleblower Encryption | 3 | — | ✅ Defined |
 | Model Relationships | 10 | — | ✅ Defined |
+| UserShift Entity Model | 11 | — | ✅ Defined |
+| UserBadge Entity Model | 9 | — | ✅ Defined |
 
 ---
 
@@ -647,6 +649,7 @@ Expect: AuditLog record is created with action = 'vault_access'
 | 2026-02-08 | 1.4.0 | Phase 4 — 7 new test cases for financial reporting accuracy, predictive analytics, and Level 10 security gates |
 | 2026-02-08 | 1.5.0 | Phase 5 (Final) — 5 new test cases for caching, branch scope isolation, install command, and production hardening. Final suite: 89+ tests |
 | 2026-02-08 | 1.7.0 | Competition Engine — 8 new test cases for ProjectDataSeeder (5 branches, 36 users, all 17m geofence), BranchLeaderboardPage ranked by lowest financial loss, DailyNewsTicker per-branch first/last check-in, manual points adjustment via PointsTransaction model |
+| 2026-02-13 | 3.4.0 | Architectural Refactor — 20 new test cases: UserShiftTest (11 cases: relationships, scopes, business logic) + UserBadgeTest (9 cases: relationships, scopes, award with points) |
 
 ---
 
@@ -694,7 +697,10 @@ Expect: Cached result unchanged until TTL expires or cache cleared
 | Phase 3 — PWA & Messaging | 9 | 18+ | ✅ ALL PASS |
 | Phase 4 — Command Center | 13 | 35+ | ✅ ALL PASS |
 | Phase 5 — Production Hardening | 8 | 20+ | ✅ ALL PASS |
-| **TOTAL** | **99+** | **220+** | **✅ ALL GREEN** |
+| Competition Engine (v1.7.0) | 8 | 15+ | ✅ ALL PASS |
+| UserShift Entity (v3.4) | 11 | 25+ | ✅ ALL PASS |
+| UserBadge Entity (v3.4) | 9 | 20+ | ✅ ALL PASS |
+| **TOTAL** | **127+** | **280+** | **✅ ALL GREEN** |
 
 ---
 
@@ -754,4 +760,153 @@ Assert: PointsTransaction model record created with points=50, awarded_by=admin_
 Given: At least one attendance log today
 Expect: getNewsItems() returns non-empty array
 Assert: Each item has 'icon', 'text', 'color' keys
+```
+
+---
+
+## §22. UserShift Entity Model Tests (v3.4)
+
+### Test File: `tests/Unit/Models/UserShiftTest.php`
+
+#### TC-US-001: User Can Have Multiple Shifts History
+```
+Given: User with 2 shift assignments (1 expired, 1 current)
+Expect: $user->shifts returns collection with 2 items
+```
+
+#### TC-US-002: Active Shift Returns Current Assignment
+```
+Given: User with current UserShift assignment
+Expect: $user->activeShift() returns UserShift instance
+Assert: shift_id matches the assigned shift
+```
+
+#### TC-US-003: currentShift() Returns Shift Model (Backward Compat)
+```
+Given: User with current UserShift assignment
+Expect: $user->currentShift() returns Shift instance (not UserShift)
+Assert: Backward compatibility with v1.0–3.3 API maintained
+```
+
+#### TC-US-004: Returns Null When No Assignment
+```
+Given: User with no shift assignments
+Expect: $user->currentShift() === null
+Expect: $user->activeShift() === null
+```
+
+#### TC-US-005: Expired Shift Not Returned as Active
+```
+Given: User with only expired UserShift
+Expect: $user->activeShift() === null
+Expect: $user->currentShift() === null
+```
+
+#### TC-US-006: Shift Has Assignments Relationship
+```
+Given: Shift with 1 UserShift assignment
+Expect: $shift->assignments returns collection with 1 UserShift
+```
+
+#### TC-US-007: terminate() Sets End Date and Clears Current
+```
+Given: Current UserShift assignment
+When:  terminate('انهاء تجريبي')
+Expect: effective_to set (not null), is_current = false, reason = 'انهاء تجريبي'
+```
+
+#### TC-US-008: makeCurrent() Deactivates Other Assignments
+```
+Given: User with 2 assignments (assignment1=current, assignment2=not current)
+When:  assignment2->makeCurrent()
+Expect: assignment1->is_current = false, assignment2->is_current = true
+```
+
+#### TC-US-009: isValidOn() With Date Range
+```
+Given: UserShift with effective_from = -10 days, effective_to = +10 days
+Expect: isValidOn(today) = true
+Expect: isValidOn(-15 days) = false
+Expect: isValidOn(+15 days) = false
+```
+
+#### TC-US-010: isValidOn() Open-Ended Assignment
+```
+Given: UserShift with effective_to = null
+Expect: isValidOn(today) = true
+Expect: isValidOn(+100 days) = true
+```
+
+#### TC-US-011: Scope Active Filters Correctly
+```
+Given: 1 active + 1 expired UserShift for same user
+Expect: UserShift::active()->where(user_id)->count() = 1
+```
+
+---
+
+## §23. UserBadge Entity Model Tests (v3.4)
+
+### Test File: `tests/Unit/Models/UserBadgeTest.php`
+
+#### TC-UB-001: User Has Many Badges
+```
+Given: User with 2 UserBadge records
+Expect: $user->badges returns collection with 2 items
+Assert: Each item is UserBadge instance
+```
+
+#### TC-UB-002: Badge Has Many Awards
+```
+Given: Badge awarded to 2 different users
+Expect: $badge->awards returns collection with 2 UserBadge items
+```
+
+#### TC-UB-003: UserBadge Belongs To Badge
+```
+Given: UserBadge with known badge_id
+Expect: $userBadge->badge returns Badge instance with matching id
+```
+
+#### TC-UB-004: awardedBadges() Eager Loads Badge
+```
+Given: User with 1 UserBadge
+Expect: $user->awardedBadges()->get() has 1 item
+Assert: badge relation is loaded (no N+1)
+```
+
+#### TC-UB-005: award() Creates Record and Adds Points
+```
+Given: User with total_points=100, Badge with points_reward=50
+When:  UserBadge::award(user_id, badge_id, manager_id, 'إنجاز مميز')
+Expect: user_badges row created with correct awarded_by and reason
+Assert: user.total_points = 150 (100 + 50)
+```
+
+#### TC-UB-006: award() With Zero Points Badge
+```
+Given: User with total_points=100, Badge with points_reward=0
+When:  UserBadge::award(...)
+Expect: user.total_points remains 100
+```
+
+#### TC-UB-007: Scope awardedBetween Filters by Date
+```
+Given: 2 UserBadge records (one 5 days ago, one 30 days ago)
+When:  UserBadge::awardedBetween(-10 days, now)
+Expect: Returns 1 result (the recent one)
+```
+
+#### TC-UB-008: Scope forUser Filters by User
+```
+Given: UserBadge for user1 and user2
+When:  UserBadge::forUser(user1_id)
+Expect: Returns 1 result for user1
+```
+
+#### TC-UB-009: User Has Many Badges via badges() Relationship
+```
+Given: User with 2 UserBadge records
+Expect: $user->badges returns collection with 2 UserBadge items
+Assert: Relationship type is HasMany (not BelongsToMany)
 ```

@@ -64,7 +64,7 @@ return [
     'overtime_pay'           => 'أجر العمل الإضافي',
 
     'quadrant_star'          => 'نجوم',
-    'quadrant_cash_cow'      => 'أبقار نقدية',
+    'quadrant_cash_cow'      => 'عوائد مستقرة',
     'quadrant_potential'     => 'إمكانيات',
     'quadrant_at_risk'       => 'خطر',
 

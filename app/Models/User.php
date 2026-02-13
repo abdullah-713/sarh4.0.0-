@@ -247,6 +247,23 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(AttendanceLog::class);
     }
 
+    // --- Telemetry (حساس الإنتاجية) ---
+
+    public function sensorReadings(): HasMany
+    {
+        return $this->hasMany(SensorReading::class);
+    }
+
+    public function workRestStats(): HasMany
+    {
+        return $this->hasMany(WorkRestStat::class);
+    }
+
+    public function anomalyLogs(): HasMany
+    {
+        return $this->hasMany(AnomalyLog::class);
+    }
+
     public function financialReports(): HasMany
     {
         return $this->hasMany(FinancialReport::class);

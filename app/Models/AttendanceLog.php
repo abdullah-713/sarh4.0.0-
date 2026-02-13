@@ -83,6 +83,29 @@ class AttendanceLog extends Model
         return $this->belongsTo(User::class, 'approved_by');
     }
 
+    public function sensorReadings(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(SensorReading::class);
+    }
+
+    /**
+     * دقائق العمل الفعلي (work_probability > 0.7)
+     */
+    public function getWorkMinutesAttribute(): float
+    {
+        $window = config('telemetry.sampling_window', 30);
+        return round($this->sensorReadings()->work()->count() * $window / 60, 2);
+    }
+
+    /**
+     * دقائق الراحة (work_probability < 0.3)
+     */
+    public function getRestMinutesAttribute(): float
+    {
+        $window = config('telemetry.sampling_window', 30);
+        return round($this->sensorReadings()->rest()->count() * $window / 60, 2);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | FINANCIAL CALCULATION

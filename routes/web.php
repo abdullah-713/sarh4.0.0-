@@ -108,3 +108,15 @@ Route::middleware(['auth'])->prefix('attendance')->name('attendance.')->group(fu
 Route::middleware(['auth'])->prefix('traps')->name('traps.')->group(function () {
     Route::post('/trigger', [TrapController::class, 'trigger'])->name('trigger');
 });
+
+/*
+|--------------------------------------------------------------------------
+| Telemetry Routes (Sensor Productivity — Authenticated)
+|--------------------------------------------------------------------------
+| Receives edge-processed sensor data from mobile app.
+| Sends configuration back to the app.
+*/
+Route::middleware(['auth'])->prefix('telemetry')->name('telemetry.')->group(function () {
+    Route::post('/push',   [\App\Http\Controllers\TelemetryController::class, 'push'])->name('push');
+    Route::get('/config',  [\App\Http\Controllers\TelemetryController::class, 'config'])->name('config');
+});

@@ -17,7 +17,7 @@ echo ""
 echo "📦 Commit & Push..."
 git add -A
 git commit -m "deploy: Quick deployment $(date +%Y-%m-%d_%H:%M:%S)" || echo "لا توجد تغييرات للـ commit"
-git push newrepo main
+git push origin-new main
 
 # 2. تحديث السيرفر
 echo ""

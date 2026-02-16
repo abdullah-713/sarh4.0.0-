@@ -46,3 +46,11 @@ yarn-error.log
 
 # Sensitive Documentation
 SSH_SETUP.md
+
+# Android
+mobile/app/build/
+mobile/build/
+mobile/.gradle/
+mobile/local.properties
+mobile/*.jks
+*.apk

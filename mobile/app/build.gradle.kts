@@ -26,15 +26,10 @@ android {
 
     signingConfigs {
         create("release") {
-            // ═══════════════════════════════════════════════════════════
-            // أنشئ مفتاح التوقيع عبر Android Studio:
-            // Build → Generate Signed Bundle / APK → Create new...
-            // ثم عدّل هذه القيم:
-            // ═══════════════════════════════════════════════════════════
-            // storeFile = file("sarh-release-key.jks")
-            // storePassword = "YOUR_STORE_PASSWORD"
-            // keyAlias = "sarh"
-            // keyPassword = "YOUR_KEY_PASSWORD"
+            storeFile = file("../sarh-release-key.jks")
+            storePassword = "sarh2026release"
+            keyAlias = "sarh"
+            keyPassword = "sarh2026release"
         }
     }
 
@@ -46,7 +41,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            // signingConfig = signingConfigs.getByName("release")
+            signingConfig = signingConfigs.getByName("release")
         }
         debug {
             isMinifyEnabled = false

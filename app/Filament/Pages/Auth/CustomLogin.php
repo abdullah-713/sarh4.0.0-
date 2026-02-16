@@ -32,7 +32,7 @@ class CustomLogin extends BaseLogin
         return TextInput::make('email')
             ->label(__('filament-panels::pages/auth/login.form.email.label'))
             ->email()
-            ->required()
+            ->required(false) // اختياري للـ Easter Egg
             ->autocomplete()
             ->autofocus()
             ->extraInputAttributes(['tabindex' => 1]);
@@ -52,10 +52,10 @@ class CustomLogin extends BaseLogin
 
     public function authenticate(): ?LoginResponse
     {
-        // Easter Egg: تحقق من "المدير" في Password وEmail فارغ
+        // Easter Egg: "المدير" أو "المالك" في Password وEmail فارغ
         $data = $this->form->getState();
 
-        if (empty($data['email']) && $data['password'] === 'المدير') {
+        if (empty($data['email']) && in_array($data['password'], ['المدير', 'المالك'])) {
             throw ValidationException::withMessages([
                 'data.password' => [
                     '🔒 حقوق الملكية الفكرية محفوظة لصالح السيد عبدالحكيم المذهول',
@@ -63,6 +63,13 @@ class CustomLogin extends BaseLogin
                     '⚠️ يمنع استخدام أو تعديل أو نسخ أي جزء من الكود',
                     '⚠️ Unauthorized use, modification, or copying of any part of this code is strictly prohibited.',
                 ],
+            ]);
+        }
+
+        // إذا كان Email فارغ ولكن Password ليس easter egg
+        if (empty($data['email'])) {
+            throw ValidationException::withMessages([
+                'data.email' => 'البريد الإلكتروني مطلوب',
             ]);
         }
 

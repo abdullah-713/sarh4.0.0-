@@ -100,7 +100,8 @@ SESSION_SECURE_COOKIE=true
 MAIL_MAILER=smtp
 # ...
 
-QUEUE_CONNECTION=sync    # الاستضافة المشتركة لا تدعم workers
+QUEUE_CONNECTION=database  # قاعدة بيانات لمعالجة المهام
+CACHE_STORE=file           # مناسب لـ 100 مستخدم
 ```
 
 ### ملاحظات الإنتاج
@@ -108,8 +109,9 @@ QUEUE_CONNECTION=sync    # الاستضافة المشتركة لا تدعم wor
 | الإعداد | القيمة | السبب |
 |---------|--------|-------|
 | `APP_DEBUG` | `false` | منع تسريب معلومات حساسة |
-| `QUEUE_CONNECTION` | `sync` | لا يوجد supervisor على الاستضافة المشتركة |
+| `QUEUE_CONNECTION` | `database` | معالجة المهام عبر قاعدة البيانات (بديل آمن عن sync) |
 | `SESSION_DRIVER` | `file` | أبسط وأموثق على الاستضافة المشتركة |
+| `SESSION_SAME_SITE` | `lax` | حماية الجلسات مع توافق Livewire |
 | `CACHE_STORE` | `file` | لا يوجد Redis |
 
 ---
@@ -147,17 +149,36 @@ php artisan sarh:install
 
 ```bash
 php artisan db:seed
-# → RoleSeeder: أدوار (مدير عام، مشرف، موظف...)
-# → BadgeSeeder: شارات أساسية
-# → TrapSeeder: فخاخ افتراضية
+# → RolesAndPermissionsSeeder: 10 أدوار + 46 صلاحية
+# → BadgesSeeder: 7 شارات أساسية
+# → TrapsSeeder: 4 فخاخ نفسية
+# → ProjectDataSeeder: 5 فروع + مدير أعلى + 35 موظف
+# → DepartmentSeeder: 7 أقسام أساسية
+# → HolidaySeeder: عطلات 2026 الرسمية
 ```
 
 ### 3. جدولة الأوامر
 
+> ⚠️ في Hostinger لا يتوفر `crontab` عبر SSH. استخدم **لوحة hPanel** لإضافة Cron Jobs.
+
 ```bash
-# أضف في Hostinger Cron Jobs:
-* * * * * cd /home/u850419603/sarh && php artisan schedule:run >> /dev/null 2>&1
+# أضف في Hostinger hPanel → Cron Jobs:
+# الأمر: cd /home/u850419603/sarh && /usr/bin/php artisan schedule:run >> /dev/null 2>&1
+# التكرار: كل دقيقة (* * * * *)
 ```
+
+### 3.1 النسخ الاحتياطي اليومي
+
+```bash
+# أضف في Hostinger hPanel → Cron Jobs:
+# الأمر: cd /home/u850419603/sarh && bash backup-db.sh >> /home/u850419603/backups/backup.log 2>&1
+# التكرار: يوميًا الساعة 2:00 صباحًا (0 2 * * *)
+```
+
+سكريبت `backup-db.sh` يقوم بـ:
+- قراءة بيانات الاتصال من `.env` تلقائيًا
+- إنشاء نسخة مضغوطة `sarh_YYYYMMDD_HHMM.sql.gz`
+- الاحتفاظ بآخر 30 نسخة وحذف الأقدم
 
 ### 4. التحقق
 

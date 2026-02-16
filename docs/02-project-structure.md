@@ -193,6 +193,8 @@ database/
     ├── BadgesSeeder.php                      ← الشارات
     ├── TrapsSeeder.php                       ← الفخاخ النفسية
     ├── ProjectDataSeeder.php                 ← بيانات المشروع النموذجية
+    ├── DepartmentSeeder.php                  ← الأقسام الأساسية (7 أقسام)
+    ├── HolidaySeeder.php                     ← العطلات الرسمية السعودية
     └── FixUserShiftsDataSeeder.php           ← إصلاح ربط الورديات
 ```
 

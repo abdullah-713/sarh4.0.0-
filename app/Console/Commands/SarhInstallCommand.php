@@ -45,6 +45,16 @@ class SarhInstallCommand extends Command
             return true;
         });
 
+        $this->components->task('تهيئة الأقسام...', function () {
+            $this->callSilently('db:seed', ['--class' => 'Database\\Seeders\\DepartmentSeeder', '--force' => true]);
+            return true;
+        });
+
+        $this->components->task('تهيئة العطلات الرسمية...', function () {
+            $this->callSilently('db:seed', ['--class' => 'Database\\Seeders\\HolidaySeeder', '--force' => true]);
+            return true;
+        });
+
         // ── Step 4: Create Super Admin ──────────────────────
         $this->newLine();
 

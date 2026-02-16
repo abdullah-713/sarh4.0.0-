@@ -30,7 +30,7 @@ php artisan key:generate
 # 4. إعداد قاعدة البيانات (عدّل .env أولاً)
 php artisan migrate --seed
 
-# 5. التثبيت (إنشاء مدير أعلى)
+# 5. التثبيت (إنشاء مدير أعلى + بذر أقسام وعطلات)
 php artisan sarh:install
 
 # 6. ربط التخزين

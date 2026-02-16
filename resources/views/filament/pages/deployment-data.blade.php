@@ -30,19 +30,14 @@
     {{-- Action Buttons --}}
     <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 mb-6">
         <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">⚡ عمليات التهيئة</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
             <button wire:click="resetAllRecords"
                     wire:confirm="⚠️ سيتم حذف جميع سجلات الحضور والإجازات والرواتب والتقارير. هل تريد المتابعة؟"
                     class="flex items-center justify-center gap-2 px-4 py-3 bg-red-500/10 border border-red-300 dark:border-red-700 text-red-600 dark:text-red-400 rounded-xl hover:bg-red-500/20 transition font-medium text-sm">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                 تصفير السجلات
             </button>
-            <button wire:click="resetAllPasswords"
-                    wire:confirm="سيتم إعادة تعيين كلمات المرور لجميع الموظفين إلى 123456. هل تريد المتابعة؟"
-                    class="flex items-center justify-center gap-2 px-4 py-3 bg-amber-500/10 border border-amber-300 dark:border-amber-700 text-amber-600 dark:text-amber-400 rounded-xl hover:bg-amber-500/20 transition font-medium text-sm">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg>
-                كلمات المرور 123456
-            </button>
+
             <button wire:click="setLogoAsAvatar"
                     class="flex items-center justify-center gap-2 px-4 py-3 bg-purple-500/10 border border-purple-300 dark:border-purple-700 text-purple-600 dark:text-purple-400 rounded-xl hover:bg-purple-500/20 transition font-medium text-sm">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
@@ -55,7 +50,7 @@
                 مناوبة 08:00—21:00
             </button>
             <button wire:click="runFullDeploymentReset"
-                    wire:confirm="⚠️ سيتم: تصفير السجلات + كلمات مرور 123456 + صورة الشعار + مناوبة موحدة. هل تريد تنفيذ الكل؟"
+                    wire:confirm="⚠️ سيتم: تصفير السجلات + صورة الشعار + مناوبة موحدة. هل تريد تنفيذ الكل؟"
                     class="flex items-center justify-center gap-2 px-4 py-3 bg-orange-500 text-white rounded-xl hover:bg-orange-600 transition font-bold text-sm shadow-lg">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                 تنفيذ الكل دفعة واحدة
@@ -141,13 +136,8 @@
 
     {{-- Employees Table --}}
     <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-        <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+        <div class="p-4 border-b border-gray-200 dark:border-gray-700">
             <h3 class="text-lg font-bold text-gray-900 dark:text-white">👥 الموظفون ({{ count($employees) }})</h3>
-            <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-                <span class="inline-flex items-center gap-1 px-2 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 rounded-full">
-                    🔑 كلمة المرور الافتراضية: <strong>123456</strong>
-                </span>
-            </div>
         </div>
         <div class="overflow-x-auto">
             <table class="w-full text-sm">

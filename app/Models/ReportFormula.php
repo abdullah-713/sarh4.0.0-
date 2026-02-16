@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Log;
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
 /**
  * SARH v1.9.0 — صيغ التقارير الديناميكية
@@ -72,6 +74,9 @@ class ReportFormula extends Model
     /**
      * Evaluate the formula with given variable values.
      *
+     * Uses Symfony ExpressionLanguage instead of eval() for security.
+     * Only whitelisted variables are passed to the evaluator.
+     *
      * @param  array<string, float>  $values  e.g. ['attendance' => 95.5, 'task_completion' => 87.0]
      * @return float|null
      */
@@ -79,34 +84,40 @@ class ReportFormula extends Model
     {
         $formula = $this->formula;
 
+        if (empty($formula)) {
+            return null;
+        }
+
         // Validate all required variables are provided
         $requiredVars = array_keys($this->variables ?? []);
         foreach ($requiredVars as $var) {
             if (!array_key_exists($var, $values)) {
+                Log::warning('Formula missing required variable', [
+                    'formula_id' => $this->id,
+                    'missing'    => $var,
+                ]);
                 return null;
             }
         }
 
-        // Replace variables with their values (longest first to avoid partial replacements)
-        $vars = array_keys($values);
-        usort($vars, fn ($a, $b) => strlen($b) - strlen($a));
-
-        foreach ($vars as $var) {
-            $formula = str_replace($var, (string) (float) $values[$var], $formula);
-        }
-
-        // Sanitize: Only allow numbers, operators, parentheses, spaces, and decimal points
-        $sanitized = preg_replace('/[^0-9+\-*\/().%\s]/', '', $formula);
-
-        if (empty($sanitized) || $sanitized !== $formula) {
-            return null; // Formula contains invalid characters
+        // Only pass declared variables — whitelist approach
+        $safeValues = [];
+        foreach ($requiredVars as $var) {
+            $safeValues[$var] = (float) ($values[$var] ?? 0);
         }
 
         try {
-            // Safe evaluation using PHP's mathematical evaluation
-            $result = @eval("return ({$sanitized});");
+            $expressionLanguage = new ExpressionLanguage();
+            $result = $expressionLanguage->evaluate($formula, $safeValues);
+
             return is_numeric($result) ? round((float) $result, 4) : null;
-        } catch (\Throwable) {
+        } catch (\Throwable $e) {
+            Log::error('Formula evaluation failed', [
+                'formula_id' => $this->id,
+                'formula'    => $formula,
+                'variables'  => $safeValues,
+                'error'      => $e->getMessage(),
+            ]);
             return null;
         }
     }

@@ -13,7 +13,6 @@ use App\Models\User;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -23,7 +22,6 @@ use Illuminate\Support\Facades\Storage;
  * - الفروع الحالية وإحداثياتها
  * - الموظفون وبياناتهم
  * - إعادة تصفير جميع السجلات
- * - كلمة مرور افتراضية 123456
  * - مناوبة واحدة 08:00—21:00 عدا الجمعة
  *
  * ⚠️ متاحة فقط لـ super_admin / Level 10
@@ -184,23 +182,7 @@ class DeploymentDataPage extends Page
             ->send();
     }
 
-    /**
-     * إعادة تعيين كلمات المرور لجميع الموظفين إلى 123456.
-     */
-    public function resetAllPasswords(): void
-    {
-        User::where('is_super_admin', false)->update([
-            'password' => Hash::make('123456'),
-        ]);
 
-        $this->loadData();
-
-        Notification::make()
-            ->title('تم إعادة تعيين كلمات المرور')
-            ->body('كلمة المرور الافتراضية لجميع الموظفين: 123456')
-            ->success()
-            ->send();
-    }
 
     /**
      * تعيين صورة الشعار كصورة بروفايل لجميع الموظفين.
@@ -294,13 +276,12 @@ class DeploymentDataPage extends Page
     public function runFullDeploymentReset(): void
     {
         $this->resetAllRecords();
-        $this->resetAllPasswords();
         $this->setLogoAsAvatar();
         $this->applyStandardShift();
 
         Notification::make()
             ->title('✅ تم تهيئة النظام للنشر')
-            ->body('تصفير السجلات + كلمات المرور 123456 + صورة الشعار + مناوبة 08:00-21:00')
+            ->body('تصفير السجلات + صورة الشعار + مناوبة 08:00-21:00')
             ->success()
             ->duration(8000)
             ->send();

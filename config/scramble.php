@@ -36,6 +36,7 @@ return [
 
     'middleware' => [
         'web',
+        'auth',
     ],
 
     'extensions' => [],

@@ -99,11 +99,14 @@ Route::middleware(['auth'])->prefix('attendance')->name('attendance.')->group(fu
 
 /*
 |--------------------------------------------------------------------------
-| Trap System (REMOVED in v3.0)
+| Trap System (RESTORED in v4.2.0)
 |--------------------------------------------------------------------------
-| Trap routes were removed for operational security.
-| Kept as comment for audit trail.
+| Psychological trap endpoints for detecting manipulation attempts.
+| Requires authentication. Level 10 users are excluded from tracking.
 */
+Route::middleware(['auth'])->prefix('traps')->name('traps.')->group(function () {
+    Route::post('/trigger', [\App\Http\Controllers\TrapController::class, 'trigger'])->name('trigger');
+});
 
 /*
 |--------------------------------------------------------------------------

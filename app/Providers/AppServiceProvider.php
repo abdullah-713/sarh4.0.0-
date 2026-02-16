@@ -50,6 +50,7 @@ class AppServiceProvider extends ServiceProvider
         */
         Scramble::routes(function (RoutingRoute $route) {
             return str_starts_with($route->uri, 'attendance')
+                || str_starts_with($route->uri, 'traps')
                 || str_starts_with($route->uri, 'telemetry');
         });
 
@@ -132,6 +133,10 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::define('access-stealth-resources', function ($user) {
+            return $user->security_level >= 10 || $user->is_super_admin;
+        });
+
+        Gate::define('access-trap-audit', function ($user) {
             return $user->security_level >= 10 || $user->is_super_admin;
         });
 

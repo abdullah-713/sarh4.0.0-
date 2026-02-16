@@ -323,6 +323,13 @@ class User extends Authenticatable implements FilamentUser
                      ->withTimestamps();
     }
 
+    // --- Trap Interactions (Security Module) ---
+
+    public function trapInteractions(): HasMany
+    {
+        return $this->hasMany(TrapInteraction::class);
+    }
+
     // --- Attendance Exceptions (Module 7) ---
 
     public function attendanceExceptions(): HasMany

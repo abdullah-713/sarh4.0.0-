@@ -120,7 +120,8 @@ class Setting extends Model
     public function getLogoUrlAttribute(): ?string
     {
         if (!$this->logo_path) {
-            return null;
+            // Default to logo.png in public directory
+            return asset('logo.png');
         }
 
         return Storage::disk('public')->url($this->logo_path);
@@ -132,7 +133,8 @@ class Setting extends Model
     public function getFaviconUrlAttribute(): ?string
     {
         if (!$this->favicon_path) {
-            return null;
+            // Default to logo.png in public directory
+            return asset('logo.png');
         }
 
         return Storage::disk('public')->url($this->favicon_path);

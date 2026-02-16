@@ -4,6 +4,7 @@ namespace App\Providers\Filament;
 
 use App\Filament\App\Pages\EmployeeDashboard;
 use App\Filament\App\Widgets\EmployeeWelcomeWidget;
+use App\Filament\Pages\Auth\CustomLogin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -37,7 +38,7 @@ class AppPanelProvider extends PanelProvider
         return $panel
             ->id('app')
             ->path('app')
-            ->login()
+            ->login(CustomLogin::class)
             ->passwordReset()
             ->colors([
                 // SARH v3.0: Navy + Gold Executive Theme

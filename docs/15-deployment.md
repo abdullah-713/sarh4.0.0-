@@ -188,11 +188,47 @@ php artisan db:seed
 | لوحة الإدارة | `https://sarh.online/admin` |
 | بوابة الموظف | `https://sarh.online/app` |
 | البلاغات السرية | `https://sarh.online/whistleblower` |
+| تحميل التطبيق | `https://sarh.online/app/download` |
+| فحص إصدار التطبيق | `https://sarh.online/api/app-version` |
 | توثيق API | `https://sarh.online/docs/api` |
 
 ---
 
-## 15.8 استكشاف الأخطاء
+## 15.8 تطبيق الموبايل (Android)
+
+### بنية المشروع
+
+المشروع في مجلد `mobile/` — يُفتح في Android Studio.
+
+### بناء APK
+
+```bash
+# في Android Studio:
+# Build → Generate Signed Bundle / APK → APK
+# اختر release → وقّع بمفتاح sarh-release-key.jks
+```
+
+### نشر APK على الخادم
+
+```bash
+# 1. انسخ APK الموقّع إلى الخادم
+scp -P 65002 app-release.apk u850419603@145.223.119.139:~/domains/sarh.online/public_html/app/sarh.apk
+
+# 2. رابط التحميل: https://sarh.online/app/sarh.apk
+# 3. صفحة التحميل: https://sarh.online/app/download
+```
+
+### تحديث الإصدار
+
+عند إصدار نسخة جديدة:
+1. عدّل `versionCode` و `versionName` في `mobile/app/build.gradle.kts`
+2. عدّل قيم `/api/app-version` في `routes/web.php`
+3. أعد بناء APK ووقّعه **بنفس المفتاح**
+4. استبدل الملف على الخادم
+
+---
+
+## 15.9 استكشاف الأخطاء
 
 ### خطأ 500
 

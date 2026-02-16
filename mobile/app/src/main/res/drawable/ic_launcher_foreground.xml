@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- أيقونة التطبيق الأمامية (Vector) — حرف ص بخلفية دائرية -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- خلفية الدائرة (برتقالي) -->
+    <path
+        android:fillColor="#F97316"
+        android:pathData="M54,54m-40,0a40,40 0,1 1,80 0a40,40 0,1 1,-80 0" />
+
+    <!-- حرف S (أبيض) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,30 C44,30 36,35 36,42 C36,49 44,52 54,54 C64,56 72,59 72,66 C72,73 64,78 54,78 C44,78 36,73 36,66"
+        android:strokeWidth="5"
+        android:strokeColor="#FFFFFF"
+        android:fillType="nonZero" />
+
+</vector>

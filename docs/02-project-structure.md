@@ -23,6 +23,10 @@ sarh/
 ├── database/               ← التهجيرات والبذور والمصانع
 ├── docs/                   ← التوثيق (أنت هنا)
 ├── lang/                   ← ملفات الترجمة (ar/en)
+├── mobile/                 ← تطبيق أندرويد (Kotlin + WebView)
+│   ├── app/src/main/java/  ← الكود المصدري (Kotlin)
+│   ├── app/src/main/res/   ← الموارد (layouts, themes, strings)
+│   └── build.gradle.kts    ← إعدادات البناء
 ├── public/                 ← الملفات العامة (نقطة الدخول)
 ├── resources/              ← العروض والأصول
 ├── routes/                 ← تعريف المسارات

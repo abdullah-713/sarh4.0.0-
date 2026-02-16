@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ═══ الثيم الرئيسي ═══ -->
+    <style name="Theme.Sarh" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/sarh_orange</item>
+        <item name="colorPrimaryDark">@color/sarh_orange_dark</item>
+        <item name="colorAccent">@color/sarh_blue</item>
+        <item name="android:statusBarColor">@color/status_bar</item>
+        <item name="android:navigationBarColor">@color/sarh_blue_dark</item>
+        <item name="android:windowBackground">@color/sarh_white</item>
+    </style>
+
+    <!-- ═══ ثيم شاشة البداية ═══ -->
+    <style name="Theme.Sarh.Splash" parent="Theme.Sarh">
+        <item name="android:statusBarColor">@color/splash_bg</item>
+        <item name="android:windowBackground">@color/splash_bg</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>

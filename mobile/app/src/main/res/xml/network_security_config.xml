@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- إعدادات أمان الشبكة — HTTPS فقط -->
+<network-security-config>
+    <!-- السماح بـ HTTPS فقط لنطاق sarh.online -->
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">sarh.online</domain>
+    </domain-config>
+</network-security-config>

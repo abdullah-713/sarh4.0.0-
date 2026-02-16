@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- اسم التطبيق -->
+    <string name="app_name">صرح الإتقان</string>
+    <string name="app_subtitle">نظام إدارة الموارد البشرية</string>
+
+    <!-- شاشة البداية -->
+    <string name="loading">جاري التحميل…</string>
+    <string name="update_available">يتوفر تحديث جديد</string>
+    <string name="update_now">تحديث الآن</string>
+    <string name="skip">تخطي</string>
+
+    <!-- رسائل عامة -->
+    <string name="no_internet">لا يوجد اتصال بالإنترنت</string>
+    <string name="retry">إعادة المحاولة</string>
+    <string name="exit_confirm">هل تريد الخروج من تطبيق صرح؟</string>
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
+    <string name="downloading">جاري التحميل…</string>
+    <string name="choose_file">اختر ملفاً</string>
+</resources>

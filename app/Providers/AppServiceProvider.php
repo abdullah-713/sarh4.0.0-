@@ -11,8 +11,26 @@ use App\Listeners\HandleAttendanceRecorded;
 use App\Listeners\HandleBadgePoints;
 use App\Listeners\HandleTrapTriggered;
 use App\Models\AttendanceLog;
+use App\Models\Branch;
+use App\Models\Circular;
+use App\Models\Department;
+use App\Models\EmployeeDocument;
+use App\Models\Holiday;
+use App\Models\LeaveRequest;
+use App\Models\Payroll;
+use App\Models\PerformanceAlert;
+use App\Models\Shift;
 use App\Models\User;
 use App\Policies\AttendanceLogPolicy;
+use App\Policies\BranchPolicy;
+use App\Policies\CircularPolicy;
+use App\Policies\DepartmentPolicy;
+use App\Policies\EmployeeDocumentPolicy;
+use App\Policies\HolidayPolicy;
+use App\Policies\LeaveRequestPolicy;
+use App\Policies\PayrollPolicy;
+use App\Policies\PerformanceAlertPolicy;
+use App\Policies\ShiftPolicy;
 use App\Policies\UserPolicy;
 use Dedoc\Scramble\Scramble;
 use Illuminate\Routing\Route as RoutingRoute;
@@ -150,5 +168,14 @@ class AppServiceProvider extends ServiceProvider
         */
         Gate::policy(User::class, UserPolicy::class);
         Gate::policy(AttendanceLog::class, AttendanceLogPolicy::class);
+        Gate::policy(Payroll::class, PayrollPolicy::class);
+        Gate::policy(LeaveRequest::class, LeaveRequestPolicy::class);
+        Gate::policy(EmployeeDocument::class, EmployeeDocumentPolicy::class);
+        Gate::policy(PerformanceAlert::class, PerformanceAlertPolicy::class);
+        Gate::policy(Circular::class, CircularPolicy::class);
+        Gate::policy(Holiday::class, HolidayPolicy::class);
+        Gate::policy(Branch::class, BranchPolicy::class);
+        Gate::policy(Department::class, DepartmentPolicy::class);
+        Gate::policy(Shift::class, ShiftPolicy::class);
     }
 }

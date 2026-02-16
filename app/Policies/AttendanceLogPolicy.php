@@ -9,6 +9,14 @@ use Illuminate\Database\Eloquent\Builder;
 class AttendanceLogPolicy
 {
     /**
+     * هل يستطيع المستخدم مشاهدة قائمة سجلات الحضور؟
+     */
+    public function viewAny(User $user): bool
+    {
+        return true;
+    }
+
+    /**
      * هل يستطيع المستخدم مشاهدة هذا السجل؟
      */
     public function view(User $user, AttendanceLog $log): bool
@@ -47,5 +55,33 @@ class AttendanceLogPolicy
         }
 
         return $query->where('branch_id', $user->branch_id);
+    }
+
+    /**
+     * إنشاء سجل حضور: المستوى 6+ فقط.
+     */
+    public function create(User $user): bool
+    {
+        return $user->is_super_admin || $user->security_level >= 6;
+    }
+
+    /**
+     * تعديل سجل حضور: المستوى 7+ لفرعه، أو المستوى 10.
+     */
+    public function update(User $user, AttendanceLog $log): bool
+    {
+        if ($user->is_super_admin || $user->security_level >= 10) {
+            return true;
+        }
+
+        return $user->security_level >= 7 && $user->branch_id === $log->branch_id;
+    }
+
+    /**
+     * حذف سجل حضور: المستوى 10 فقط.
+     */
+    public function delete(User $user, AttendanceLog $log): bool
+    {
+        return $user->is_super_admin || $user->security_level >= 10;
     }
 }

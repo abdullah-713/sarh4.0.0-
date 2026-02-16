@@ -12,7 +12,7 @@ set -e
 
 PROJECT_DIR="/home/u850419603/sarh"
 DOMAIN_PUBLIC="/home/u850419603/domains/sarh.online/public_html"
-REPO_URL="https://github.com/ggoolbx0/sarh.git"
+REPO_URL="https://github.com/abawelast-hash/newbranch.git"
 
 echo ""
 echo "╔═══════════════════════════════════════════╗"

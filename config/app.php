@@ -97,9 +97,7 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
-    // SARH PRODUCTION FIX: env('APP_KEY') returns NULL on Hostinger shared hosting
-    // due to phpdotenv parsing failure with PHP 8.2. Fallback guarantees encryption works.
-    'key' => env('APP_KEY') ?: 'base64:HCm50MHjQdA60jtRE8b0eIT+QKqogCIBlWAUYASWNPo=',
+    'key' => env('APP_KEY'),
 
     'previous_keys' => [
         ...array_filter(

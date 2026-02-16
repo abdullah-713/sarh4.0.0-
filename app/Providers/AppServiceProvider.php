@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\AnomalyDetected;
 use App\Events\AttendanceRecorded;
 use App\Events\BadgeAwarded;
+use App\Listeners\HandleAnomalyDetected;
 use App\Listeners\HandleAttendanceRecorded;
 use App\Listeners\HandleBadgePoints;
 use App\Models\AttendanceLog;
@@ -39,6 +41,7 @@ class AppServiceProvider extends ServiceProvider
         */
         Event::listen(BadgeAwarded::class, HandleBadgePoints::class);
         Event::listen(AttendanceRecorded::class, HandleAttendanceRecorded::class);
+        Event::listen(AnomalyDetected::class, HandleAnomalyDetected::class);
 
         /*
         |----------------------------------------------------------------------

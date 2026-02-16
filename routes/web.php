@@ -99,14 +99,11 @@ Route::middleware(['auth'])->prefix('attendance')->name('attendance.')->group(fu
 
 /*
 |--------------------------------------------------------------------------
-| Trap System Routes (PWA — Authenticated)
+| Trap System (REMOVED in v3.0)
 |--------------------------------------------------------------------------
-| Trap trigger endpoint. The PWA sends trap interactions here.
-| The response is a convincing fake payload — no real data exposed.
+| Trap routes were removed for operational security.
+| Kept as comment for audit trail.
 */
-Route::middleware(['auth'])->prefix('traps')->name('traps.')->group(function () {
-    Route::post('/trigger', [TrapController::class, 'trigger'])->name('trigger');
-});
 
 /*
 |--------------------------------------------------------------------------

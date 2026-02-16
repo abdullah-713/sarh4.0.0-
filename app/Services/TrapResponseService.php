@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Events\TrapTriggered;
 use App\Models\AuditLog;
 use App\Models\Trap;
 use App\Models\TrapInteraction;
@@ -78,6 +79,9 @@ class TrapResponseService
                 'count'       => $interactionCount,
             ]
         );
+
+        // إطلاق حدث TrapTriggered للمعالجة غير المتزامنة
+        TrapTriggered::dispatch($trap, $user, $interaction);
 
         return $interaction;
     }

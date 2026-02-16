@@ -55,7 +55,7 @@ create_test_user.php, reset_passwords.php (و4 سكريبتات خطرة أخر�
 | **النطاق** | `sarh.online` |
 | **الخادم** | Hostinger Shared Hosting |
 | **SSH** | `ssh -p 65002 u850419603@145.223.119.139` |
-| **كلمة المرور** | `Goolbx512!!` |
+| **كلمة المرور** | `<REDACTED — راجع .env.production>` |
 | **مسار المشروع** | `/home/u850419603/sarh` |
 | **مسار الويب العام** | `/home/u850419603/public_html` → symlink → `sarh/public` |
 | **قاعدة البيانات** | `u850419603_sarh` @ `127.0.0.1:3306` |
@@ -353,7 +353,7 @@ echo "✅ تم الإصلاح"
 
 ```bash
 # الاتصال بالخادم
-sshpass -p 'Goolbx512!!' ssh -p 65002 u850419603@145.223.119.139
+sshpass -p '<REDACTED>' ssh -p 65002 u850419603@145.223.119.139
 
 # الانتقال للمشروع
 cd /home/u850419603/sarh
@@ -429,7 +429,7 @@ git commit -m "v3.0.0: Navy+Gold UI, Removed Traps, Cleanup"
 git push newrepo main
 
 # 3. النشر على Hostinger
-sshpass -p 'Goolbx512!!' ssh -p 65002 -o StrictHostKeyChecking=no u850419603@145.223.119.139 'cd /home/u850419603/sarh && bash deploy.sh 2>&1'
+sshpass -p '<REDACTED>' ssh -p 65002 -o StrictHostKeyChecking=no u850419603@145.223.119.139 'cd /home/u850419603/sarh && bash deploy.sh 2>&1'
 ```
 
 ### 8.2 التحقق بعد النشر
@@ -447,7 +447,7 @@ sshpass -p 'Goolbx512!!' ssh -p 65002 -o StrictHostKeyChecking=no u850419603@145
 | العنصر | القيمة |
 |--------|--------|
 | **حساب المدير العام** | `abdullah@sarh.app` |
-| **كلمة المرور** | `Goolbx512!!` |
+| **كلمة المرور** | `<REDACTED — راجع .env.production>` |
 | **المستوى الأمني** | 10 (God Mode) |
 | **لوحة الإدارة** | `https://sarh.online/admin` |
 | **بوابة الموظف** | `https://sarh.online/app` |

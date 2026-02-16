@@ -12,7 +12,7 @@ class SarhInstallCommand extends Command
 {
     protected $signature = 'sarh:install';
 
-    protected $description = 'Install SARH AL-ITQAN: seed roles, badges, traps, and create the initial Super Admin (Level 10)';
+    protected $description = 'Install SARH AL-ITQAN: seed roles, badges, and create the initial Super Admin (Level 10)';
 
     public function handle(): int
     {
@@ -37,11 +37,6 @@ class SarhInstallCommand extends Command
 
         $this->components->task(__('install.seeding_badges'), function () {
             $this->callSilently('db:seed', ['--class' => 'Database\\Seeders\\BadgesSeeder', '--force' => true]);
-            return true;
-        });
-
-        $this->components->task(__('install.seeding_traps'), function () {
-            $this->callSilently('db:seed', ['--class' => 'Database\\Seeders\\TrapsSeeder', '--force' => true]);
             return true;
         });
 

@@ -99,20 +99,6 @@ class BadgesSeeder extends Seeder
                 'points_reward' => 500,
                 'criteria'      => ['type' => 'ranking', 'condition' => 'branch_top', 'rank' => 1],
             ],
-
-            // --- Special Badges ---
-            [
-                'slug'          => 'integrity_champion',
-                'name_ar'       => 'بطل النزاهة',
-                'name_en'       => 'Integrity Champion',
-                'description_ar'=> 'اجتاز جميع اختبارات النزاهة بنجاح',
-                'description_en'=> 'Passed all integrity trap tests successfully',
-                'icon'          => 'heroicon-o-shield-check',
-                'color'         => '#14b8a6',
-                'category'      => 'special',
-                'points_reward' => 1000,
-                'criteria'      => ['type' => 'special', 'condition' => 'zero_trap_failures'],
-            ],
         ];
 
         foreach ($badges as $badge) {

@@ -44,36 +44,36 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogoHeight('2.5rem')
             ->favicon(fn () => Setting::instance()->favicon_url)
             ->colors([
-                // Module 5: Corporate Orange Palette
+                // SARH v3.0: Navy + Gold Executive Theme
                 'primary' => [
-                    50  => '#fff7ed',
-                    100 => '#ffedd5',
-                    200 => '#fed7aa',
-                    300 => '#fdba74',
-                    400 => '#fb923c',
-                    500 => '#FF8C00',
-                    600 => '#ea580c',
-                    700 => '#c2410c',
-                    800 => '#9a3412',
-                    900 => '#7c2d12',
-                    950 => '#431407',
+                    50  => '#FDFAF0',
+                    100 => '#FBF3D4',
+                    200 => '#F5E4A3',
+                    300 => '#EDD472',
+                    400 => '#E8C852',
+                    500 => '#D4A841',
+                    600 => '#B8922E',
+                    700 => '#967520',
+                    800 => '#745A18',
+                    900 => '#5C4714',
+                    950 => '#362A0C',
                 ],
                 'danger'  => Color::Red,
                 'warning' => Color::Amber,
                 'success' => Color::Emerald,
                 'info'    => Color::Sky,
                 'gray'    => [
-                    50  => '#fafafa',
-                    100 => '#f5f5f5',
-                    200 => '#e5e5e5',
-                    300 => '#d4d4d4',
-                    400 => '#a3a3a3',
-                    500 => '#737373',
-                    600 => '#525252',
-                    700 => '#404040',
-                    800 => '#262626',
-                    900 => '#171717',
-                    950 => '#0a0a0a',
+                    50  => '#F8FAFC',
+                    100 => '#F1F5F9',
+                    200 => '#E2E8F0',
+                    300 => '#CBD5E1',
+                    400 => '#94A3B8',
+                    500 => '#64748B',
+                    600 => '#475569',
+                    700 => '#334155',
+                    800 => '#1E293B',
+                    900 => '#0F172A',
+                    950 => '#020617',
                 ],
             ])
             ->font('Cairo')
@@ -110,7 +110,7 @@ class AdminPanelProvider extends PanelProvider
             ->spa()
             ->renderHook(
                 PanelsRenderHook::HEAD_END,
-                fn () => new HtmlString('<link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#FF8C00">'),
+                fn () => new HtmlString('<link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#0F172A">'),
             )
             ->renderHook(
                 PanelsRenderHook::BODY_END,

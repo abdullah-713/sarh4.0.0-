@@ -39,19 +39,6 @@ class MassAssignmentTest extends TestCase
     }
 
     /**
-     * TC-MA-003: Cannot Mass-Assign is_trap_target
-     */
-    public function test_cannot_mass_assign_is_trap_target(): void
-    {
-        $user = User::factory()->create();
-
-        $user->update(['is_trap_target' => true]);
-        $user->refresh();
-
-        $this->assertFalse($user->is_trap_target);
-    }
-
-    /**
      * Security setter methods SHOULD work (forceFill bypass)
      */
     public function test_security_setters_work_via_force_fill(): void
@@ -66,10 +53,6 @@ class MassAssignmentTest extends TestCase
         $user->refresh();
         $this->assertTrue($user->is_super_admin);
         $this->assertEquals(10, $user->security_level);
-
-        $user->enableTrapMonitoring();
-        $user->refresh();
-        $this->assertTrue($user->is_trap_target);
     }
 
     /**

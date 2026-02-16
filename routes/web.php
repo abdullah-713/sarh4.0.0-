@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AttendanceController;
-use App\Http\Controllers\TrapController;
 use App\Livewire\EmployeeDashboard;
 use App\Livewire\MessagingChat;
 use App\Livewire\MessagingInbox;

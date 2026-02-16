@@ -12,7 +12,6 @@ return [
     'navigation_group'        => 'Command Center',
     'financial_reports'       => 'Financial Reports',
     'whistleblower_vault'     => 'Whistleblower Vault',
-    'trap_audit'              => 'Trap Audit Trail',
 
     // Real-Time Loss Counter Widget
     'loss_counter_title'      => 'Real-Time Loss Indicators',
@@ -39,9 +38,7 @@ return [
 
     // Integrity Alert Hub
     'integrity_hub_title'     => 'Integrity Alert Hub',
-    'recent_trap_triggers'    => 'Recent Trap Triggers',
     'wb_reports_status'       => 'Whistleblower Reports Status',
-    'trap_type'               => 'Trap Type',
     'triggered_by'            => 'Triggered By',
     'triggered_at'            => 'Triggered At',
     'risk_level'              => 'Risk Level',
@@ -81,17 +78,6 @@ return [
     'access_logged'           => 'Your access has been logged in the audit trail',
     'unauthorized_vault'      => 'Unauthorized access — Insufficient security clearance',
 
-    // Trap Audit
-    'audit_title'             => 'Trap Audit Trail',
-    'interaction_data'        => 'Interaction Data',
-    'page_url'                => 'Source Page',
-    'ip_address'              => 'IP Address',
-    'user_agent'              => 'User Agent',
-    'review_status'           => 'Review Status',
-    'reviewed_by'             => 'Reviewed By',
-    'review_notes'            => 'Review Notes',
-    'risk_trajectory'         => 'Risk Trajectory',
-
     // Vault Filter Options
     'status_new'              => 'New',
     'status_under_review'     => 'Under Review',
@@ -106,7 +92,5 @@ return [
 
     // Audit Log Descriptions
     'audit_vault_access'      => 'Decrypted whistleblower report viewed: :ticket',
-    'audit_trap_reviewed'     => 'Trap interaction marked as reviewed',
-    'audit_trap_page_access'  => 'Accessed Trap Audit Trail page',
 
 ];

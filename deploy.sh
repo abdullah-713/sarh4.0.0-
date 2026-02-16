@@ -84,7 +84,7 @@ echo "  ✓ SESSION_SECURE_COOKIE=true (HTTPS)"
 echo ""
 
 # ── Step 3: Migrate + Seed (Empty DB → Full Schema) ─────
-echo "▸ [3/8] Running migrations & seeding (RBAC + Traps + Badges)..."
+echo "▸ [3/8] Running migrations & seeding (RBAC + Badges)..."
 php artisan migrate --force --seed
 echo "  ✓ Database schema created with seed data"
 echo ""

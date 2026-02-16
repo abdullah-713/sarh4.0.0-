@@ -110,12 +110,6 @@ return [
     'msg_participants'   => 'participants',
     'msg_type_message'   => 'Type your message...',
 
-    // Traps
-    'trap_salary_peek'   => 'Salary Report',
-    'trap_data_export'   => 'Export Data',
-    'exporting'          => 'Exporting',
-    'export_complete'    => 'Export Complete',
-
     // Competition Widget
     'competition_title'      => 'Branch Competition',
     'your_branch'            => 'Your Branch',

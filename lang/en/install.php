@@ -14,7 +14,6 @@ return [
     'running_migrations'  => 'Running database migrations',
     'seeding_roles'       => 'Seeding roles & permissions (10 levels)',
     'seeding_badges'      => 'Seeding badges (8 badges)',
-    'seeding_traps'       => 'Seeding psychological traps (4 traps)',
     'creating_admin'      => 'Creating Super Admin account (Level 10)',
     'admin_exists'        => 'Super Admin already exists — skipping',
     'admin_created'       => 'Super Admin created successfully: :email',

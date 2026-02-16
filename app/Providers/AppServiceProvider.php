@@ -4,10 +4,8 @@ namespace App\Providers;
 
 use App\Events\AttendanceRecorded;
 use App\Events\BadgeAwarded;
-use App\Events\TrapTriggered;
 use App\Listeners\HandleAttendanceRecorded;
 use App\Listeners\HandleBadgePoints;
-use App\Listeners\LogTrapInteraction;
 use App\Models\AttendanceLog;
 use App\Models\User;
 use App\Policies\AttendanceLogPolicy;
@@ -40,7 +38,6 @@ class AppServiceProvider extends ServiceProvider
         |----------------------------------------------------------------------
         */
         Event::listen(BadgeAwarded::class, HandleBadgePoints::class);
-        Event::listen(TrapTriggered::class, LogTrapInteraction::class);
         Event::listen(AttendanceRecorded::class, HandleAttendanceRecorded::class);
 
         /*
@@ -50,7 +47,6 @@ class AppServiceProvider extends ServiceProvider
         */
         Scramble::routes(function (RoutingRoute $route) {
             return str_starts_with($route->uri, 'attendance')
-                || str_starts_with($route->uri, 'traps')
                 || str_starts_with($route->uri, 'telemetry');
         });
 
@@ -87,10 +83,6 @@ class AppServiceProvider extends ServiceProvider
         |----------------------------------------------------------------------
         */
         Gate::define('access-whistleblower-vault', function ($user) {
-            return $user->security_level >= 10;
-        });
-
-        Gate::define('access-trap-audit', function ($user) {
             return $user->security_level >= 10;
         });
 

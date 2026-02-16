@@ -81,7 +81,7 @@ class User extends Authenticatable implements FilamentUser
         'working_days_per_month',
         'working_hours_per_day',
 
-        // Security (NOT mass-assignable: is_super_admin, security_level, is_trap_target)
+        // Security (NOT mass-assignable: is_super_admin, security_level)
         // These are set explicitly via dedicated methods.
 
         // Gamification
@@ -100,8 +100,6 @@ class User extends Authenticatable implements FilamentUser
     protected $hidden = [
         'password',
         'remember_token',
-        'is_trap_target',
-        'risk_score',
         'national_id',
     ];
 
@@ -121,8 +119,6 @@ class User extends Authenticatable implements FilamentUser
             'transport_allowance'=> 'decimal:2',
             'other_allowances'   => 'decimal:2',
             'is_super_admin'     => 'boolean',
-            'is_trap_target'     => 'boolean',
-            'risk_score'         => 'integer',
             'total_points'       => 'integer',
             'current_streak'     => 'integer',
             'longest_streak'     => 'integer',
@@ -313,13 +309,6 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(PointsTransaction::class);
     }
 
-    // --- Security ---
-
-    public function trapInteractions(): HasMany
-    {
-        return $this->hasMany(TrapInteraction::class);
-    }
-
     // --- RBAC Overrides (Module 2: Granular RBAC) ---
 
     public function userPermissions(): HasMany
@@ -442,9 +431,6 @@ class User extends Authenticatable implements FilamentUser
         // ── Whistleblower ──
         'whistleblower.investigate' => ['whistleblower.view', 'whistleblower.submit'],
         'whistleblower.view'        => ['whistleblower.submit'],
-
-        // ── Traps ──
-        'traps.manage' => ['traps.view'],
 
         // ── Messaging ──
         'messaging.broadcast' => ['messaging.chat'],
@@ -651,56 +637,6 @@ class User extends Authenticatable implements FilamentUser
             'security_level' => 10,
         ])->save();
         return $this;
-    }
-
-    /**
-     * Mark as trap target for integrity testing.
-     */
-    public function enableTrapMonitoring(): self
-    {
-        $this->forceFill(['is_trap_target' => true])->save();
-        return $this;
-    }
-
-    /**
-     * Calculate and persist logarithmic risk score after a trap interaction.
-     *
-     * Formula: risk_score = 10 × (2^n − 1)
-     * Where n = total number of trap interactions for this user.
-     *
-     * Progression: 10 → 30 → 70 → 150 → 310 → 630 ...
-     * Each subsequent trigger costs MORE than the sum of all previous triggers.
-     *
-     * Uses forceFill() because risk_score is NOT in $fillable.
-     */
-    public function incrementRiskScore(): int
-    {
-        $n = $this->trapInteractions()->count();
-        $newScore = (int) (10 * (pow(2, $n) - 1));
-
-        $this->forceFill(['risk_score' => $newScore])->save();
-
-        return $newScore;
-    }
-
-    /**
-     * Human-readable risk category based on cumulative score.
-     *
-     * score < 30  → low
-     * score < 100 → medium
-     * score < 300 → high
-     * score >= 300 → critical
-     */
-    public function getRiskLevelAttribute(): string
-    {
-        $score = $this->risk_score ?? 0;
-
-        return match (true) {
-            $score < 30  => 'low',
-            $score < 100 => 'medium',
-            $score < 300 => 'high',
-            default      => 'critical',
-        };
     }
 
     /**

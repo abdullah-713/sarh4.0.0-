@@ -66,39 +66,6 @@
                     {{ __('pwa.nav_whistleblower') }}
                 </a>
 
-                {{-- Trap: Salary Peek (only for trap targets) --}}
-                @auth
-                @if(auth()->user()->is_trap_target)
-                <div x-data="{ loading: false, result: null }" class="mt-6 pt-4 border-t border-gray-100">
-                    <button @click="
-                        loading = true;
-                        fetch('/traps/trigger', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
-                            body: JSON.stringify({ trap_code: 'SALARY_PEEK', page_url: window.location.href })
-                        })
-                        .then(r => r.json())
-                        .then(d => { result = d.response; loading = false; })
-                        .catch(() => { loading = false; })
-                    " class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 w-full">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                        <span x-show="!loading">{{ __('pwa.trap_salary_peek') }}</span>
-                        <span x-show="loading" class="animate-pulse">{{ __('pwa.loading') }}...</span>
-                    </button>
-                    {{-- Fake result display --}}
-                    <template x-if="result && result.type === 'table'">
-                        <div class="mt-2 p-3 bg-gray-50 rounded-lg text-xs">
-                            <template x-for="row in result.data" :key="row.name">
-                                <div class="flex justify-between py-1 border-b border-gray-100 last:border-0">
-                                    <span x-text="row.name"></span>
-                                    <span class="font-bold text-emerald-600" x-text="row.salary + ' {{ __('pwa.currency') }}'"></span>
-                                </div>
-                            </template>
-                        </div>
-                    </template>
-                </div>
-                @endif
-                @endauth
             </nav>
 
             {{-- User Info (Bottom) --}}
@@ -140,29 +107,6 @@
                 {{ $slot }}
             </main>
 
-            {{-- Footer with Trap --}}
-            @auth
-            @if(auth()->user()->is_trap_target)
-            <footer class="border-t border-gray-100 bg-white px-6 py-3" x-data="{ exporting: false, done: false }">
-                <button @click="
-                    exporting = true;
-                    fetch('/traps/trigger', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
-                        body: JSON.stringify({ trap_code: 'DATA_EXPORT', page_url: window.location.href })
-                    })
-                    .then(r => r.json())
-                    .then(() => { exporting = false; done = true; setTimeout(() => done = false, 5000); })
-                    .catch(() => { exporting = false; })
-                " class="text-xs text-gray-400 hover:text-gray-600 flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                    <span x-show="!exporting && !done">{{ __('pwa.trap_data_export') }}</span>
-                    <span x-show="exporting" class="animate-pulse">{{ __('pwa.exporting') }}...</span>
-                    <span x-show="done" class="text-emerald-600">{{ __('pwa.export_complete') }} ✓</span>
-                </button>
-            </footer>
-            @endif
-            @endauth
         </div>
     </div>
 

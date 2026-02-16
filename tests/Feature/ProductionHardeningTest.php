@@ -184,7 +184,7 @@ class ProductionHardeningTest extends TestCase
     public function test_all_lang_files_return_valid_arrays(): void
     {
         $langFiles = [
-            'app', 'attendance', 'traps', 'pwa', 'command', 'install',
+            'app', 'attendance', 'pwa', 'command', 'install',
         ];
 
         foreach (['ar', 'en'] as $locale) {
@@ -208,18 +208,8 @@ class ProductionHardeningTest extends TestCase
     public function test_navigation_groups_are_localized(): void
     {
         // Verify lang keys exist and return non-empty
-        $this->assertNotEmpty(__('traps.navigation_group'));
         $this->assertNotEmpty(__('attendance.navigation_group'));
         $this->assertNotEmpty(__('command.navigation_group'));
-
-        // Verify Arabic translations differ from English
-        app()->setLocale('ar');
-        $arSecurity = __('traps.navigation_group');
-
-        app()->setLocale('en');
-        $enSecurity = __('traps.navigation_group');
-
-        $this->assertNotEquals($arSecurity, $enSecurity);
     }
 
     // ──────────────────────────────────────────────
@@ -233,12 +223,6 @@ class ProductionHardeningTest extends TestCase
         $this->assertTrue(
             \Illuminate\Support\Facades\Schema::hasTable('attendance_logs'),
             'attendance_logs table should exist after running all migrations'
-        );
-
-        // Verify trap_interactions table also exists
-        $this->assertTrue(
-            \Illuminate\Support\Facades\Schema::hasTable('trap_interactions'),
-            'trap_interactions table should exist after running all migrations'
         );
     }
 }

@@ -83,10 +83,6 @@ class RolesAndPermissionsSeeder extends Seeder
             ['slug' => 'whistleblower.view',       'group' => 'whistleblower', 'name_ar' => 'عرض البلاغات',       'name_en' => 'View Reports'],
             ['slug' => 'whistleblower.investigate','group' => 'whistleblower', 'name_ar' => 'التحقيق في البلاغات', 'name_en' => 'Investigate Reports'],
 
-            // --- Traps ---
-            ['slug' => 'traps.view',               'group' => 'traps',      'name_ar' => 'عرض سجل المصائد',     'name_en' => 'View Trap Logs'],
-            ['slug' => 'traps.manage',             'group' => 'traps',      'name_ar' => 'إدارة المصائد',       'name_en' => 'Manage Traps'],
-
             // --- Messaging ---
             ['slug' => 'messaging.chat',           'group' => 'messaging',  'name_ar' => 'المحادثات',           'name_en' => 'Chat'],
             ['slug' => 'messaging.circulars',      'group' => 'messaging',  'name_ar' => 'إنشاء تعاميم',       'name_en' => 'Create Circulars'],
@@ -188,7 +184,6 @@ class RolesAndPermissionsSeeder extends Seeder
                 'whistleblower.submit', 'whistleblower.view',
                 'messaging.chat', 'messaging.circulars', 'messaging.broadcast',
                 'gamification.view_own', 'gamification.view_all',
-                'traps.view',
             ],
 
             // Level 8: Regional Director — + all branches
@@ -203,7 +198,6 @@ class RolesAndPermissionsSeeder extends Seeder
                 'whistleblower.submit', 'whistleblower.view', 'whistleblower.investigate',
                 'messaging.chat', 'messaging.circulars', 'messaging.broadcast',
                 'gamification.view_own', 'gamification.view_all', 'gamification.manage',
-                'traps.view', 'traps.manage',
                 'system.manage_holidays',
             ],
 
@@ -219,7 +213,6 @@ class RolesAndPermissionsSeeder extends Seeder
                 'whistleblower.submit', 'whistleblower.view', 'whistleblower.investigate',
                 'messaging.chat', 'messaging.circulars', 'messaging.broadcast',
                 'gamification.view_own', 'gamification.view_all', 'gamification.manage',
-                'traps.view', 'traps.manage',
                 'system.manage_holidays', 'system.audit_logs',
             ],
 

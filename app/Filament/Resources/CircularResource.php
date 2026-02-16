@@ -42,6 +42,12 @@ class CircularResource extends Resource
         return __('circulars.plural_model_label');
     }
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->with(['creator']);
+    }
+
     public static function form(Form $form): Form
     {
         return $form->schema([

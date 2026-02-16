@@ -11,6 +11,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class DepartmentResource extends Resource
 {
@@ -38,6 +39,12 @@ class DepartmentResource extends Resource
     public static function getPluralModelLabel(): string
     {
         return 'الأقسام';
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->with(['branch', 'parent', 'head']);
     }
 
     public static function form(Form $form): Form

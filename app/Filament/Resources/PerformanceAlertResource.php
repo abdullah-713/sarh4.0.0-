@@ -72,7 +72,8 @@ class PerformanceAlertResource extends Resource
      */
     public static function getEloquentQuery(): Builder
     {
-        $query = parent::getEloquentQuery();
+        $query = parent::getEloquentQuery()
+            ->with(['user']);
         $user = auth()->user();
 
         if ($user && ! $user->is_super_admin && $user->security_level < 10 && $user->branch_id) {

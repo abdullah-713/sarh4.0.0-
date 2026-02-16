@@ -191,7 +191,8 @@ class EmployeeDocumentResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        $query = parent::getEloquentQuery();
+        $query = parent::getEloquentQuery()
+            ->with(['user']);
 
         // المستوى 10 يرى كل شيء
         if (auth()->user()?->security_level >= 10) {

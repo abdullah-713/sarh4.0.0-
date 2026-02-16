@@ -48,7 +48,8 @@ class UserResource extends Resource
      */
     public static function getEloquentQuery(): Builder
     {
-        $query = parent::getEloquentQuery();
+        $query = parent::getEloquentQuery()
+            ->with(['branch', 'role']);
 
         $user = auth()->user();
 

@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class HolidayResource extends Resource
 {
@@ -37,6 +38,12 @@ class HolidayResource extends Resource
     public static function getPluralModelLabel(): string
     {
         return __('holidays.plural_model_label');
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->with(['branch']);
     }
 
     public static function form(Form $form): Form

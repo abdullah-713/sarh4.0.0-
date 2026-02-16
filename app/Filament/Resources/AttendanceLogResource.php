@@ -31,7 +31,8 @@ class AttendanceLogResource extends Resource
      */
     public static function getEloquentQuery(): Builder
     {
-        $query = parent::getEloquentQuery();
+        $query = parent::getEloquentQuery()
+            ->with(['user', 'branch']);
 
         $user = auth()->user();
 

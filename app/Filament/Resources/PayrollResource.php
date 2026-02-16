@@ -49,7 +49,8 @@ class PayrollResource extends Resource
      */
     public static function getEloquentQuery(): Builder
     {
-        $query = parent::getEloquentQuery();
+        $query = parent::getEloquentQuery()
+            ->with(['user.branch']);
         $user  = auth()->user();
 
         if ($user && !$user->is_super_admin && $user->security_level < 10) {

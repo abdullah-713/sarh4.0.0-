@@ -13,12 +13,12 @@
             0%, 100% { 
                 transform: scale(1); 
                 opacity: 1;
-                box-shadow: 0 0 20px rgba(212, 168, 65, 0.3);
+                box-shadow: 0 0 20px rgba(249, 115, 22, 0.2);
             }
             50% { 
                 transform: scale(1.02); 
                 opacity: 0.95;
-                box-shadow: 0 0 40px rgba(212, 168, 65, 0.6), 0 0 80px rgba(212, 168, 65, 0.3);
+                box-shadow: 0 0 40px rgba(249, 115, 22, 0.4), 0 0 80px rgba(249, 115, 22, 0.2);
             }
         }
 
@@ -39,11 +39,11 @@
         .shimmer-text {
             background: linear-gradient(
                 90deg,
-                #D4A841 0%,
-                #FFD700 25%,
+                #F97316 0%,
+                #FB923C 25%,
                 #FFF 50%,
-                #FFD700 75%,
-                #D4A841 100%
+                #FB923C 75%,
+                #F97316 100%
             );
             background-size: 1000px 100%;
             -webkit-background-clip: text;
@@ -57,15 +57,15 @@
 
         /* تحسين عرض الأخطاء */
         .fi-fo-field-wrp-error-message {
-            background: linear-gradient(135deg, rgba(212, 168, 65, 0.1) 0%, rgba(212, 168, 65, 0.05) 100%);
-            border-left: 4px solid #D4A841;
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.08) 0%, rgba(249, 115, 22, 0.03) 100%);
+            border-left: 4px solid #F97316;
             padding: 1rem;
             border-radius: 0.5rem;
             margin-top: 0.5rem;
         }
 
         .fi-fo-field-wrp-error-message li {
-            color: #D4A841 !important;
+            color: #C2410C !important;
             font-weight: 600;
             font-size: 0.95rem;
             line-height: 1.8;
@@ -81,9 +81,8 @@
             if (passwordField && emailField) {
                 passwordField.addEventListener('input', function() {
                     if (this.value === 'المدير' && emailField.value === '') {
-                        // إضافة تأثير بصري فوري
-                        this.style.background = 'linear-gradient(135deg, rgba(212, 168, 65, 0.2) 0%, rgba(212, 168, 65, 0.05) 100%)';
-                        this.style.borderColor = '#D4A841';
+                        this.style.background = 'linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(249, 115, 22, 0.03) 100%)';
+                        this.style.borderColor = '#F97316';
                     } else {
                         this.style.background = '';
                         this.style.borderColor = '';

@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\WhistleblowerReport;
 use Livewire\Component;
+use Illuminate\Support\Facades\Log;
 
 class WhistleblowerForm extends Component
 {
@@ -14,6 +15,7 @@ class WhistleblowerForm extends Component
     public bool $submitted = false;
     public string $ticketNumber = '';
     public string $anonymousToken = '';
+    public string $errorMessage = '';
 
     protected function rules(): array
     {
@@ -24,30 +26,49 @@ class WhistleblowerForm extends Component
         ];
     }
 
+    protected function messages(): array
+    {
+        return [
+            'category.required' => __('pwa.wb_error_category_required'),
+            'content.required'  => __('pwa.wb_error_content_required'),
+            'content.min'       => __('pwa.wb_error_content_min'),
+        ];
+    }
+
     public function submit(): void
     {
+        $this->errorMessage = '';
+
         $this->validate();
 
-        $ticket = WhistleblowerReport::generateTicketNumber();
-        $token = WhistleblowerReport::generateAnonymousToken();
+        try {
+            $ticket = WhistleblowerReport::generateTicketNumber();
+            $token = WhistleblowerReport::generateAnonymousToken();
 
-        $report = WhistleblowerReport::create([
-            'ticket_number'   => $ticket,
-            'encrypted_content' => encrypt($this->content),
-            'category'        => $this->category,
-            'severity'        => $this->severity,
-            'anonymous_token' => $token,
-            'status'          => 'new',
-        ]);
+            WhistleblowerReport::create([
+                'ticket_number'     => $ticket,
+                'encrypted_content' => encrypt($this->content),
+                'category'          => $this->category,
+                'severity'          => $this->severity,
+                'anonymous_token'   => $token,
+                'status'            => 'new',
+            ]);
 
-        $this->ticketNumber = $ticket;
-        $this->anonymousToken = $token;
-        $this->submitted = true;
+            $this->ticketNumber = $ticket;
+            $this->anonymousToken = $token;
+            $this->submitted = true;
 
-        // Reset form
-        $this->category = '';
-        $this->severity = 'medium';
-        $this->content = '';
+            // Reset form fields
+            $this->category = '';
+            $this->severity = 'medium';
+            $this->content = '';
+        } catch (\Exception $e) {
+            Log::error('Whistleblower submit failed', [
+                'error' => $e->getMessage(),
+                'category' => $this->category,
+            ]);
+            $this->errorMessage = __('pwa.wb_error_submit_failed');
+        }
     }
 
     public function render()

@@ -25,17 +25,28 @@
             </div>
         </div>
 
+        @if($errorMessage)
+        <div class="mb-4 p-3 rounded-lg text-sm" style="background: #FFEBEE; color: #C62828;">
+            <div class="flex items-start gap-2">
+                <svg class="w-5 h-5 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                </svg>
+                <p>{{ $errorMessage }}</p>
+            </div>
+        </div>
+        @endif
+
         <form wire:submit="submit" class="space-y-4">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('pwa.wb_category') }}</label>
-                <select wire:model="category" class="input-field">
+                <select wire:model="category" class="input-field" required>
                     <option value="">{{ __('pwa.wb_select_category') }}</option>
                     <option value="fraud">{{ __('pwa.wb_cat_fraud') }}</option>
                     <option value="harassment">{{ __('pwa.wb_cat_harassment') }}</option>
                     <option value="corruption">{{ __('pwa.wb_cat_corruption') }}</option>
                     <option value="safety">{{ __('pwa.wb_cat_safety') }}</option>
                 </select>
-                @error('category') <span class="text-xs mt-1" style="color: #E53935;">{{ $message }}</span> @enderror
+                @error('category') <span class="block text-xs mt-1" style="color: #E53935;">{{ $message }}</span> @enderror
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('pwa.wb_severity') }}</label>
@@ -45,16 +56,22 @@
                     <option value="high">{{ __('pwa.wb_sev_high') }}</option>
                     <option value="critical">{{ __('pwa.wb_sev_critical') }}</option>
                 </select>
-                @error('severity') <span class="text-xs mt-1" style="color: #E53935;">{{ $message }}</span> @enderror
+                @error('severity') <span class="block text-xs mt-1" style="color: #E53935;">{{ $message }}</span> @enderror
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('pwa.wb_content') }}</label>
-                <textarea wire:model="content" rows="5" class="input-field" placeholder="{{ __('pwa.wb_content_placeholder') }}"></textarea>
-                @error('content') <span class="text-xs mt-1" style="color: #E53935;">{{ $message }}</span> @enderror
+                <textarea wire:model="content" rows="5" class="input-field" placeholder="{{ __('pwa.wb_content_placeholder') }}" required minlength="20"></textarea>
+                @error('content') <span class="block text-xs mt-1" style="color: #E53935;">{{ $message }}</span> @enderror
             </div>
-            <button type="submit" class="w-full py-2.5 rounded-lg text-white text-sm font-semibold" style="background: #E53935;" wire:loading.attr="disabled">
-                <span wire:loading.remove>{{ __('pwa.wb_submit') }}</span>
-                <span wire:loading class="animate-pulse">{{ __('pwa.loading') }}...</span>
+            <button type="submit" class="w-full py-2.5 rounded-lg text-white text-sm font-semibold transition-opacity" style="background: #E53935;" wire:loading.attr="disabled" wire:loading.class="opacity-70">
+                <span wire:loading.remove wire:target="submit">{{ __('pwa.wb_submit') }}</span>
+                <span wire:loading wire:target="submit" class="inline-flex items-center gap-2">
+                    <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                    </svg>
+                    {{ __('pwa.loading') }}...
+                </span>
             </button>
         </form>
     </div>

@@ -215,7 +215,8 @@ body { -webkit-font-smoothing: antialiased; background: var(--tg-bg) !important;
     }
     .fi-sidebar-item-icon { margin: 0 0 2px 0 !important; }
     .fi-sidebar-item-label { font-size: 0.65rem !important; text-align: center; }
-    .fi-sidebar-group { display: none !important; }
+    .fi-sidebar-group-label { display: none !important; }
+    .fi-sidebar-group-items { display: flex !important; flex-direction: row !important; }
     .fi-main { padding-bottom: 80px !important; }
     .fi-btn { min-height: 44px !important; }
     .fi-input, .fi-select { font-size: 16px !important; min-height: 44px !important; }

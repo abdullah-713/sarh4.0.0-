@@ -81,7 +81,6 @@ class AppPanelProvider extends PanelProvider
             ->favicon(fn () => Setting::instance()->favicon_url)
             ->darkMode(true)
             ->sidebarCollapsibleOnDesktop()
-            ->sidebarFullyCollapsibleOnDesktop()
             ->maxContentWidth('full')
             ->discoverResources(
                 in: app_path('Filament/App/Resources'),

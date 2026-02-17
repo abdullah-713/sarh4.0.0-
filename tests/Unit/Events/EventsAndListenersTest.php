@@ -117,7 +117,7 @@ class EventsAndListenersTest extends TestCase
         $userBadge = UserBadge::create([
             'user_id' => $user->id,
             'badge_id' => $badge->id,
-            'earned_at' => now(),
+            'awarded_at' => now(),
         ]);
 
         $event = new BadgeAwarded($userBadge);

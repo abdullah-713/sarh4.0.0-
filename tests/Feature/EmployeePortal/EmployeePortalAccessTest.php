@@ -4,7 +4,6 @@ namespace Tests\Feature\EmployeePortal;
 
 use App\Models\User;
 use App\Models\Branch;
-use App\Models\Shift;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -18,13 +17,11 @@ class EmployeePortalAccessTest extends TestCase
     protected function createEmployeeUser(): User
     {
         $branch = Branch::factory()->create();
-        $shift = Shift::factory()->create();
 
         return User::factory()->create([
             'branch_id' => $branch->id,
-            'shift_id' => $shift->id,
             'security_level' => 2, // Employee level
-            'is_active' => true,
+            'status' => 'active',
         ]);
     }
 
@@ -111,12 +108,10 @@ class EmployeePortalAccessTest extends TestCase
     public function test_inactive_user_cannot_access_portal(): void
     {
         $branch = Branch::factory()->create();
-        $shift = Shift::factory()->create();
 
         $user = User::factory()->create([
             'branch_id' => $branch->id,
-            'shift_id' => $shift->id,
-            'is_active' => false,
+            'status' => 'suspended',
         ]);
 
         // Inactive users are blocked by middleware or login logic

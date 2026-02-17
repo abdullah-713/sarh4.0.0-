@@ -4,7 +4,6 @@ namespace Tests\Feature\EmployeePortal;
 
 use App\Models\User;
 use App\Models\Branch;
-use App\Models\Shift;
 use App\Models\AttendanceLog;
 use App\Models\LeaveRequest;
 use App\Filament\App\Resources\AttendanceResource;
@@ -28,20 +27,17 @@ class EmployeeResourcesTest extends TestCase
         parent::setUp();
 
         $this->branch = Branch::factory()->create();
-        $shift = Shift::factory()->create();
 
         $this->employee = User::factory()->create([
             'branch_id' => $this->branch->id,
-            'shift_id' => $shift->id,
             'security_level' => 2,
-            'is_active' => true,
+            'status' => 'active',
         ]);
 
         $this->otherEmployee = User::factory()->create([
             'branch_id' => $this->branch->id,
-            'shift_id' => $shift->id,
             'security_level' => 2,
-            'is_active' => true,
+            'status' => 'active',
         ]);
     }
 

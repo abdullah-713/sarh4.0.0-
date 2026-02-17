@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################
-# SARH AL-ITQAN — Daily Database Backup Script
+# SarhIndex — Daily Database Backup Script
 # يتم تشغيله عبر Cron Job في لوحة Hostinger
 # الأمر: cd /home/u850419603/sarh && bash backup-db.sh
 ###############################################################

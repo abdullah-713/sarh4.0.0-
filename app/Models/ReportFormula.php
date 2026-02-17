@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
 /**
- * SARH v1.9.0 — صيغ التقارير الديناميكية
+ * SarhIndex v1.9.0 — صيغ التقارير الديناميكية
  *
  * يسمح لمالك النظام بتعريف صيغ حسابية مخصصة للتقارير.
  * مثال: (attendance * 0.4) + (task_completion * 0.6)

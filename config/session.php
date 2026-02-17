@@ -13,7 +13,7 @@ return [
     | incoming requests. Laravel supports a variety of storage options to
     | persist session data. File storage is the safest for shared hosting.
     |
-    | SARH Hardened: Default forced to 'file'. Database/redis sessions
+    | SarhIndex Hardened: Default forced to 'file'. Database/redis sessions
     | cause 419 loops on Hostinger after deploys clear the sessions table.
     |
     | Supported: "file", "cookie", "database", "apc",
@@ -48,7 +48,7 @@ return [
     | should be encrypted before it's stored. All encryption is performed
     | automatically by Laravel and you may use the session like normal.
     |
-    | SARH Hardened: Default forced to false. Encrypted file sessions
+    | SarhIndex Hardened: Default forced to false. Encrypted file sessions
     | become invalid when APP_KEY rotates during deployment.
     |
     */
@@ -160,7 +160,7 @@ return [
     | available to. By default, the cookie will be available to the root
     | domain and all subdomains. Typically, this shouldn't be changed.
     |
-    | SARH Hardened: Default null. Let Laravel auto-detect from request.
+    | SarhIndex Hardened: Default null. Let Laravel auto-detect from request.
     | Explicit domain strings cause cookie mismatch on www vs non-www.
     |
     */

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * SARH v2.0 — تعيين الشفتات للموظفين مع الصلاحية الزمنية.
+ * SarhIndex v2.0 — تعيين الشفتات للموظفين مع الصلاحية الزمنية.
  *
  * هذا ليس Pivot. هذا عقد عمل مؤقت.
  * يحل مشكلة: تاريخ الشفتات، التفويض، التعارض، التقارير.

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * SARH v2.0 — Dynamic Settings Model
+ * SarhIndex v2.0 — Dynamic Settings Model
  *
  * Single-row pattern: Settings::instance() always returns the one settings record.
  * Caches for 1 hour. Clears cache on save.
@@ -75,10 +75,10 @@ class Setting extends Model
     {
         return Cache::remember('sarh_settings', 3600, function () {
             return static::firstOrCreate(['id' => 1], [
-                'app_name'             => 'صرح الإتقان',
-                'app_name_en'          => 'SARH Al-Itqan',
-                'welcome_title'        => 'مرحباً بكم في صرح الإتقان',
-                'pwa_name'             => 'صرح الإتقان',
+                'app_name'             => 'مؤشر صرح',
+                'app_name_en'          => 'SarhIndex',
+                'welcome_title'        => 'مرحباً بكم في مؤشر صرح',
+                'pwa_name'             => 'مؤشر صرح',
                 'pwa_short_name'       => 'صرح',
                 'pwa_theme_color'      => '#FF8C00',
                 'pwa_background_color' => '#ffffff',
@@ -93,10 +93,10 @@ class Setting extends Model
     public static function freshInstance(): static
     {
         return static::firstOrCreate(['id' => 1], [
-            'app_name'             => 'صرح الإتقان',
-            'app_name_en'          => 'SARH Al-Itqan',
-            'welcome_title'        => 'مرحباً بكم في صرح الإتقان',
-            'pwa_name'             => 'صرح الإتقان',
+            'app_name'             => 'مؤشر صرح',
+            'app_name_en'          => 'SarhIndex',
+            'welcome_title'        => 'مرحباً بكم في مؤشر صرح',
+            'pwa_name'             => 'مؤشر صرح',
             'pwa_short_name'       => 'صرح',
             'pwa_theme_color'      => '#FF8C00',
             'pwa_background_color' => '#ffffff',

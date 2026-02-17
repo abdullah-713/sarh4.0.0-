@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * SARH v1.9.0 — Module 2: Granular RBAC
+ * SarhIndex v1.9.0 — Module 2: Granular RBAC
  *
  * جدول تجاوز الصلاحيات على مستوى المستخدم الفردي.
  * يسمح بمنح صلاحية محددة لمستخدم بغض النظر عن دوره.

@@ -8,7 +8,7 @@ use App\Models\UserPermission;
 use Illuminate\Database\Seeder;
 
 /**
- * SARH v4.1 — ترحيل صلاحيات الأدوار إلى صلاحيات فردية
+ * SarhIndex v4.1 — ترحيل صلاحيات الأدوار إلى صلاحيات فردية
  *
  * يأخذ كل مستخدم له دور → ويحوّل صلاحيات دوره إلى سجلات UserPermission (grant).
  * يتخطى السجلات الموجودة مسبقًا لتجنب التكرار.

@@ -5,7 +5,7 @@
             <div class="flex items-center gap-3 mb-4">
                 <x-heroicon-o-code-bracket class="w-8 h-8 text-primary-500" />
                 <div>
-                    <h2 class="text-xl font-bold text-gray-900 dark:text-white">توثيق نقاط API — SARH v4.0</h2>
+                    <h2 class="text-xl font-bold text-gray-900 dark:text-white">توثيق نقاط API — SarhIndex v4.0</h2>
                     <p class="text-sm text-gray-500 dark:text-gray-400">جميع نقاط الاتصال المتاحة للتطبيق</p>
                 </div>
             </div>

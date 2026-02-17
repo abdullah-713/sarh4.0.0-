@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 /**
- * SARH v3.4 — مصحح بيانات user_shifts
+ * SarhIndex v3.4 — مصحح بيانات user_shifts
  *
  * يملأ الأعمدة الجديدة (assigned_by, approved_by, approved_at, reason)
  * في السجلات الموجودة مسبقاً قبل ترقية الموديل.

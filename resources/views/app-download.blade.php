@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>تحميل تطبيق صرح الإتقان</title>
-    <meta name="description" content="تحميل تطبيق صرح الإتقان لأجهزة أندرويد — نظام إدارة الموارد البشرية">
+    <title>تحميل تطبيق مؤشر صرح</title>
+    <meta name="description" content="تحميل تطبيق مؤشر صرح لأجهزة أندرويد — نظام إدارة الموارد البشرية">
     <meta name="theme-color" content="#0F1B2D">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -125,7 +125,7 @@
 <body>
     <div class="card">
         <div class="icon">ص</div>
-        <h1>صرح الإتقان</h1>
+        <h1>مؤشر صرح</h1>
         <p class="subtitle">نظام إدارة الموارد البشرية</p>
         <span class="version">الإصدار 1.0.0</span>
 
@@ -154,7 +154,7 @@
                 <li>عند ظهور تحذير الأمان، اضغط <strong>"السماح"</strong></li>
                 <li>افتح الملف المُحمّل واضغط <strong>"تثبيت"</strong></li>
                 <li>إذا طُلب منك السماح بالتثبيت من مصادر غير معروفة، فعّل الخيار</li>
-                <li>سجّل الدخول ببيانات حسابك في صرح</li>
+                <li>سجّل الدخول ببيانات حسابك في مؤشر صرح</li>
             </ol>
         </div>
 

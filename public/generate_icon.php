@@ -11,7 +11,7 @@ imagefill($img, 0, 0, $orange);
 $white = imagecolorallocate($img, 255, 255, 255);
 
 // Draw "صرح" centered (using built-in font since TTF may not be available)
-$text = 'SARH';
+$text = 'SarhIndex';
 $font_size = 5; // largest built-in
 $tw = imagefontwidth($font_size) * strlen($text);
 $th = imagefontheight($font_size);

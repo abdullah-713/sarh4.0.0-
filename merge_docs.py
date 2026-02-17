@@ -37,7 +37,7 @@ def main():
     with open(output_file, 'w', encoding='utf-8') as out:
         # كتابة الرأسية
         out.write("=" * 80 + "\n")
-        out.write(" " * 20 + "توثيق نظام سهر (SARH) - النسخة الكاملة\n")
+        out.write(" " * 20 + "توثيق نظام مؤشر صرح (SarhIndex) - النسخة الكاملة\n")
         out.write("=" * 80 + "\n\n")
         
         # كتابة شجرة الملفات

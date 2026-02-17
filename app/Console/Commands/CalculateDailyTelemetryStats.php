@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 /**
- * SARH v4.1 — Calculate Daily Work/Rest Stats
+ * SarhIndex v4.1 — Calculate Daily Work/Rest Stats
  *
  * يُشغّل يومياً لتجميع بيانات الحساسات في work_rest_stats.
  * يمكن تشغيله يدوياً: php artisan telemetry:daily-stats

@@ -398,7 +398,7 @@ class AutoDocumentCommand extends Command
 
     private function generateIndexFile(): void
     {
-        $content = "# 📚 SARH v3.0 - فهرس التوثيق التلقائي\n\n";
+        $content = "# 📚 SarhIndex v3.0 - فهرس التوثيق التلقائي\n\n";
         $content .= "**آخر تحديث:** " . now()->toDateTimeString() . "\n\n";
         $content .= "> 🤖 هذا الملف يتم تحديثه تلقائياً عند أي تغيير في الكود\n\n";
         
@@ -415,7 +415,7 @@ class AutoDocumentCommand extends Command
         $content .= "- [Configuration](AUTO_CONFIG.md)\n\n";
         
         $content .= "### التوثيق اليدوي\n";
-        $content .= "- [دليل التشغيل القياسي](SOP_SARH_v3.0.0.md)\n";
+        $content .= "- [دليل التشغيل القياسي](SOP_SarhIndex_v3.0.0.md)\n";
         $content .= "- [المخطط المعماري](technical_logic_v3.0.md)\n";
         $content .= "- [الميثاق الوظيفي](functional_ar_v3.0.md)\n\n";
         

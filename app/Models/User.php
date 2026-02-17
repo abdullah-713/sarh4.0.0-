@@ -18,7 +18,7 @@ class User extends Authenticatable implements FilamentUser
     use HasFactory, Notifiable, SoftDeletes;
 
     /**
-     * SARH v1.9.0 — Identity Isolation بين بوابة الإدارة وبوابة الموظفين.
+     * SarhIndex v1.9.0 — Identity Isolation بين بوابة الإدارة وبوابة الموظفين.
      *
      * /admin → is_super_admin أو (security_level >= 4 + حساب مفعّل)
      * /app   → security_level < 4 + حساب مفعّل (الموظفون العاديون فقط)
@@ -712,7 +712,7 @@ class User extends Authenticatable implements FilamentUser
      */
     public static function generateEmployeeId(): string
     {
-        $prefix = 'SARH';
+        $prefix = 'SI';
         $year = now()->format('y');
         $sequence = str_pad(static::withTrashed()->count() + 1, 4, '0', STR_PAD_LEFT);
 

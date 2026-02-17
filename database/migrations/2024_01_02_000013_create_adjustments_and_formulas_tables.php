@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * SARH v1.9.0 — Module 8: Manual Adjustments & Dynamic Reporting
+ * SarhIndex v1.9.0 — Module 8: Manual Adjustments & Dynamic Reporting
  *
  * جدول تعديلات النقاط/الدرجات اليدوية + جدول صيغ التقارير الديناميكية.
  */

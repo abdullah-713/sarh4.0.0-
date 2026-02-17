@@ -17,7 +17,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 /**
- * SARH v1.9.0 — مولّد البيانات التجريبية
+ * SarhIndex v1.9.0 — مولّد البيانات التجريبية
  *
  * صفحة إدارية لتوليد بيانات حضور واقعية للعرض على أصحاب المصلحة.
  * تستخدم مقياس "الانضباط" (1-10) للتحكم في مستوى فوضوية البيانات.
@@ -434,7 +434,7 @@ class DemoDataGenerator extends Page implements HasForms
                     'check_in_within_geofence' => $gpsData['within_geofence'],
                     'check_in_distance_meters' => $gpsData['distance_meters'],
                     'check_in_ip'           => '192.168.' . rand(1, 255) . '.' . rand(1, 255),
-                    'check_in_device'       => 'SARH Demo Generator',
+                    'check_in_device'       => 'SarhIndex Demo Generator',
                     'notes'                 => 'سجل تجريبي — غائب',
                     'is_manual_entry'       => false,
                     'created_at'            => $now,
@@ -473,7 +473,7 @@ class DemoDataGenerator extends Page implements HasForms
                     'check_in_within_geofence' => $gpsData['within_geofence'],
                     'check_in_distance_meters' => $gpsData['distance_meters'],
                     'check_in_ip'           => '192.168.' . rand(1, 255) . '.' . rand(1, 255),
-                    'check_in_device'       => 'SARH Demo Generator',
+                    'check_in_device'       => 'SarhIndex Demo Generator',
                     'notes'                 => "سجل تجريبي — تأخير {$lateMinutes} دقيقة",
                     'is_manual_entry'       => false,
                     'created_at'            => $now,
@@ -509,7 +509,7 @@ class DemoDataGenerator extends Page implements HasForms
                     'check_in_within_geofence' => $gpsData['within_geofence'],
                     'check_in_distance_meters' => $gpsData['distance_meters'],
                     'check_in_ip'           => '192.168.' . rand(1, 255) . '.' . rand(1, 255),
-                    'check_in_device'       => 'SARH Demo Generator',
+                    'check_in_device'       => 'SarhIndex Demo Generator',
                     'notes'                 => "سجل تجريبي — عمل إضافي {$overtimeMinutes} دقيقة",
                     'is_manual_entry'       => false,
                     'created_at'            => $now,
@@ -545,7 +545,7 @@ class DemoDataGenerator extends Page implements HasForms
                     'check_in_within_geofence' => $gpsData['within_geofence'],
                     'check_in_distance_meters' => $gpsData['distance_meters'],
                     'check_in_ip'           => '192.168.' . rand(1, 255) . '.' . rand(1, 255),
-                    'check_in_device'       => 'SARH Demo Generator',
+                    'check_in_device'       => 'SarhIndex Demo Generator',
                     'notes'                 => null,
                     'is_manual_entry'       => false,
                     'created_at'            => $now,

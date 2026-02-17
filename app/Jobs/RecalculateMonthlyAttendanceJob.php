@@ -14,7 +14,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
 /**
- * SARH v3.2 — Historical Data Integrity Job
+ * SarhIndex v3.2 — Historical Data Integrity Job
  *
  * Re-calculates delay_minutes, delay_cost, cost_per_minute, overtime_value
  * for all AttendanceLogs in the current month when branch shift/salary

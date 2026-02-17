@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * SARH v1.9.0 — تعديلات النقاط/الدرجات اليدوية
+ * SarhIndex v1.9.0 — تعديلات النقاط/الدرجات اليدوية
  *
  * يسمح للمالك بتعديل نقاط الفروع والموظفين يدوياً.
  */

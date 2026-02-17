@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * SARH v1.9.0 — محرك استثناءات الحضور
+ * SarhIndex v1.9.0 — محرك استثناءات الحضور
  *
  * يسمح بتعريف استثناءات حضور لموظفين محددين:
  * - ساعات مرنة

@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * SARH v2.0 — Dynamic Settings Engine
+ * SarhIndex v2.0 — Dynamic Settings Engine
  *
  * Central settings table for app_name, welcome messages, branding assets.
  * Single-row design: only one settings record (id=1).
@@ -18,11 +18,11 @@ return new class extends Migration
             $table->id();
 
             // Brand Identity
-            $table->string('app_name')->default('صرح الإتقان');
-            $table->string('app_name_en')->default('SARH Al-Itqan');
+            $table->string('app_name')->default('مؤشر صرح');
+            $table->string('app_name_en')->default('SarhIndex');
 
             // Welcome Screen
-            $table->string('welcome_title')->default('مرحباً بكم في صرح الإتقان');
+            $table->string('welcome_title')->default('مرحباً بكم في مؤشر صرح');
             $table->text('welcome_body')->nullable();
 
             // Branding Assets
@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('favicon_path')->nullable();
 
             // PWA Metadata
-            $table->string('pwa_name')->default('صرح الإتقان');
+            $table->string('pwa_name')->default('مؤشر صرح');
             $table->string('pwa_short_name')->default('صرح');
             $table->string('pwa_theme_color')->default('#FF8C00');
             $table->string('pwa_background_color')->default('#ffffff');
@@ -40,9 +40,9 @@ return new class extends Migration
 
         // Seed the default settings row
         \Illuminate\Support\Facades\DB::table('settings')->insert([
-            'app_name'       => 'صرح الإتقان',
-            'app_name_en'    => 'SARH Al-Itqan',
-            'welcome_title'  => 'مرحباً بكم في صرح الإتقان',
+            'app_name'       => 'مؤشر صرح',
+            'app_name_en'    => 'SarhIndex',
+            'welcome_title'  => 'مرحباً بكم في مؤشر صرح',
             'welcome_body'   => 'نظام إدارة الموارد البشرية المتكامل',
             'created_at'     => now(),
             'updated_at'     => now(),

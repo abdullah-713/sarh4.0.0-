@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * SARH v4.1 — Anomaly Log (سجل التلاعب)
+ * SarhIndex v4.1 — Anomaly Log (سجل التلاعب)
  *
  * يُنشئ عند كشف نمط مريب في بيانات الحساسات.
  * يتطلب مراجعة من المدير قبل اتخاذ إجراء.

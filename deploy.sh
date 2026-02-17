@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################
-# SARH AL-ITQAN — One-Command Deploy Script
+# SarhIndex — One-Command Deploy Script
 # Usage: bash deploy.sh          (first time + updates)
 # Repo:  https://github.com/ggoolbx0/sarh
 # Target: Hostinger (sarh.online)
@@ -16,7 +16,7 @@ REPO_URL="https://github.com/abdullah-713/sarh4.0.0-.git"
 
 echo ""
 echo "╔═══════════════════════════════════════════╗"
-echo "║   SARH AL-ITQAN — Production Deployment  ║"
+echo "║   SarhIndex — Production Deployment  ║"
 echo "║   sarh.online                             ║"
 echo "╚═══════════════════════════════════════════╝"
 echo ""
@@ -61,7 +61,7 @@ fi
 echo ""
 
 # ── Step 2.5: Enforce Hardened Session Protocol ──────────
-# SARH Constitution: Session config MUST NOT be overwritten by git pull.
+# SarhIndex Constitution: Session config MUST NOT be overwritten by git pull.
 # Force file-based sessions, no encryption, null domain, SameSite=lax.
 echo "▸ [2.5] Enforcing Hardened Session Protocol..."
 sed -i 's/^SESSION_DRIVER=.*/SESSION_DRIVER=file/' .env

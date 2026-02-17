@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- ألوان الهوية البصرية لصرح -->
+    <!-- ألوان الهوية البصرية لمؤشر صرح -->
     <color name="sarh_orange">#F97316</color>
     <color name="sarh_orange_dark">#EA580C</color>
     <color name="sarh_blue">#2563EB</color>

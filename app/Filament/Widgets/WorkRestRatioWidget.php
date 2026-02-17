@@ -9,7 +9,7 @@ use Filament\Widgets\TableWidget as BaseWidget;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * SARH v4.1 — Work/Rest Ratio Widget (نسبة العمل/الراحة)
+ * SarhIndex v4.1 — Work/Rest Ratio Widget (نسبة العمل/الراحة)
  *
  * يعرض جدول الموظفين مع نسبة الإنتاجية اليومية.
  * يظهر فقط لمستوى أمان 6+ (مدير فرع فأعلى).

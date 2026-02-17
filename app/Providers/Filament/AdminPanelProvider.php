@@ -23,7 +23,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Models\Setting;
 
 /**
- * SARH v1.9.0 — لوحة الإدارة /admin
+ * SarhIndex v1.9.0 — لوحة الإدارة /admin
  *
  * Module 5: Corporate Brand Identity — Orange (#FF8C00), Black, White/Grey
  * Module 3: Stealth visibility via dynamic navigation

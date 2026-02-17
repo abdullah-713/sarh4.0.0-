@@ -1,4 +1,4 @@
-# ProGuard rules for SARH App
+# ProGuard rules for SarhIndex App
 -keepattributes *Annotation*
 -keepattributes SourceFile,LineNumberTable
 

@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * SARH v1.9.0 — Module 7: Attendance Exception Engine
+ * SarhIndex v1.9.0 — Module 7: Attendance Exception Engine
  *
  * جدول استثناءات الحضور - يسمح لموظفين محددين بتسجيل الحضور
  * خارج ساعات العمل الرسمية بدون تسجيلهم كمتأخرين.

@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * SARH — بيانات النشر
+ * SarhIndex — بيانات النشر
  *
  * صفحة مرجعية تعرض حالة النظام للنشر:
  * - الفروع الحالية وإحداثياتها

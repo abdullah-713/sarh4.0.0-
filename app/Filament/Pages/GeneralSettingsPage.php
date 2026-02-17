@@ -11,7 +11,7 @@ use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 
 /**
- * SARH v2.0 — الإعدادات العامة (Level 10 فقط)
+ * SarhIndex v2.0 — الإعدادات العامة (Level 10 فقط)
  *
  * لوحة تحكم مركزية لإدارة الهوية البصرية والنصوص والبيانات الوصفية.
  * تُحفظ في جدول settings وتُقرأ ديناميكياً عبر Setting::instance().

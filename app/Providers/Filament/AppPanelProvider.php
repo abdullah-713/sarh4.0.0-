@@ -23,7 +23,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Models\Setting;
 
 /**
- * SARH v1.9.0 — بوابة الموظفين /app
+ * SarhIndex v1.9.0 — بوابة الموظفين /app
  *
  * Module 5: Employee Portal Emerald Theme
  * Module 4: Mobile-First responsive configuration

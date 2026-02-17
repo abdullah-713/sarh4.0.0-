@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * SARH v1.9.0 — إصلاح خطأ Permissions-Policy / Geolocation
+ * SarhIndex v1.9.0 — إصلاح خطأ Permissions-Policy / Geolocation
  *
  * في v1.8.x كان المتصفح يرفض navigator.geolocation.getCurrentPosition()
  * لأن الـ header الافتراضي (أو عدم وجوده) يحظر geolocation على shared hosting.

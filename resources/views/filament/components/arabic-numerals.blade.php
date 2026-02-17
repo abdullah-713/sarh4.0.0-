@@ -1,4 +1,4 @@
-{{-- SARH v2.0 — Arabic Numeral Converter + Smart Mobile Viewport --}}
+{{-- SarhIndex v2.0 — Arabic Numeral Converter + Smart Mobile Viewport --}}
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const arabicDigits = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];

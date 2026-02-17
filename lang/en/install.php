@@ -4,12 +4,12 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | SARH Installation Command — English
+    | SarhIndex Installation Command — English
     |--------------------------------------------------------------------------
     */
 
     'banner'              => '══════════════════════════════════════════',
-    'app_title'           => 'Installing SARH AL-ITQAN',
+    'app_title'           => 'Installing SarhIndex',
     'verifying_env'       => 'Verifying environment',
     'running_migrations'  => 'Running database migrations',
     'seeding_roles'       => 'Seeding roles & permissions (10 levels)',

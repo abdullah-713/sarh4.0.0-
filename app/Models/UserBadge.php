@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * SARH v2.0 — منح الشارات للموظفين.
+ * SarhIndex v2.0 — منح الشارات للموظفين.
  *
  * هذا ليس Pivot. هذا إنجاز موثق.
  */

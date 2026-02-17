@@ -6,7 +6,7 @@ use App\Models\AttendanceLog;
 use Filament\Widgets\Widget;
 
 /**
- * SARH v1.9.0 — ويدجت الترحيب بالموظف في لوحة /app
+ * SarhIndex v1.9.0 — ويدجت الترحيب بالموظف في لوحة /app
  *
  * يعرض: اسم الموظف، تاريخ اليوم، حالة الحضور اليومية.
  */

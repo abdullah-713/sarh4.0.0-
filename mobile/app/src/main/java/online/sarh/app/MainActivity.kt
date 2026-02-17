@@ -23,7 +23,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 /**
  * ══════════════════════════════════════════════════════════════
- *  SARH AL-ITQAN — الشاشة الرئيسية (WebView)
+ *  SarhIndex — الشاشة الرئيسية (WebView)
  * ══════════════════════════════════════════════════════════════
  *  تحتوي على WebView محسّن مع:
  *  - جلسات دائمة (Persistent Cookies)
@@ -342,7 +342,7 @@ class MainActivity : AppCompatActivity() {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             AlertDialog.Builder(this)
                 .setTitle("الخروج")
-                .setMessage("هل تريد الخروج من تطبيق صرح؟")
+                .setMessage("هل تريد الخروج من تطبيق مؤشر صرح؟")
                 .setPositiveButton("نعم") { _, _ -> finish() }
                 .setNegativeButton("لا", null)
                 .show()

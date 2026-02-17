@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- اسم التطبيق -->
-    <string name="app_name">صرح الإتقان</string>
+    <string name="app_name">مؤشر صرح</string>
     <string name="app_subtitle">نظام إدارة الموارد البشرية</string>
 
     <!-- شاشة البداية -->
@@ -13,7 +13,7 @@
     <!-- رسائل عامة -->
     <string name="no_internet">لا يوجد اتصال بالإنترنت</string>
     <string name="retry">إعادة المحاولة</string>
-    <string name="exit_confirm">هل تريد الخروج من تطبيق صرح؟</string>
+    <string name="exit_confirm">هل تريد الخروج من تطبيق مؤشر صرح؟</string>
     <string name="yes">نعم</string>
     <string name="no">لا</string>
     <string name="downloading">جاري التحميل…</string>

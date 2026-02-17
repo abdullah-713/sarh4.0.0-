@@ -1,5 +1,5 @@
 #!/bin/bash
-# SARH Documentation Watcher
+# SarhIndex Documentation Watcher
 # يراقب التغييرات في الكود ويحدث التوثيق تلقائياً
 
 PROJECT_DIR="/home/sarh/سطح المكتب/work/proj/sarh"

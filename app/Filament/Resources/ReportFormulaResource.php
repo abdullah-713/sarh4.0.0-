@@ -12,7 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 
 /**
- * SARH v1.9.0 — Module 8: صيغ التقارير الديناميكية
+ * SarhIndex v1.9.0 — Module 8: صيغ التقارير الديناميكية
  *
  * واجهة لتعريف صيغ حسابية مخصصة يمكن للمالك استخدامها في التقارير.
  */

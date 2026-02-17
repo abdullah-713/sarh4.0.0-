@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ config('app.name', 'صرح الإتقان') }}</title>
+    <title>{{ config('app.name', 'مؤشر صرح') }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -137,7 +137,7 @@
             <img src="{{ asset('logo.png') }}" alt="Logo" class="logo">
         </div>
 
-        <h1 class="title">{{ config('app.name', 'صرح الإتقان') }}</h1>
+        <h1 class="title">{{ config('app.name', 'مؤشر صرح') }}</h1>
         <p class="subtitle">نظام الحضور والموارد البشرية الذكي</p>
 
         <div class="nav-buttons">

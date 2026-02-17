@@ -5,7 +5,7 @@ namespace App\Filament\App\Pages;
 use Filament\Pages\Dashboard as BaseDashboard;
 
 /**
- * SARH v1.9.0 — الصفحة الرئيسية لبوابة الموظفين
+ * SarhIndex v1.9.0 — الصفحة الرئيسية لبوابة الموظفين
  *
  * تعرض لوحة معلومات مخصصة للموظف مع تحية حسب الوقت.
  */
@@ -42,7 +42,7 @@ class EmployeeDashboard extends BaseDashboard
 
     public function getSubheading(): ?string
     {
-        return 'مرحباً بك في بوابة الموظفين — نظام سهر لإدارة الموارد البشرية';
+        return 'مرحباً بك في بوابة الموظفين — نظام مؤشر صرح لإدارة الموارد البشرية';
     }
 
     public function getWidgets(): array

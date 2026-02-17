@@ -7,7 +7,7 @@ use App\Models\Department;
 use Illuminate\Database\Seeder;
 
 /**
- * بذر الأقسام الأساسية لشركة صرح الإتقان
+ * بذر الأقسام الأساسية لشركة مؤشر صرح
  * يتم ربطها بالفروع الموجودة تلقائياً
  */
 class DepartmentSeeder extends Seeder
@@ -16,7 +16,7 @@ class DepartmentSeeder extends Seeder
     {
         $this->command->info('  بذر الأقسام...');
 
-        // الحصول على الفرع الرئيسي (SARH-HQ) أو أول فرع
+        // الحصول على الفرع الرئيسي (SI-HQ) أو أول فرع
         $mainBranch = Branch::where('name_en', 'like', '%HQ%')
             ->orWhere('name_ar', 'like', '%الرئيسي%')
             ->first() ?? Branch::first();

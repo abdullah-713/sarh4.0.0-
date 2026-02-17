@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 /**
- * SARH v4.1 — Telemetry Controller (استقبال بيانات الحساسات)
+ * SarhIndex v4.1 — Telemetry Controller (استقبال بيانات الحساسات)
  *
  * POST /telemetry/push — يستقبل قراءة واحدة أو مجموعة من الموبايل
  * GET  /telemetry/config — يُرسل إعدادات العينة للتطبيق

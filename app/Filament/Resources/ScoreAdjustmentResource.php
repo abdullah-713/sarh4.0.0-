@@ -11,7 +11,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 
 /**
- * SARH v1.9.0 — Module 8: تعديلات النقاط/الدرجات اليدوية
+ * SarhIndex v1.9.0 — Module 8: تعديلات النقاط/الدرجات اليدوية
  */
 class ScoreAdjustmentResource extends Resource
 {

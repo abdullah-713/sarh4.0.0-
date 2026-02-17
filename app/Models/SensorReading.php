@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * SARH v4.1 — Sensor Reading (حساس الإنتاجية)
+ * SarhIndex v4.1 — Sensor Reading (حساس الإنتاجية)
  *
  * يمثل قراءة واحدة من حساسات الموبايل (accelerometer + gyroscope + dB)
  * يُرسل من التطبيق كل 10 دقائق كنتيجة Edge Processing.

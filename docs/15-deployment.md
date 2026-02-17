@@ -82,7 +82,7 @@ SESSION_LIFETIME=120
 ## 15.4 إعداد .env للإنتاج
 
 ```env
-APP_NAME="سهر الإتقان"
+APP_NAME="مؤشر صرح"
 APP_ENV=production
 APP_DEBUG=false
 APP_URL=https://sarh.online

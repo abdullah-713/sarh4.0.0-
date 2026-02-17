@@ -11,7 +11,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 
 /**
- * SARH v1.9.0 — Module 2: إدارة الصلاحيات
+ * SarhIndex v1.9.0 — Module 2: إدارة الصلاحيات
  */
 class PermissionResource extends Resource
 {

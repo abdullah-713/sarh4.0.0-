@@ -13,7 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Support\Facades\Gate;
 
 /**
- * SARH v4.1 — الأدوار فخرية فقط
+ * SarhIndex v4.1 — الأدوار فخرية فقط
  *
  * الأدوار لا تؤثر على الصلاحيات الفعلية.
  * الصلاحيات تُدار فرديًا عبر UserPermission في صفحة تعديل المستخدم.

@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * SARH v1.9.0 — سجل حضور الموظف (بوابة /app فقط)
+ * SarhIndex v1.9.0 — سجل حضور الموظف (بوابة /app فقط)
  *
  * ⚠️ SCOPED: getEloquentQuery() يقيّد البيانات لـ auth()->id() فقط.
  * الموظف لا يستطيع رؤية/تعديل/حذف سجلات غيره.

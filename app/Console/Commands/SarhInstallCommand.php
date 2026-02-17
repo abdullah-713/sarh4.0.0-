@@ -12,7 +12,7 @@ class SarhInstallCommand extends Command
 {
     protected $signature = 'sarh:install';
 
-    protected $description = 'Install SARH AL-ITQAN: seed roles, badges, and create the initial Super Admin (Level 10)';
+    protected $description = 'Install SarhIndex: seed roles, badges, and create the initial Super Admin (Level 10)';
 
     public function handle(): int
     {

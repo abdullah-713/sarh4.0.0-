@@ -1,5 +1,5 @@
 {{--
-    SARH v1.9.0 — Geolocation Helper Script
+    SarhIndex v1.9.0 — Geolocation Helper Script
     يُحقن فقط في بوابة الموظفين /app عبر renderHook في AppPanelProvider.
     يحل مشكلة Permissions-Policy التي ظهرت في v1.8.x.
 --}}

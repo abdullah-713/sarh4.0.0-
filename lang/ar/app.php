@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'brand_name' => 'صرح الإتقان — SARH',
+    'brand_name' => 'مؤشر صرح — SarhIndex',
 ];

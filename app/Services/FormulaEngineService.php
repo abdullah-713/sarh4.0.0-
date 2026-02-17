@@ -9,7 +9,7 @@ use App\Models\User;
 use Carbon\Carbon;
 
 /**
- * SARH v1.9.0 — محرك الصيغ الديناميكية للتقارير
+ * SarhIndex v1.9.0 — محرك الصيغ الديناميكية للتقارير
  *
  * يحسب نتائج الصيغ المخصصة بناءً على بيانات الموظف الفعلية.
  * يدعم المتغيرات: attendance, delay_rate, on_time_rate, total_points,

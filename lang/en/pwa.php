@@ -3,8 +3,8 @@
 return [
 
     // App
-    'app_title'       => 'SARH AL-ITQAN',
-    'app_name'        => 'SARH',
+    'app_title'       => 'SarhIndex',
+    'app_name'        => 'SarhIndex',
     'app_subtitle'    => 'HR Intelligence Platform',
 
     // Navigation

@@ -5,7 +5,7 @@ use Dedoc\Scramble\Http\Middleware\RestrictedDocsAccess;
 return [
     /*
      * Your API path. By default, all routes starting with this path will be added to the docs.
-     * SARH: Using custom routes resolver in AppServiceProvider instead.
+     * SarhIndex: Using custom routes resolver in AppServiceProvider instead.
      */
     'api_path' => 'api',
 
@@ -15,11 +15,11 @@ return [
 
     'info' => [
         'version' => '4.3.0',
-        'description' => 'SARH — نظام إدارة الموارد البشرية الذكي. API Documentation.',
+        'description' => 'SarhIndex — نظام إدارة الموارد البشرية الذكي. API Documentation.',
     ],
 
     'ui' => [
-        'title' => 'SARH API Documentation',
+        'title' => 'SarhIndex API Documentation',
         'theme' => 'light',
         'hide_try_it' => false,
         'hide_schemas' => false,

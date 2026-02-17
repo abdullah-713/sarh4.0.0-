@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * SARH v4.1 — Work Rest Stat (إحصائيات الإنتاجية اليومية)
+ * SarhIndex v4.1 — Work Rest Stat (إحصائيات الإنتاجية اليومية)
  *
  * سجل يومي مجمّع من sensor_readings لكل موظف.
  * يُحسب نهاية كل يوم عمل بواسطة TelemetryService::calculateDailyStats()

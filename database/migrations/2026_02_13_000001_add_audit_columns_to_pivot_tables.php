@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * SARH v3.4 — إضافة أعمدة التدقيق للجداول المحوّلة إلى كيانات مستقلة.
+ * SarhIndex v3.4 — إضافة أعمدة التدقيق للجداول المحوّلة إلى كيانات مستقلة.
  *
  * user_shifts: assigned_by, reason, approved_at, approved_by
  * user_badges: awarded_by

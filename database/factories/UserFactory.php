@@ -28,7 +28,7 @@ class UserFactory extends Factory
 
         return [
             // Identity
-            'employee_id'      => 'SARH-' . now()->format('y') . '-' . str_pad(fake()->unique()->numberBetween(1, 9999), 4, '0', STR_PAD_LEFT),
+            'employee_id'      => 'SI-' . now()->format('y') . '-' . str_pad(fake()->unique()->numberBetween(1, 9999), 4, '0', STR_PAD_LEFT),
             'name_ar'          => fake('ar_SA')->name($gender),
             'name_en'          => fake()->name($gender),
             'email'            => fake()->unique()->safeEmail(),

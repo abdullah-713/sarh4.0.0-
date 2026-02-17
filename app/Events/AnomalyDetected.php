@@ -9,7 +9,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * SARH v4.1 — Anomaly Detected Event
+ * SarhIndex v4.1 — Anomaly Detected Event
  *
  * يُطلق عند كشف تلاعب في بيانات الحساسات.
  */

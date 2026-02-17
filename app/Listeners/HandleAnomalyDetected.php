@@ -7,7 +7,7 @@ use App\Models\PerformanceAlert;
 use Illuminate\Support\Facades\Log;
 
 /**
- * SARH v4.1 — Anomaly Detected Listener
+ * SarhIndex v4.1 — Anomaly Detected Listener
  *
  * يُنشئ تنبيه أداء عند اكتشاف تلاعب في بيانات الحساسات.
  */

@@ -9,7 +9,7 @@ use Filament\Widgets\TableWidget as BaseWidget;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * SARH v4.1 — Anomaly Alert Widget (تنبيهات التلاعب)
+ * SarhIndex v4.1 — Anomaly Alert Widget (تنبيهات التلاعب)
  *
  * يعرض آخر حالات التلاعب المكتشفة — للمراجعة الفورية.
  * يظهر فقط لمستوى أمان 7+ (مدير إقليمي فأعلى).

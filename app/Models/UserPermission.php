@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * SARH v1.9.0 — تجاوز الصلاحيات على مستوى المستخدم
+ * SarhIndex v1.9.0 — تجاوز الصلاحيات على مستوى المستخدم
  *
  * يسمح بمنح أو سحب صلاحية محددة لمستخدم بغض النظر عن دوره.
  * مثال: متدرب يحصل على صلاحية لا يملكها مشرفه.

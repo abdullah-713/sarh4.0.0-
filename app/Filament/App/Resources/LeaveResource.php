@@ -12,7 +12,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * SARH v2.0 — طلب إجازة للموظف (بوابة /app فقط)
+ * SarhIndex v2.0 — طلب إجازة للموظف (بوابة /app فقط)
  *
  * ⚠️ SCOPED: الموظف يرى طلباته فقط.
  */

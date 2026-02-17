@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 class ProjectDataSeeder extends Seeder
 {
     /**
-     * SARH v1.7.0 — Real branch & employee data.
+     * SarhIndex v1.7.0 — Real branch & employee data.
      * Idempotent via updateOrCreate on code/email.
      */
     public function run(): void
@@ -24,13 +24,13 @@ class ProjectDataSeeder extends Seeder
         */
         $branches = [
             [
-                'code'                 => 'SARH-HQ',
-                'name_ar'              => 'صرح الاتقان الرئيسي',
-                'name_en'              => 'SARH Al-Itqan HQ',
+                'code'                 => 'SI-HQ',
+                'name_ar'              => 'مؤشر صرح الرئيسي',
+                'name_en'              => 'SarhIndex HQ',
                 'city_ar'              => 'الرياض',
                 'city_en'              => 'Riyadh',
-                'address_ar'           => 'صرح الاتقان — المقر الرئيسي',
-                'address_en'           => 'SARH Al-Itqan — Headquarters',
+                'address_ar'           => 'مؤشر صرح — المقر الرئيسي',
+                'address_en'           => 'SarhIndex — Headquarters',
                 'latitude'             => 24.572368,
                 'longitude'            => 46.602829,
                 'geofence_radius'      => 17,
@@ -41,13 +41,13 @@ class ProjectDataSeeder extends Seeder
                 'is_active'            => true,
             ],
             [
-                'code'                 => 'SARH-CORNER',
-                'name_ar'              => 'صرح الاتقان كورنر',
-                'name_en'              => 'SARH Al-Itqan Corner',
+                'code'                 => 'SI-CORNER',
+                'name_ar'              => 'مؤشر صرح كورنر',
+                'name_en'              => 'SarhIndex Corner',
                 'city_ar'              => 'الرياض',
                 'city_en'              => 'Riyadh',
-                'address_ar'           => 'صرح الاتقان — كورنر',
-                'address_en'           => 'SARH Al-Itqan — Corner',
+                'address_ar'           => 'مؤشر صرح — كورنر',
+                'address_en'           => 'SarhIndex — Corner',
                 'latitude'             => 24.572439,
                 'longitude'            => 46.603008,
                 'geofence_radius'      => 17,
@@ -58,13 +58,13 @@ class ProjectDataSeeder extends Seeder
                 'is_active'            => true,
             ],
             [
-                'code'                 => 'SARH-2',
-                'name_ar'              => 'صرح الاتقان 2',
-                'name_en'              => 'SARH Al-Itqan 2',
+                'code'                 => 'SI-2',
+                'name_ar'              => 'مؤشر صرح 2',
+                'name_en'              => 'SarhIndex 2',
                 'city_ar'              => 'الرياض',
                 'city_en'              => 'Riyadh',
-                'address_ar'           => 'صرح الاتقان — الفرع الثاني',
-                'address_en'           => 'SARH Al-Itqan — Branch 2',
+                'address_ar'           => 'مؤشر صرح — الفرع الثاني',
+                'address_en'           => 'SarhIndex — Branch 2',
                 'latitude'             => 24.572262,
                 'longitude'            => 46.602580,
                 'geofence_radius'      => 17,
@@ -133,7 +133,7 @@ class ProjectDataSeeder extends Seeder
                 'basic_salary'           => 45000,
                 'housing_allowance'      => 11250,
                 'transport_allowance'    => 3000,
-                'branch_id'              => $branchModels['SARH-HQ']->id,
+                'branch_id'              => $branchModels['SI-HQ']->id,
                 'working_days_per_month' => 22,
                 'working_hours_per_day'  => 8,
                 'status'                 => 'active',
@@ -161,25 +161,25 @@ class ProjectDataSeeder extends Seeder
             ['منذر محمد',         'Munther Mohammed',     'munther@sarh.app',     'emp031', 4000, 'FADA-1'],
             ['مصطفى عوض سعد',    'Mustafa Awad Saad',    'mustafa@sarh.app',     'emp033', 4000, 'FADA-1'],
             ['سالفادور ديلا',     'Salvador Dela',        'salvador@sarh.app',    'emp038', 4000, 'FADA-1'],
-            // SARH-CORNER — 7
-            ['أباوي',             'Abawe',                'abawe@sarh.app',       'emp009', 6000, 'SARH-CORNER'],
-            ['أرنوس',             'Arnous',               'arnous@sarh.app',      'emp016', 5000, 'SARH-CORNER'],
-            ['بلال',              'Bilal',                'bilal@sarh.app',       'emp018', 5000, 'SARH-CORNER'],
-            ['إيناي يو إس',      'Inay_us',              'inay.us@sarh.app',     'emp023', 5000, 'SARH-CORNER'],
-            ['مصعب',              'Musab',                'musab@sarh.app',       'emp032', 8000, 'SARH-CORNER'],
-            ['شعبان',             'Shaaban',              'shaaban@sarh.app',     'emp039', 5000, 'SARH-CORNER'],
-            ['وقاص',              'Wakas',                'wakas@sarh.app',       'emp041', 5000, 'SARH-CORNER'],
-            // SARH-2 — 5
-            ['أبو سليمان',        'Abu Suleiman',         'abu.suleiman@sarh.app','emp013', 4500, 'SARH-2'],
-            ['بخاري',             'Bukhari',              'bukhari@sarh.app',     'emp019', 4500, 'SARH-2'],
-            ['إسلام',             'Islam',                'islam@sarh.app',       'emp025', 4500, 'SARH-2'],
-            ['محسن',              'Mohsen',               'mohsen@sarh.app',      'emp030', 4500, 'SARH-2'],
-            ['صابر',              'Saber',                'saber@sarh.app',       'emp037', 4500, 'SARH-2'],
-            // SARH-HQ — 4
-            ['أمجد',              'Amjad',                'amjad@sarh.app',       'emp015', 4000, 'SARH-HQ'],
-            ['أيمن',              'Ayman',                'ayman@sarh.app',       'emp017', 4000, 'SARH-HQ'],
-            ['نجيب',              'Najeeb',               'najeeb@sarh.app',      'emp034', 4000, 'SARH-HQ'],
-            ['زاهر',              'Zaher',                'zaher@sarh.app',       'emp043', 4000, 'SARH-HQ'],
+            // SI-CORNER — 7
+            ['أباوي',             'Abawe',                'abawe@sarh.app',       'emp009', 6000, 'SI-CORNER'],
+            ['أرنوس',             'Arnous',               'arnous@sarh.app',      'emp016', 5000, 'SI-CORNER'],
+            ['بلال',              'Bilal',                'bilal@sarh.app',       'emp018', 5000, 'SI-CORNER'],
+            ['إيناي يو إس',      'Inay_us',              'inay.us@sarh.app',     'emp023', 5000, 'SI-CORNER'],
+            ['مصعب',              'Musab',                'musab@sarh.app',       'emp032', 8000, 'SI-CORNER'],
+            ['شعبان',             'Shaaban',              'shaaban@sarh.app',     'emp039', 5000, 'SI-CORNER'],
+            ['وقاص',              'Wakas',                'wakas@sarh.app',       'emp041', 5000, 'SI-CORNER'],
+            // SI-2 — 5
+            ['أبو سليمان',        'Abu Suleiman',         'abu.suleiman@sarh.app','emp013', 4500, 'SI-2'],
+            ['بخاري',             'Bukhari',              'bukhari@sarh.app',     'emp019', 4500, 'SI-2'],
+            ['إسلام',             'Islam',                'islam@sarh.app',       'emp025', 4500, 'SI-2'],
+            ['محسن',              'Mohsen',               'mohsen@sarh.app',      'emp030', 4500, 'SI-2'],
+            ['صابر',              'Saber',                'saber@sarh.app',       'emp037', 4500, 'SI-2'],
+            // SI-HQ — 4
+            ['أمجد',              'Amjad',                'amjad@sarh.app',       'emp015', 4000, 'SI-HQ'],
+            ['أيمن',              'Ayman',                'ayman@sarh.app',       'emp017', 4000, 'SI-HQ'],
+            ['نجيب',              'Najeeb',               'najeeb@sarh.app',      'emp034', 4000, 'SI-HQ'],
+            ['زاهر',              'Zaher',                'zaher@sarh.app',       'emp043', 4000, 'SI-HQ'],
             // FADA-2 — 11
             ['عبد واي',           'Abd_y',                'abd.y@sarh.app',       'emp011', 5500, 'FADA-2'],
             ['أفضل',              'Afzal',                'afzal@sarh.app',       'emp014', 5000, 'FADA-2'],

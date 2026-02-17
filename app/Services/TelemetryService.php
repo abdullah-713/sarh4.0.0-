@@ -11,7 +11,7 @@ use App\Models\WorkRestStat;
 use Carbon\Carbon;
 
 /**
- * SARH v4.1 — Telemetry Service (خدمة تحليل بيانات الحساسات)
+ * SarhIndex v4.1 — Telemetry Service (خدمة تحليل بيانات الحساسات)
  *
  * المنطق الرئيسي لاستقبال قراءات الموبايل ومعالجتها:
  * 1. حساب احتمال العمل (work_probability)

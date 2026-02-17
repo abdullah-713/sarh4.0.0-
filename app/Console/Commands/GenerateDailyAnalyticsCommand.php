@@ -17,7 +17,7 @@ class GenerateDailyAnalyticsCommand extends Command
             ? \Carbon\Carbon::parse($this->option('date'))
             : now();
 
-        $this->info("🔬 Running SARH Analytics for {$date->toDateString()}...");
+        $this->info("🔬 Running SarhIndex Analytics for {$date->toDateString()}...");
         $this->newLine();
 
         $results = $service->runFullAnalysis($date);

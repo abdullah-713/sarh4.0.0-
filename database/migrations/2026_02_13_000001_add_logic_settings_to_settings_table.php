@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * SARH v3.2 — Add logic_settings JSON column to settings table.
+ * SarhIndex v3.2 — Add logic_settings JSON column to settings table.
  * Stores dynamic business rules: loss_multiplier, geofence_radius, grace_period, overtime_multiplier.
  */
 return new class extends Migration

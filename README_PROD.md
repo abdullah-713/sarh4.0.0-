@@ -1,4 +1,4 @@
-# صرح الإتقان — دليل النشر الإنتاجي
+# مؤشر صرح — دليل النشر الإنتاجي
 > **الإصدار:** 1.9.0 | **التاريخ:** 2026-02-08
 > **البيئة المستهدفة:** استضافة مشتركة (Hostinger)، خادم VPS، أو خادم مخصص
 > **المتطلبات:** PHP 8.2+، MySQL 8.0+، Composer، Node.js 18+
@@ -62,7 +62,7 @@ php artisan key:generate
 
 عدّل ملف `.env`:
 ```ini
-APP_NAME="صرح الإتقان"
+APP_NAME="مؤشر صرح"
 APP_ENV=production
 APP_DEBUG=false
 APP_TIMEZONE=Asia/Riyadh
@@ -84,7 +84,7 @@ QUEUE_CONNECTION=database
 FILAMENT_PATH=admin
 ```
 
-### 2.4 تشغيل مُثبِّت صرح
+### 2.4 تشغيل مُثبِّت مؤشر صرح
 
 ```bash
 php artisan sarh:install
@@ -247,7 +247,7 @@ php artisan storage:link
 - [ ] جذر الويب يشير فقط إلى `public/` — وليس إلى جذر المشروع
 - [ ] HTTPS (SSL) مفعّل
 
-### 6.4 خاص بنظام صرح
+### 6.4 خاص بنظام مؤشر صرح
 - [ ] صفحات قبو المستوى 10 (`/admin/whistleblower-vault`، `/admin/trap-audit`) محمية بـ `security_level >= 10`
 - [ ] محتوى البلاغات مشفر بـ AES-256-CBC
 - [ ] عزل بيانات الفروع مفعّل (غير المدير العام يرى فرعه فقط)
@@ -306,5 +306,5 @@ tar -czf /backups/sarh_files_$(date +%Y%m%d).tar.gz \
 
 ---
 
-**صرح الإتقان** — SARH AL-ITQAN
+**مؤشر صرح** — SarhIndex
 *نظام الموارد البشرية والذكاء المالي المؤسسي*

@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "SARH"
+rootProject.name = "SarhIndex"
 include(":app")

@@ -11,7 +11,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 
 /**
- * SARH v1.9.0 — Module 7: محرك استثناءات الحضور
+ * SarhIndex v1.9.0 — Module 7: محرك استثناءات الحضور
  *
  * واجهة إدارية لتعريف استثناءات حضور لموظفين محددين.
  */

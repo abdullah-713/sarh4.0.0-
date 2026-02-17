@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 
 /**
- * SARH v4.1 — Anomaly Detector (محرك كشف التلاعب المتقدم)
+ * SarhIndex v4.1 — Anomaly Detector (محرك كشف التلاعب المتقدم)
  *
  * المستوى الثاني من كشف التلاعب:
  * - GPS/Sensor mismatch

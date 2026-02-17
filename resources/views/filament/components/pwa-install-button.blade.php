@@ -1,4 +1,4 @@
-{{-- SARH v2.0 — PWA Install Button (beforeinstallprompt) --}}
+{{-- SarhIndex v2.0 — PWA Install Button (beforeinstallprompt) --}}
 <div
     x-data="{
         showInstall: false,

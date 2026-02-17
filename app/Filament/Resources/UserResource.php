@@ -73,8 +73,9 @@ class UserResource extends Resource
                         ->imageEditor()
                         ->circleCropper()
                         ->directory('avatars')
+                        ->disk('public')
                         ->maxSize(2048)
-                        ->required()
+                        ->required(fn (string $operation): bool => $operation === 'create')
                         ->columnSpanFull()
                         ->hintIcon('heroicon-m-information-circle', tooltip: __('users.avatar_hint'))
                         ->helperText('صورة شخصية واضحة للموظف — تظهر في جميع الأقسام'),
@@ -204,6 +205,30 @@ class UserResource extends Resource
                         ])
                         ->default('active')
                         ->hintIcon('heroicon-m-information-circle', tooltip: __('users.status_hint')),
+
+                    Forms\Components\Select::make('security_level')
+                        ->label('مستوى الأمان')
+                        ->options([
+                            1  => '1 - موظف عادي',
+                            2  => '2 - موظف متقدم',
+                            3  => '3 - مشرف',
+                            4  => '4 - مدير قسم',
+                            5  => '5 - مدير فرع',
+                            6  => '6 - مدير منطقة',
+                            7  => '7 - مدير تنفيذي',
+                            8  => '8 - مدير عام',
+                            9  => '9 - إدارة عليا',
+                            10 => '10 - مدير النظام',
+                        ])
+                        ->default(1)
+                        ->visible(fn (): bool => auth()->user()?->is_super_admin || auth()->user()?->security_level >= 10)
+                        ->helperText('⚗️ يحدد صلاحيات الوصول واللوحة المستخدمة (< 4 = بوابة موظف, ≥ 4 = لوحة إدارة)'),
+
+                    Forms\Components\Toggle::make('is_super_admin')
+                        ->label('مدير نظام أعلى (Super Admin)')
+                        ->default(false)
+                        ->visible(fn (): bool => auth()->user()?->is_super_admin === true)
+                        ->helperText('⚠️ صلاحيات كاملة بدون قيود — للمدير الأعلى فقط'),
 
                     Forms\Components\Select::make('employment_type')
                         ->label(__('users.employment_type'))

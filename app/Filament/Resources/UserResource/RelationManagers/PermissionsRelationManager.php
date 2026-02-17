@@ -143,6 +143,9 @@ class PermissionsRelationManager extends RelationManager
                     ->mutateFormDataUsing(function (array $data): array {
                         $data['granted_by'] = auth()->id();
                         return $data;
+                    })
+                    ->after(function () {
+                        $this->getOwnerRecord()->flushPermissionCache();
                     }),
 
                 Tables\Actions\Action::make('bulk_grant')
@@ -208,13 +211,22 @@ class PermissionsRelationManager extends RelationManager
                     }),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->after(function () {
+                        $this->getOwnerRecord()->flushPermissionCache();
+                    }),
                 Tables\Actions\DeleteAction::make()
-                    ->label('حذف'),
+                    ->label('حذف')
+                    ->after(function () {
+                        $this->getOwnerRecord()->flushPermissionCache();
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->after(function () {
+                            $this->getOwnerRecord()->flushPermissionCache();
+                        }),
                 ]),
             ])
             ->defaultSort('permission.group');

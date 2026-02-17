@@ -138,7 +138,7 @@
             <li><span class="emoji">📂</span> رفع وتحميل الملفات</li>
         </ul>
 
-        <a href="/app/sarh.apk" class="btn-download">
+        <a href="/apk/sarh.apk" class="btn-download">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                 <polyline points="7 10 12 15 17 10"/>

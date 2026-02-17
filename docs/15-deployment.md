@@ -212,9 +212,9 @@ php artisan db:seed
 
 ```bash
 # 1. انسخ APK الموقّع إلى الخادم
-scp -P 65002 app-release.apk u850419603@145.223.119.139:~/domains/sarh.online/public_html/app/sarh.apk
+scp -P 65002 app-release.apk u850419603@145.223.119.139:~/domains/sarh.online/public_html/apk/sarh.apk
 
-# 2. رابط التحميل: https://sarh.online/app/sarh.apk
+# 2. رابط التحميل: https://sarh.online/apk/sarh.apk
 # 3. صفحة التحميل: https://sarh.online/app/download
 ```
 

@@ -23,7 +23,7 @@ Route::get('/api/app-version', function () {
     return response()->json([
         'version_code' => 1,
         'version_name' => '1.0.0',
-        'download_url' => 'https://sarh.online/app/sarh.apk',
+        'download_url' => 'https://sarh.online/apk/sarh.apk',
         'force_update' => false,
         'changelog'    => '',
     ]);

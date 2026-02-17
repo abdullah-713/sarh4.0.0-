@@ -44,7 +44,7 @@ class SplashActivity : AppCompatActivity() {
 
         btnUpdate.setOnClickListener {
             // فتح رابط التحميل في المتصفح
-            val url = btnUpdate.tag as? String ?: "${BuildConfig.BASE_URL}/app/sarh.apk"
+            val url = btnUpdate.tag as? String ?: "${BuildConfig.BASE_URL}/apk/sarh.apk"
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         }
 

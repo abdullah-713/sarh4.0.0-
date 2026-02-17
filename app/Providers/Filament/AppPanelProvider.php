@@ -116,7 +116,7 @@ class AppPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->databaseNotifications()
-            ->spa()
+            ->databaseNotificationsPolling('120s')
             ->renderHook(
                 PanelsRenderHook::BODY_END,
                 fn () => view('filament.app.partials.geolocation-script'),

@@ -19,7 +19,7 @@ class AttendanceHeatmapWidget extends Widget
 
     protected static ?int $sort = 3;
 
-    protected static ?string $pollingInterval = '60s';
+    protected static ?string $pollingInterval = null;
 
     public ?int $selectedBranch = null;
     public array $heatmapData = [];

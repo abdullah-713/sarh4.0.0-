@@ -17,7 +17,7 @@ class ROIMatrixWidget extends Widget
 
     protected static ?int $sort = 5;
 
-    protected static ?string $pollingInterval = '60s';
+    protected static ?string $pollingInterval = null;
 
     protected function getViewData(): array
     {

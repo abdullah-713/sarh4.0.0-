@@ -93,8 +93,7 @@ class AnomalyAlertWidget extends BaseWidget
                 Tables\Filters\TernaryFilter::make('is_reviewed')
                     ->label('حالة المراجعة'),
             ])
-            ->defaultSort('created_at', 'desc')
-            ->poll('30s');
+            ->defaultSort('created_at', 'desc');
     }
 
     private function getQuery(): Builder

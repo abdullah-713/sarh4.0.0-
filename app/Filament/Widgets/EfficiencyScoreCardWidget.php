@@ -18,7 +18,7 @@ class EfficiencyScoreCardWidget extends Widget
 
     protected static ?int $sort = 4;
 
-    protected static ?string $pollingInterval = '60s';
+    protected static ?string $pollingInterval = null;
 
     protected function getViewData(): array
     {

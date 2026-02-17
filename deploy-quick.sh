@@ -22,12 +22,19 @@ git push origin main
 # 2. تحديث السيرفر
 echo ""
 echo "🌐 تحديث السيرفر..."
+DOMAIN_PUBLIC="/home/u850419603/domains/sarh.online/public_html"
 ssh -p $PORT $SERVER "cd $PROJECT_PATH && \
     git fetch origin main && \
     git reset --hard origin/main && \
     php artisan migrate --force && \
     php artisan optimize:clear && \
-    php artisan optimize"
+    php artisan optimize && \
+    echo '📁 Syncing public assets to domain public_html...' && \
+    cp -r $PROJECT_PATH/public/build $DOMAIN_PUBLIC/ && \
+    cp -r $PROJECT_PATH/public/css $DOMAIN_PUBLIC/ 2>/dev/null; \
+    cp -r $PROJECT_PATH/public/js $DOMAIN_PUBLIC/ 2>/dev/null; \
+    cp $PROJECT_PATH/public/.htaccess $DOMAIN_PUBLIC/ 2>/dev/null; \
+    echo '✅ Assets synced to public_html'"
 
 echo ""
 echo "✅ النشر مكتمل!"

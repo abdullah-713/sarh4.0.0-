@@ -243,8 +243,7 @@ class AttendanceResource extends Resource
             ->bulkActions([])
             ->emptyStateHeading('لا توجد سجلات حضور')
             ->emptyStateDescription('لم يتم تسجيل أي حضور بعد.')
-            ->emptyStateIcon('heroicon-o-clock')
-            ->poll('60s');
+            ->emptyStateIcon('heroicon-o-clock');
     }
 
     public static function getRelations(): array

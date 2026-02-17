@@ -20,7 +20,7 @@ class BranchPerformanceHeatmap extends BaseWidget
 
     protected int|string|array $columnSpan = 'full';
 
-    protected static ?string $pollingInterval = '60s';
+    protected static ?string $pollingInterval = null;
 
     public function getHeading(): string
     {

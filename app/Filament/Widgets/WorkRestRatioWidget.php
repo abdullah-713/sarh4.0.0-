@@ -102,8 +102,7 @@ class WorkRestRatioWidget extends BaseWidget
                         'critical' => '🔴 حرج',
                     ]),
             ])
-            ->defaultSort('productivity_ratio', 'asc')
-            ->poll('60s');
+            ->defaultSort('productivity_ratio', 'asc');
     }
 
     private function getQuery(): Builder

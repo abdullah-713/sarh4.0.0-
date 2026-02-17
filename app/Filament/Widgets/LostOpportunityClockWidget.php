@@ -16,7 +16,7 @@ class LostOpportunityClockWidget extends Widget
     /**
      * Auto-refresh every 60 seconds.
      */
-    protected static ?string $pollingInterval = '60s';
+    protected static ?string $pollingInterval = null;
 
     public array $clockData = [];
 

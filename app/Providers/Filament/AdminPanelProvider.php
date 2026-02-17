@@ -108,7 +108,7 @@ class AdminPanelProvider extends PanelProvider
                 \App\Http\Middleware\EnsureAdminPanelAccess::class,
             ])
             ->databaseNotifications()
-            ->spa()
+            ->databaseNotificationsPolling('120s')
             ->renderHook(
                 PanelsRenderHook::HEAD_END,
                 fn () => new HtmlString('<link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#2AABEE">'),

@@ -14,7 +14,7 @@ class AttendanceOverview extends BaseWidget
 
     protected static ?int $sort = 1;
 
-    protected static ?string $pollingInterval = '60s';
+    protected static ?string $pollingInterval = null;
 
     protected function getStats(): array
     {

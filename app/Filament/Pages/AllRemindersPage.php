@@ -159,7 +159,6 @@ class AllRemindersPage extends Page implements HasTable
                     ->requiresConfirmation()
                     ->action(fn ($records) => $records->each->markAsCompleted()),
             ])
-            ->poll('30s')
             ->striped();
     }
 }

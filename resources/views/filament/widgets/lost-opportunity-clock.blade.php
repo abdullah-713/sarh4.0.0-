@@ -1,4 +1,4 @@
-<div wire:poll.60s="loadData">
+<div>
     @php
         $d = $data ?? [];
         $totalLoss = $d['total_loss_today'] ?? 0;

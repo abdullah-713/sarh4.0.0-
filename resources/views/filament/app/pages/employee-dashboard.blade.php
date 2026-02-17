@@ -1,10 +1,10 @@
 <x-filament-panels::page>
     <div class="space-y-6">
+        {{-- Branch Progress (first for all employees) --}}
+        @livewire(\App\Livewire\BranchProgressWidget::class)
+
         {{-- Personal Mirror --}}
         @livewire(\App\Filament\App\Widgets\PersonalMirrorWidget::class)
-        
-        {{-- Branch Progress --}}
-        @livewire(\App\Livewire\BranchProgressWidget::class)
         
         {{-- Quick Attendance --}}
         @livewire(\App\Livewire\AttendanceWidget::class)

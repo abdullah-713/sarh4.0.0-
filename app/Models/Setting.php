@@ -28,6 +28,11 @@ class Setting extends Model
 {
     protected $table = 'settings';
 
+    /**
+     * Process-level cache — prevents multiple DB hits per request.
+     */
+    protected static ?self $cachedInstance = null;
+
     protected $fillable = [
         'app_name',
         'app_name_en',
@@ -69,11 +74,15 @@ class Setting extends Model
     }
 
     /**
-     * Get the singleton settings instance (cached for 1 hour).
+     * Get the singleton settings instance (cached in process + file cache).
      */
     public static function instance(): static
     {
-        return Cache::remember('sarh_settings', 3600, function () {
+        if (static::$cachedInstance !== null) {
+            return static::$cachedInstance;
+        }
+
+        return static::$cachedInstance = Cache::remember('sarh_settings', 3600, function () {
             return static::firstOrCreate(['id' => 1], [
                 'app_name'             => 'مؤشر صرح',
                 'app_name_en'          => 'SarhIndex',
@@ -111,6 +120,7 @@ class Setting extends Model
     {
         static::saved(function () {
             Cache::forget('sarh_settings');
+            static::$cachedInstance = null;
         });
     }
 

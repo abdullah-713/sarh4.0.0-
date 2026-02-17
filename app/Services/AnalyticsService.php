@@ -860,23 +860,25 @@ class AnalyticsService
 
     private function countWorkingDays(Carbon $startDate, Carbon $endDate, ?int $branchId = null): int
     {
+        // Pre-load all holidays in one query instead of N+1
+        $holidays = Holiday::whereBetween('date', [$startDate->toDateString(), $endDate->toDateString()])
+            ->where(function ($q) use ($branchId) {
+                $q->whereNull('branch_id');
+                if ($branchId) {
+                    $q->orWhere('branch_id', $branchId);
+                }
+            })
+            ->pluck('date')
+            ->map(fn ($d) => (string) $d)
+            ->toArray();
+
         $count = 0;
         $current = $startDate->copy();
 
         while ($current->lte($endDate)) {
             // Skip Friday & Saturday (Saudi weekend)
             if (!in_array($current->dayOfWeek, [Carbon::FRIDAY, Carbon::SATURDAY])) {
-                // Skip holidays
-                $isHoliday = Holiday::where('date', $current->toDateString())
-                    ->where(function ($q) use ($branchId) {
-                        $q->whereNull('branch_id');
-                        if ($branchId) {
-                            $q->orWhere('branch_id', $branchId);
-                        }
-                    })
-                    ->exists();
-
-                if (!$isHoliday) {
+                if (!in_array($current->toDateString(), $holidays)) {
                     $count++;
                 }
             }

@@ -35,31 +35,10 @@ Route::get('/app/download', function () {
 
 /*
 |--------------------------------------------------------------------------
-| PWA Manifest (Dynamic from Settings)
+| PWA Manifest — served as static file from public/manifest.json
+| (No longer hits the database on every PWA page load)
 |--------------------------------------------------------------------------
 */
-Route::get('/manifest.json', function () {
-    $s = Setting::instance();
-    $iconUrl = $s->logo_url ?? '/icon-192.png';
-
-    return response()->json([
-        'name'             => $s->pwa_name,
-        'short_name'       => $s->pwa_short_name,
-        'description'      => $s->welcome_body ?? 'نظام إدارة الموارد البشرية',
-        'start_url'        => '/app/login',
-        'scope'            => '/',
-        'display'          => 'standalone',
-        'orientation'      => 'portrait',
-        'theme_color'      => $s->pwa_theme_color,
-        'background_color' => $s->pwa_background_color,
-        'lang'             => 'ar',
-        'dir'              => 'rtl',
-        'icons'            => [
-            ['src' => $iconUrl, 'sizes' => '192x192', 'type' => 'image/png'],
-            ['src' => $iconUrl, 'sizes' => '512x512', 'type' => 'image/png'],
-        ],
-    ], 200, ['Content-Type' => 'application/manifest+json']);
-})->name('manifest');
 
 /*
 |--------------------------------------------------------------------------

@@ -129,14 +129,16 @@ class EmployeeResourcesTest extends TestCase
     }
 
     // ═══════════════════════════════════════════════════
-    // TC-ER-005: Employee can access create attendance page
+    // TC-ER-005: Employee cannot manually create attendance (policy enforced)
+    // Only security_level >= 6 can create records
     // ═══════════════════════════════════════════════════
-    public function test_employee_can_access_create_attendance_page(): void
+    public function test_employee_cannot_manually_create_attendance(): void
     {
         $response = $this->actingAs($this->employee)
             ->get('/app/my-attendance/create');
 
-        $response->assertStatus(200);
+        // Employees use the check-in widget, not manual creation
+        $response->assertStatus(403);
     }
 
     // ═══════════════════════════════════════════════════

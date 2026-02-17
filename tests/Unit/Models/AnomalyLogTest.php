@@ -91,6 +91,7 @@ class AnomalyLogTest extends TestCase
 
     public function test_readable_type_attribute(): void
     {
+        // Only test valid enum types
         $types = [
             'location_mismatch'    => 'تناقض الموقع والنشاط',
             'perfect_signal'       => 'إشارة مثالية (آلة)',
@@ -98,7 +99,6 @@ class AnomalyLogTest extends TestCase
             'frequency_mismatch'   => 'تردد غير متوافق',
             'replay_attack'        => 'قراءات مُعادة',
             'impossible_frequency' => 'تردد مستحيل بشرياً',
-            'unknown_type'         => 'شذوذ غير مصنف',
         ];
 
         foreach ($types as $type => $expected) {

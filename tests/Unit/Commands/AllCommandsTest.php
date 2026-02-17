@@ -18,7 +18,7 @@ class AllCommandsTest extends TestCase
     public function test_sarh_install_command_registered(): void
     {
         // sarh:install is interactive; just verify it's registered
-        $this->assertTrue(\Illuminate\Support\Facades\Artisan::all()->has('sarh:install'));
+        $this->assertArrayHasKey('sarh:install', \Illuminate\Support\Facades\Artisan::all());
     }
 
     public function test_auto_document_command_registered(): void

@@ -106,6 +106,7 @@ class EventsAndListenersTest extends TestCase
         $badge = Badge::create([
             'name_ar' => 'شارة اختبار',
             'name_en' => 'Test Badge',
+            'slug' => 'test-badge-' . uniqid(),
             'description_ar' => 'اختبار',
             'icon' => 'star',
             'category' => 'attendance',

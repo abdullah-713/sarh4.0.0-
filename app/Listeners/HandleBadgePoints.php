@@ -16,7 +16,7 @@ class HandleBadgePoints
             PerformanceAlert::create([
                 'user_id'    => $userBadge->user_id,
                 'alert_type' => 'badge_earned',
-                'severity'   => 'success',
+                'severity'   => 'info',
                 'title_ar'   => 'تهانينا!',
                 'title_en'   => 'Congratulations!',
                 'message_ar' => "لقد حصلت على شارة {$userBadge->badge->name}",

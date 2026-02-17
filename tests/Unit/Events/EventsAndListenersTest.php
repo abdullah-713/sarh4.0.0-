@@ -127,7 +127,7 @@ class EventsAndListenersTest extends TestCase
         $this->assertDatabaseHas('performance_alerts', [
             'user_id' => $user->id,
             'alert_type' => 'badge_earned',
-            'severity' => 'success',
+            'severity' => 'info',
         ]);
     }
 

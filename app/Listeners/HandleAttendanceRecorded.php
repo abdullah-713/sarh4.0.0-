@@ -21,15 +21,15 @@ class HandleAttendanceRecorded
         try {
             AuditLog::create([
                 'user_id'        => $log->user_id,
-                'action'         => $log->check_out ? 'attendance_checkout' : 'attendance_checkin',
+                'action'         => $log->check_out_at ? 'attendance_checkout' : 'attendance_checkin',
                 'auditable_type' => get_class($log),
                 'auditable_id'   => $log->id,
                 'old_values'     => null,
                 'new_values'     => [
                     'status'          => $log->status,
                     'attendance_date' => $log->attendance_date?->toDateString(),
-                    'check_in'        => $log->check_in,
-                    'check_out'       => $log->check_out,
+                    'check_in'        => $log->check_in_at,
+                    'check_out'       => $log->check_out_at,
                     'branch_id'       => $log->branch_id,
                 ],
                 'ip_address' => request()->ip(),

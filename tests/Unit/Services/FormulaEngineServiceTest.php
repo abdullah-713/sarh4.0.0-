@@ -40,12 +40,18 @@ class FormulaEngineServiceTest extends TestCase
             'working_hours_per_day' => 8,
         ]);
 
-        // 2 present days
-        AttendanceLog::factory()->count(2)->create([
+        // 2 present days with unique dates
+        AttendanceLog::factory()->create([
             'user_id' => $user->id,
             'branch_id' => $branch->id,
             'status' => 'present',
-            'attendance_date' => now()->subDay(),
+            'attendance_date' => now()->subDays(2)->toDateString(),
+        ]);
+        AttendanceLog::factory()->create([
+            'user_id' => $user->id,
+            'branch_id' => $branch->id,
+            'status' => 'present',
+            'attendance_date' => now()->subDay()->toDateString(),
         ]);
 
         $values = $this->service->resolveVariablesForUser(

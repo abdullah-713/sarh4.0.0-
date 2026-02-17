@@ -27,11 +27,12 @@ class TrapTest extends TestCase
         $this->assertEquals(1, Trap::active()->count());
     }
 
-    public function test_trap_scope_by_type(): void
+    public function test_trap_scope_for_level(): void
     {
-        Trap::factory()->create(['trap_type' => 'phantom_page']);
-        Trap::factory()->create(['trap_type' => 'fake_api']);
-        $this->assertEquals(1, Trap::byType('phantom_page')->count());
+        Trap::factory()->create(['target_levels' => [3, 4, 5]]);
+        Trap::factory()->create(['target_levels' => [7, 8]]);
+        $this->assertEquals(1, Trap::forLevel(3)->count());
+        $this->assertEquals(1, Trap::forLevel(7)->count());
     }
 
     public function test_trap_interaction_belongs_to_trap(): void
@@ -48,27 +49,47 @@ class TrapTest extends TestCase
 
     public function test_trap_interaction_risk_level_attribute(): void
     {
-        $low = TrapInteraction::factory()->create(['risk_score' => 0.2]);
-        $medium = TrapInteraction::factory()->create(['risk_score' => 0.5]);
-        $high = TrapInteraction::factory()->create(['risk_score' => 0.8]);
-        $critical = TrapInteraction::factory()->create(['risk_score' => 0.95]);
+        // Model uses 0-100 scale and returns Arabic labels
+        $low = TrapInteraction::factory()->create(['risk_score' => 10]);
+        $medium = TrapInteraction::factory()->create(['risk_score' => 30]);
+        $high = TrapInteraction::factory()->create(['risk_score' => 60]);
+        $critical = TrapInteraction::factory()->create(['risk_score' => 80]);
 
-        $this->assertEquals('low', $low->risk_level);
-        $this->assertEquals('medium', $medium->risk_level);
-        $this->assertEquals('high', $high->risk_level);
-        $this->assertEquals('critical', $critical->risk_level);
+        $this->assertEquals('منخفض', $low->risk_level);
+        $this->assertEquals('متوسط', $medium->risk_level);
+        $this->assertEquals('مرتفع', $high->risk_level);
+        $this->assertEquals('حرج', $critical->risk_level);
     }
 
     public function test_trap_interaction_risk_color(): void
     {
-        $interaction = TrapInteraction::factory()->create(['risk_score' => 0.95]);
+        $interaction = TrapInteraction::factory()->create(['risk_score' => 80]);
         $this->assertEquals('danger', $interaction->risk_color);
     }
 
     public function test_trap_interaction_scope_high_risk(): void
     {
-        TrapInteraction::factory()->create(['risk_score' => 0.9]);
-        TrapInteraction::factory()->create(['risk_score' => 0.3]);
+        // Default threshold is 50.0
+        TrapInteraction::factory()->create(['risk_score' => 70]);
+        TrapInteraction::factory()->create(['risk_score' => 30]);
         $this->assertEquals(1, TrapInteraction::highRisk()->count());
+    }
+
+    public function test_trap_unique_interactions_count(): void
+    {
+        $trap = Trap::factory()->create();
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        TrapInteraction::factory()->create(['trap_id' => $trap->id, 'user_id' => $user1->id]);
+        TrapInteraction::factory()->create(['trap_id' => $trap->id, 'user_id' => $user2->id]);
+        $this->assertEquals(2, $trap->unique_interactions_count);
+    }
+
+    public function test_trap_average_risk_score(): void
+    {
+        $trap = Trap::factory()->create();
+        TrapInteraction::factory()->create(['trap_id' => $trap->id, 'risk_score' => 40]);
+        TrapInteraction::factory()->create(['trap_id' => $trap->id, 'risk_score' => 60]);
+        $this->assertEquals(50.0, $trap->average_risk_score);
     }
 }

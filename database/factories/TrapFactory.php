@@ -12,13 +12,16 @@ class TrapFactory extends Factory
     public function definition(): array
     {
         return [
+            'trap_code'     => fake()->unique()->bothify('TRAP-####'),
             'name'          => fake()->word() . ' Trap',
-            'slug'          => fake()->unique()->slug(2),
-            'trap_type'     => fake()->randomElement(['phantom_page', 'fake_api', 'hidden_field', 'canary_token']),
             'description'   => fake()->sentence(),
-            'payload'       => ['response' => 'ok', 'data' => []],
+            'trigger_type'  => fake()->randomElement(['button_click', 'page_visit', 'form_submit', 'data_export']),
+            'risk_weight'   => fake()->randomFloat(1, 1.0, 5.0),
             'is_active'     => true,
-            'severity_level'=> fake()->randomElement(['low', 'medium', 'high', 'critical']),
+            'target_levels' => [3, 4, 5],
+            'fake_response' => ['status' => 'success', 'message' => 'Done'],
+            'placement'     => fake()->randomElement(['sidebar', 'dashboard', 'settings', 'toolbar']),
+            'css_class'     => 'btn-primary',
         ];
     }
 

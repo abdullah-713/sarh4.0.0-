@@ -110,7 +110,6 @@ class LivewireComponentsTest extends TestCase
         $user = $this->createUserWithBranch();
         Circular::factory()->create([
             'created_by' => $user->id,
-            'is_published' => true,
             'published_at' => now()->subDay(),
         ]);
 

@@ -144,13 +144,14 @@ class CircularResource extends Resource
                     ->searchable()
                     ->limit(50),
 
-                Tables\Columns\BadgeColumn::make('priority')
+                Tables\Columns\TextColumn::make('priority')
                     ->label(__('circulars.priority'))
-                    ->colors([
-                        'gray'   => 'normal',
-                        'warning' => 'high',
-                        'danger'  => 'urgent',
-                    ])
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'urgent' => 'danger',
+                        'high'   => 'warning',
+                        default  => 'gray',
+                    })
                     ->formatStateUsing(fn (string $state) => __("circulars.priority_{$state}")),
 
                 Tables\Columns\TextColumn::make('target_scope')

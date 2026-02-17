@@ -6,6 +6,7 @@ return [
     'app_title'       => 'SarhIndex',
     'app_name'        => 'SarhIndex',
     'app_subtitle'    => 'HR Intelligence Platform',
+    'login_subtitle'  => 'Sign in to access the employee portal',
 
     // Navigation
     'dashboard'          => 'Dashboard',

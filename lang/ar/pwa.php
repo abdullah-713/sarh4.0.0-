@@ -1,9 +1,10 @@
 <?php
 
 return [
-    'app_title' => 'صَرْح الإتقان',
-    'app_name' => 'صَرْح',
+    'app_title' => 'مؤشر صرح',
+    'app_name' => 'مؤشر صرح',
     'app_subtitle' => 'منصة الموارد البشرية',
+    'login_subtitle' => 'سجّل دخولك للوصول إلى بوابة الموظفين',
     'dashboard' => 'لوحة التحكم',
     'nav_dashboard' => 'الرئيسية',
     'nav_messages' => 'الرسائل',

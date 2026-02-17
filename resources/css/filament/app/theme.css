@@ -222,6 +222,45 @@ body { -webkit-font-smoothing: antialiased; background: var(--tg-bg) !important;
     .fi-input, .fi-select { font-size: 16px !important; min-height: 44px !important; }
 }
 
+/* ── Password Reveal Button Fix ── */
+.fi-input-wrp [x-on\:click*="isPasswordRevealed"] svg,
+button[x-on\:click*="password"] svg,
+.fi-input-wrp button svg {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+}
+.fi-input-wrp button {
+    padding: 0.5rem !important;
+}
+
+/* ── Login Page ── */
+.fi-simple-page {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 100vh !important;
+    background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%) !important;
+}
+.fi-simple-main-ctn {
+    width: 100% !important;
+    max-width: 28rem !important;
+    padding: 1rem !important;
+}
+.fi-simple-main {
+    background: #FFFFFF !important;
+    border-radius: var(--tg-radius-lg) !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08) !important;
+    padding: 2rem !important;
+    border: 1px solid var(--tg-border) !important;
+}
+.dark .fi-simple-page {
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%) !important;
+}
+.dark .fi-simple-main {
+    background: #1F2937 !important;
+    border-color: #374151 !important;
+}
+
 /* ── Badges ── */
 .fi-badge {
     border-radius: 1rem !important;

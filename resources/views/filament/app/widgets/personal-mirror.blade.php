@@ -26,7 +26,7 @@
                 <div class="text-xs mt-1" style="color: #707579;">{{ __('pwa.late_days') }}</div>
             </div>
             <div class="bg-white dark:bg-gray-800 p-4 text-center">
-                <div class="text-2xl font-bold" style="color: #E53935;">{{ $totalLoss ?? '0 ر.س' }}</div>
+                <div class="text-2xl font-bold" style="color: #E53935;">{{ $totalLoss ?? ('0 ' . __('pwa.currency')) }}</div>
                 <div class="text-xs mt-1" style="color: #707579;">{{ __('pwa.total_loss') }}</div>
             </div>
             <div class="bg-white dark:bg-gray-800 p-4 text-center">

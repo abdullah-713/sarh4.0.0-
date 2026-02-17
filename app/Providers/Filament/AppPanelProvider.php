@@ -21,6 +21,8 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\HtmlString;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Models\Setting;
+use App\Http\Middleware\DetectLocale;
+use App\Http\Middleware\SuppressPortalErrors;
 
 /**
  * SarhIndex v1.9.0 — بوابة الموظفين /app
@@ -75,7 +77,7 @@ class AppPanelProvider extends PanelProvider
             ])
             ->font('Cairo')
             ->viteTheme('resources/css/filament/app/theme.css')
-            ->brandName(fn () => Setting::instance()->app_name . ' — بوابة الموظفين')
+            ->brandName(fn () => Setting::instance()->app_name . ' — ' . __('employee.portal_title'))
             ->brandLogo(fn () => Setting::instance()->logo_url)
             ->brandLogoHeight('2.5rem')
             ->favicon(fn () => Setting::instance()->favicon_url)
@@ -111,6 +113,8 @@ class AppPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                DetectLocale::class,
+                SuppressPortalErrors::class,
             ])
             ->authMiddleware([
                 Authenticate::class,
@@ -118,6 +122,10 @@ class AppPanelProvider extends PanelProvider
             ->renderHook(
                 PanelsRenderHook::BODY_END,
                 fn () => view('filament.app.partials.geolocation-script'),
+            )
+            ->renderHook(
+                PanelsRenderHook::BODY_END,
+                fn () => new HtmlString('<script>document.documentElement.lang="' . app()->getLocale() . '";document.documentElement.dir="' . (app()->getLocale() === 'ar' ? 'rtl' : 'ltr') . '";</script>'),
             )
             ->renderHook(
                 PanelsRenderHook::HEAD_END,

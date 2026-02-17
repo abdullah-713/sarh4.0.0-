@@ -26,13 +26,22 @@ class AttendanceResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-clock';
 
-    protected static ?string $navigationLabel = 'سجل الحضور';
+    protected static ?int $navigationSort = 2;
 
-    protected static ?string $modelLabel = 'سجل حضور';
+    public static function getNavigationLabel(): string
+    {
+        return __('employee.attendance_log');
+    }
 
-    protected static ?string $pluralModelLabel = 'سجل الحضور';
+    public static function getModelLabel(): string
+    {
+        return __('employee.attendance_record');
+    }
 
-    protected static ?int $navigationSort = 1;
+    public static function getPluralModelLabel(): string
+    {
+        return __('employee.attendance_log');
+    }
 
     protected static ?string $slug = 'my-attendance';
 

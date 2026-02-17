@@ -66,4 +66,23 @@ return [
     // Empty States
     'no_branches'            => 'No active branches to rank',
     'no_news'                => 'No news at the moment',
+
+    // Hints
+    'leaderboard_hint'       => 'A competitive ranking system that ranks branches from best to worst based on attendance, discipline, and absence scores.',
+    'scoring_legend_hint'    => 'Each branch starts with 1000 points. 5 points deducted per late check-in, 15 per absence. 20 bonus points per perfect employee.',
+    'level_legendary_hint'   => 'Highest competitive level (950+ points) — indicates near-perfect discipline with exceptional performance.',
+    'financial_loss_hint'    => 'Total financial cost of branch delays for the current month.',
+
+    // Score Adjustments
+    'score_adjustment_navigation' => 'Score Adjustments',
+    'score_adjustment_model'      => 'Score Adjustment',
+    'score_adjustment_plural'     => 'Score Adjustments',
+    'scope_hint'                  => 'Define the adjustment scope: applies to an entire branch, a single employee, or a specific department.',
+    'scope_branch_hint'           => 'The branch to which the score adjustment will be applied.',
+    'scope_user_hint'             => 'The employee to whom the score adjustment will be applied.',
+    'scope_department_hint'       => 'The department to which the score adjustment will be applied.',
+    'points_delta_hint'           => 'Number of points to add (positive) or deduct (negative) from the current balance.',
+    'value_delta_hint'            => 'Additional monetary adjustment linked to the score change (if any) — in SAR.',
+    'category_hint'               => 'Classification: manual (administrative decision), reward, disciplinary deduction, or error correction.',
+    'adjustment_reason_hint'      => 'Reason for the score adjustment — required for documentation and auditing.',
 ];

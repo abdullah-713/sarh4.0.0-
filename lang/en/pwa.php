@@ -146,4 +146,18 @@ return [
     // General
     'loading'            => 'Loading',
 
+    // Missing keys
+    'check_in_success'       => 'Check-in recorded successfully',
+    'check_out_success'      => 'Check-out recorded successfully',
+    'status_not_checked_in'  => 'Not checked in yet',
+    'inside_geofence'        => 'Within work zone',
+    'outside_geofence'       => 'Outside work zone',
+    'meters'                 => 'm',
+
+    // Hints
+    'attendance_title_hint'  => 'GPS-based check-in & check-out — you must be within your branch geofence.',
+    'gamification_title_hint' => 'Points & badges: every on-time attendance day earns you points and boosts your streak — reflected in your branch ranking.',
+    'financial_title_hint'   => 'Your personal financial indicators: delay cost and on-time rate this month.',
+    'wb_title_hint'          => 'Encrypted and anonymous reporting system — no identifying data is recorded about you.',
+
 ];

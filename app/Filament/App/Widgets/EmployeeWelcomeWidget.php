@@ -33,8 +33,10 @@ class EmployeeWelcomeWidget extends Widget
         $checkedOut = (bool) $todayLog?->check_out_at;
 
         return [
-            'userName'    => $user->name_ar ?? $user->name ?? 'موظف',
-            'todayDate'   => now()->translatedFormat('l، j F Y'),
+            'userName'    => app()->getLocale() === 'ar'
+                ? ($user->name_ar ?? $user->name ?? __('employee.employee'))
+                : ($user->name ?? $user->name_ar ?? __('employee.employee')),
+            'todayDate'   => now()->translatedFormat(app()->getLocale() === 'ar' ? 'l، j F Y' : 'l, F j, Y'),
             'checkedIn'   => $checkedIn,
             'checkedOut'  => $checkedOut,
             'checkInTime' => $todayLog?->check_in_at?->format('H:i'),

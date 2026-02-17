@@ -15,7 +15,7 @@ class WhistleblowerPage extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-shield-exclamation';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 5;
 
     protected static string $view = 'filament.app.pages.whistleblower';
 

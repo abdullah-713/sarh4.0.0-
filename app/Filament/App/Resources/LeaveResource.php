@@ -22,13 +22,22 @@ class LeaveResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-calendar';
 
-    protected static ?string $navigationLabel = 'طلبات الإجازة';
+    protected static ?int $navigationSort = 4;
 
-    protected static ?string $modelLabel = 'طلب إجازة';
+    public static function getNavigationLabel(): string
+    {
+        return __('employee.leave_requests');
+    }
 
-    protected static ?string $pluralModelLabel = 'طلبات الإجازة';
+    public static function getModelLabel(): string
+    {
+        return __('employee.leave_request');
+    }
 
-    protected static ?int $navigationSort = 2;
+    public static function getPluralModelLabel(): string
+    {
+        return __('employee.leave_requests');
+    }
 
     protected static ?string $slug = 'my-leaves';
 

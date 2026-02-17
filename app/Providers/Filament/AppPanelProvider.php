@@ -80,7 +80,7 @@ class AppPanelProvider extends PanelProvider
             ->brandLogoHeight('2.5rem')
             ->favicon(fn () => Setting::instance()->favicon_url)
             ->darkMode(true)
-            ->sidebarCollapsibleOnDesktop()
+            ->topNavigation()
             ->maxContentWidth('full')
             ->discoverResources(
                 in: app_path('Filament/App/Resources'),

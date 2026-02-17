@@ -28,8 +28,6 @@ class LeaveResource extends Resource
 
     protected static ?string $pluralModelLabel = 'طلبات الإجازة';
 
-    protected static ?string $navigationGroup = 'الخدمات الذاتية';
-
     protected static ?int $navigationSort = 2;
 
     protected static ?string $slug = 'my-leaves';

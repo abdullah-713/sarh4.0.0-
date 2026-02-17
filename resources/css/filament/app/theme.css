@@ -44,57 +44,7 @@ body { -webkit-font-smoothing: antialiased; background: var(--tg-bg) !important;
 }
 .fi-topbar nav { background: transparent !important; }
 
-/* ── Sidebar ── */
-.fi-sidebar {
-    background: var(--tg-sidebar) !important;
-    border-left: none !important;
-    border-right: 1px solid var(--tg-border) !important;
-    box-shadow: none;
-}
-[dir="rtl"] .fi-sidebar {
-    border-right: none !important;
-    border-left: 1px solid var(--tg-border) !important;
-}
-.fi-sidebar-header {
-    padding: 1rem 1rem !important;
-    border-bottom: 1px solid var(--tg-border) !important;
-}
-
-.fi-sidebar-item { margin: 1px 0.5rem; }
-.fi-sidebar-item-button {
-    border-radius: 0.5rem !important;
-    padding: 0.6rem 0.75rem !important;
-    transition: background 0.15s ease !important;
-}
-.fi-sidebar-item-button:hover {
-    background: #F0F2F5 !important;
-}
-.fi-sidebar-item-button.fi-active {
-    background: rgba(42, 171, 238, 0.08) !important;
-}
-.fi-sidebar-item-label {
-    color: #000000 !important;
-    font-weight: 500 !important;
-    font-size: 0.9rem !important;
-}
-.fi-sidebar-item-button.fi-active .fi-sidebar-item-label {
-    color: var(--tg-blue) !important;
-    font-weight: 700 !important;
-}
-.fi-sidebar-item-icon {
-    color: var(--tg-text-secondary) !important;
-    transition: color 0.15s ease;
-}
-.fi-sidebar-item-button:hover .fi-sidebar-item-icon { color: var(--tg-blue) !important; }
-.fi-sidebar-item-button.fi-active .fi-sidebar-item-icon { color: var(--tg-blue) !important; }
-.fi-sidebar-group-label {
-    color: var(--tg-text-secondary) !important;
-    font-weight: 600 !important;
-    font-size: 0.7rem !important;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    padding: 0.6rem 0.9rem 0.3rem !important;
-}
+/* ── Sidebar (hidden — using bottom tab bar) ── */
 
 /* ── Main Content ── */
 .fi-main { background: var(--tg-bg) !important; }
@@ -180,44 +130,145 @@ body { -webkit-font-smoothing: antialiased; background: var(--tg-bg) !important;
 .fi-ta-row:hover { background: #F7F8FA !important; }
 .fi-ta-cell { color: #000000 !important; padding: 0.75rem 0.85rem !important; }
 
-/* ── Mobile Navigation ── */
+/* ── Bottom Tab Bar Navigation ── */
+
+/* Move topbar nav items to fixed bottom bar */
+.fi-topbar-with-navigation nav > ul {
+    display: flex !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 50 !important;
+    background: var(--tg-header) !important;
+    border-top: 1px solid var(--tg-border) !important;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.06);
+    margin: 0 !important;
+    padding: 0.35rem 0 !important;
+    padding-bottom: calc(0.35rem + env(safe-area-inset-bottom)) !important;
+    justify-content: space-around !important;
+    align-items: stretch !important;
+    gap: 0 !important;
+    height: auto !important;
+}
+
+/* Each tab item takes equal space */
+.fi-topbar-item {
+    flex: 1 !important;
+    display: flex !important;
+    justify-content: center !important;
+    list-style: none !important;
+}
+
+/* Tab button — vertical layout: icon on top, label below */
+.fi-topbar-item-button {
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0.3rem 0.25rem !important;
+    gap: 0.1rem !important;
+    border-radius: 0.5rem !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    background: transparent !important;
+    transition: all 0.15s ease !important;
+}
+.fi-topbar-item-button:hover {
+    background: rgba(42, 171, 238, 0.06) !important;
+}
+
+/* Active tab indicator */
+.fi-topbar-item.fi-active .fi-topbar-item-button {
+    background: rgba(42, 171, 238, 0.08) !important;
+}
+
+/* Tab icon */
+.fi-topbar-item-icon {
+    width: 1.4rem !important;
+    height: 1.4rem !important;
+    color: var(--tg-text-secondary) !important;
+    transition: color 0.15s ease !important;
+}
+.fi-topbar-item.fi-active .fi-topbar-item-icon {
+    color: var(--tg-blue) !important;
+}
+
+/* Tab label */
+.fi-topbar-item-label {
+    font-size: 0.6rem !important;
+    line-height: 1.1 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 80px !important;
+    text-align: center !important;
+    color: var(--tg-text-secondary) !important;
+    font-weight: 600 !important;
+}
+.fi-topbar-item.fi-active .fi-topbar-item-label {
+    color: var(--tg-blue) !important;
+    font-weight: 700 !important;
+}
+
+/* Hide hamburger / sidebar toggle buttons */
+.fi-topbar-open-sidebar-btn,
+.fi-topbar-close-sidebar-btn {
+    display: none !important;
+}
+
+/* Hide the sidebar entirely (it was the mobile overlay) */
+.fi-main-sidebar {
+    display: none !important;
+}
+.fi-sidebar-close-overlay {
+    display: none !important;
+}
+
+/* Main content needs bottom padding for the tab bar */
+.fi-main {
+    padding-bottom: 80px !important;
+}
+
+/* Simplify the topbar — just show logo + user menu */
+.fi-topbar nav {
+    height: 3.5rem !important;
+}
+
+/* Dark mode for bottom tab bar */
+.dark .fi-topbar-with-navigation nav > ul {
+    background: #1F2937 !important;
+    border-top-color: #2D3748 !important;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+}
+.dark .fi-topbar-item-icon {
+    color: #9CA3AF !important;
+}
+.dark .fi-topbar-item.fi-active .fi-topbar-item-icon {
+    color: var(--tg-blue-light) !important;
+}
+.dark .fi-topbar-item-label {
+    color: #9CA3AF !important;
+}
+.dark .fi-topbar-item.fi-active .fi-topbar-item-label {
+    color: var(--tg-blue-light) !important;
+}
+.dark .fi-topbar-item-button:hover {
+    background: rgba(42, 171, 238, 0.1) !important;
+}
+
+/* Mobile touch targets */
 @media (max-width: 768px) {
-    .fi-sidebar {
-        position: fixed !important;
-        bottom: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        top: auto !important;
-        width: 100% !important;
-        height: auto !important;
-        border-radius: 0 !important;
-        border-right: none !important;
-        border-left: none !important;
-        border-top: 1px solid var(--tg-border) !important;
-        padding-bottom: env(safe-area-inset-bottom);
-        z-index: 40;
-        box-shadow: 0 -1px 4px rgba(0,0,0,0.05);
+    .fi-topbar-item-button {
+        padding: 0.4rem 0.25rem !important;
+        min-height: 44px !important;
     }
-    .fi-sidebar-header { display: none !important; }
-    .fi-sidebar-nav {
-        display: flex !important;
-        flex-direction: row !important;
-        justify-content: space-around !important;
-        padding: 0.4rem 0.3rem !important;
-        overflow-x: auto;
+    .fi-topbar-item-icon {
+        width: 1.5rem !important;
+        height: 1.5rem !important;
     }
-    .fi-sidebar-item { margin: 0 0.15rem !important; flex: 0 0 auto; }
-    .fi-sidebar-item-button {
-        flex-direction: column !important;
-        align-items: center !important;
-        padding: 0.35rem 0.5rem !important;
-        min-width: 60px;
+    .fi-topbar-item-label {
+        font-size: 0.55rem !important;
     }
-    .fi-sidebar-item-icon { margin: 0 0 2px 0 !important; }
-    .fi-sidebar-item-label { font-size: 0.65rem !important; text-align: center; }
-    .fi-sidebar-group-label { display: none !important; }
-    .fi-sidebar-group-items { display: flex !important; flex-direction: row !important; }
-    .fi-main { padding-bottom: 80px !important; }
     .fi-btn { min-height: 44px !important; }
     .fi-input, .fi-select { font-size: 16px !important; min-height: 44px !important; }
 }
@@ -298,10 +349,6 @@ button[x-on\:click*="password"] svg,
 /* ── Dark Mode ── */
 .dark body { background: var(--tg-bg-dark) !important; }
 .dark .fi-topbar { background: #1F2937 !important; border-bottom-color: #2D3748 !important; }
-.dark .fi-sidebar { background: var(--tg-sidebar-dark) !important; border-color: #1A2332 !important; }
-.dark .fi-sidebar-item-button:hover { background: rgba(42, 171, 238, 0.08) !important; }
-.dark .fi-sidebar-item-button.fi-active { background: rgba(42, 171, 238, 0.12) !important; }
-.dark .fi-sidebar-item-label { color: #E1E3E6 !important; }
 .dark .fi-main { background: var(--tg-bg-dark) !important; }
 .dark .fi-section, .dark .fi-card, .dark .fi-widget { background: #1F2937 !important; border-color: #2D3748 !important; }
 .dark .fi-section-header-heading, .dark .fi-card-heading { color: #E1E3E6 !important; }

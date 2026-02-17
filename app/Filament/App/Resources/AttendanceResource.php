@@ -32,8 +32,6 @@ class AttendanceResource extends Resource
 
     protected static ?string $pluralModelLabel = 'سجل الحضور';
 
-    protected static ?string $navigationGroup = 'الحضور والانصراف';
-
     protected static ?int $navigationSort = 1;
 
     protected static ?string $slug = 'my-attendance';

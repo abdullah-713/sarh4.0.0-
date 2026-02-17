@@ -1,23 +1,19 @@
-{{-- SARH v2.0 — Branch Progress Hero Card --}}
-<div class="overflow-hidden rounded-2xl shadow-lg" style="border: 1px solid rgba(255, 140, 0, 0.15);">
+{{-- Branch Progress Hero Card (Telegram Style) --}}
+<div class="overflow-hidden rounded-xl" style="border: 1px solid #E6E9ED;">
     {{-- Gradient Hero --}}
-    <div class="relative overflow-hidden px-6 py-6" style="background: linear-gradient(135deg, #FF8C00, #fb923c, #f59e0b);">
-        {{-- Decorative --}}
-        <div class="absolute top-0 right-0 w-40 h-40 rounded-full" style="background: rgba(255,255,255,0.1); transform: translate(30%, -30%);"></div>
-        <div class="absolute bottom-0 left-0 w-28 h-28 rounded-full" style="background: rgba(255,255,255,0.07); transform: translate(-20%, 20%);"></div>
+    <div class="relative overflow-hidden px-5 py-5" style="background: linear-gradient(135deg, #2AABEE, #229ED9, #1C96CC);">
+        <div class="absolute top-0 right-0 w-32 h-32 rounded-full" style="background: rgba(255,255,255,0.08); transform: translate(30%, -30%);"></div>
 
         @if($branchName)
         <div class="relative z-10">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm font-medium" style="color: rgba(255,255,255,0.85);">
-                        📊 إحصائيات الأسبوع · {{ $periodLabel }}
-                    </p>
-                    <h2 class="text-2xl font-bold text-white mt-1">{{ $branchName }}</h2>
-                    <p class="text-sm mt-1" style="color: rgba(255,255,255,0.75);">{{ $branchEmployees }} {{ __('competition.employees') }}</p>
+                    <p class="text-sm font-medium" style="color: rgba(255,255,255,0.8);">📊 إحصائيات الأسبوع · {{ $periodLabel }}</p>
+                    <h2 class="text-xl font-bold text-white mt-1">{{ $branchName }}</h2>
+                    <p class="text-sm mt-0.5" style="color: rgba(255,255,255,0.7);">{{ $branchEmployees }} {{ __('competition.employees') }}</p>
                 </div>
                 <div class="text-center">
-                    <div class="text-5xl drop-shadow-lg">
+                    <div class="text-4xl">
                         @switch($currentLevel)
                             @case('legendary') 👑 @break
                             @case('diamond')   💎 @break
@@ -27,27 +23,27 @@
                             @default           🏁
                         @endswitch
                     </div>
-                    <div class="text-sm font-bold text-white mt-1">{{ __('competition.level_' . $currentLevel) }}</div>
+                    <div class="text-xs font-bold text-white mt-0.5">{{ __('competition.level_' . $currentLevel) }}</div>
                 </div>
             </div>
 
             {{-- Score & Progress --}}
-            <div class="mt-5">
-                <div class="flex justify-between items-center mb-2">
-                    <span class="text-white font-bold text-lg">{{ number_format($currentScore) }} نقطة</span>
+            <div class="mt-4">
+                <div class="flex justify-between items-center mb-1.5">
+                    <span class="text-white font-bold">{{ number_format($currentScore) }} نقطة</span>
                     @if($nextLevel)
-                        <span class="text-sm" style="color: rgba(255,255,255,0.75);">{{ __('competition.level_' . $nextLevel) }} — {{ number_format($nextLevelThreshold) }}</span>
+                        <span class="text-sm" style="color: rgba(255,255,255,0.7);">{{ __('competition.level_' . $nextLevel) }} — {{ number_format($nextLevelThreshold) }}</span>
                     @else
                         <span class="text-white font-bold text-sm">🏆 {{ __('pwa.max_level') }}</span>
                     @endif
                 </div>
-                <div class="h-3 rounded-full overflow-hidden" style="background: rgba(255,255,255,0.2);">
-                    <div class="h-full rounded-full transition-all duration-1000 ease-out" style="width: {{ $progressPercent }}%; background: white;"></div>
+                <div class="h-2 rounded-full overflow-hidden" style="background: rgba(255,255,255,0.2);">
+                    <div class="h-full rounded-full transition-all duration-700" style="width: {{ $progressPercent }}%; background: white;"></div>
                 </div>
             </div>
         </div>
         @else
-        <div class="relative z-10 text-center py-4">
+        <div class="relative z-10 text-center py-3">
             <p class="text-sm" style="color: rgba(255,255,255,0.8);">{{ __('pwa.no_branch_assigned') }}</p>
         </div>
         @endif
@@ -55,26 +51,22 @@
 
     {{-- Stats Grid --}}
     @if($branchName)
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 p-5 bg-white dark:bg-gray-900">
-        <div class="text-center p-3 rounded-xl bg-gradient-to-br from-green-50 to-emerald-50 dark:from-emerald-950/30 dark:to-green-950/30 border border-green-200 dark:border-emerald-800/30 animate-scaleIn" style="animation-delay: 0.15s">
-            <div class="text-2xl font-bold {{ $attendanceRate >= 90 ? 'text-emerald-600' : ($attendanceRate >= 70 ? 'text-amber-500' : 'text-red-500') }}">
-                {{ $attendanceRate }}%
-            </div>
-            <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 font-medium">{{ __('pwa.branch_attendance_rate') }}</div>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 bg-white">
+        <div class="text-center p-3 rounded-lg" style="background: #F7F8FA;">
+            <div class="text-xl font-bold" style="color: {{ $attendanceRate >= 90 ? '#4DCD5E' : ($attendanceRate >= 70 ? '#FF9800' : '#E53935') }};">{{ $attendanceRate }}%</div>
+            <div class="text-[10px] mt-0.5 font-medium" style="color: #707579;">{{ __('pwa.branch_attendance_rate') }}</div>
         </div>
-        <div class="text-center p-3 rounded-xl bg-gradient-to-br from-red-50 to-rose-50 dark:from-red-950/30 dark:to-rose-950/30 border border-red-200 dark:border-red-800/30 animate-scaleIn" style="animation-delay: 0.2s">
-            <div class="text-2xl font-bold {{ $branchDelayCost > 0 ? 'text-red-500' : 'text-emerald-600' }}">
-                {{ number_format($branchDelayCost, 0) }}
-            </div>
-            <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 font-medium">{{ __('competition.financial_loss') }}</div>
+        <div class="text-center p-3 rounded-lg" style="background: #F7F8FA;">
+            <div class="text-xl font-bold" style="color: {{ $branchDelayCost > 0 ? '#E53935' : '#4DCD5E' }};">{{ number_format($branchDelayCost, 0) }}</div>
+            <div class="text-[10px] mt-0.5 font-medium" style="color: #707579;">{{ __('competition.financial_loss') }}</div>
         </div>
-        <div class="text-center p-3 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 border border-blue-200 dark:border-blue-800/30 animate-scaleIn" style="animation-delay: 0.25s">
-            <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">{{ $perfectEmployees }}</div>
-            <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 font-medium">{{ __('competition.perfect_employees') }}</div>
+        <div class="text-center p-3 rounded-lg" style="background: #F7F8FA;">
+            <div class="text-xl font-bold" style="color: #2AABEE;">{{ $perfectEmployees }}</div>
+            <div class="text-[10px] mt-0.5 font-medium" style="color: #707579;">{{ __('competition.perfect_employees') }}</div>
         </div>
-        <div class="text-center p-3 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 border border-amber-200 dark:border-amber-800/30 animate-scaleIn" style="animation-delay: 0.3s">
-            <div class="text-2xl font-bold text-amber-500">{{ $lateCount }}</div>
-            <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 font-medium">{{ __('competition.late_checkins') }}</div>
+        <div class="text-center p-3 rounded-lg" style="background: #F7F8FA;">
+            <div class="text-xl font-bold" style="color: #FF9800;">{{ $lateCount }}</div>
+            <div class="text-[10px] mt-0.5 font-medium" style="color: #707579;">{{ __('competition.late_checkins') }}</div>
         </div>
     </div>
     @endif

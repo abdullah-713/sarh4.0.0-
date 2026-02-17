@@ -1,34 +1,43 @@
-<div class="card">
-    <div class="card-header flex items-center gap-2">
-        <svg class="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-        </svg>
-        {{ __('pwa.competition_title') }}
+<div class="bg-white rounded-xl p-5" style="border: 1px solid #E6E9ED;">
+    <div class="flex items-center gap-2 mb-4">
+        <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: #EBF7FE;">
+            <svg class="w-4 h-4" style="color: #2AABEE;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+        </div>
+        <span class="text-sm font-bold text-gray-900">{{ __('pwa.competition_title') }}</span>
     </div>
 
-    {{-- My Branch Rank --}}
+    {{-- My Branch --}}
     @if($myBranch)
-    <div class="mb-4 p-3 rounded-xl border-2 {{ match($myBranchLevel) {
-        'legendary' => 'border-purple-400 bg-purple-50',
-        'diamond'   => 'border-cyan-400 bg-cyan-50',
-        'gold'      => 'border-yellow-400 bg-yellow-50',
-        'silver'    => 'border-gray-300 bg-gray-50',
-        'bronze'    => 'border-orange-400 bg-orange-50',
-        default     => 'border-gray-200 bg-gray-50',
-    } }}">
+    <div class="mb-4 p-3 rounded-lg" style="border: 1.5px solid {{ match($myBranchLevel) {
+        'legendary' => '#7B68EE',
+        'diamond'   => '#4FC3F7',
+        'gold'      => '#FFD54F',
+        'silver'    => '#B0BEC5',
+        'bronze'    => '#FF9800',
+        default     => '#E6E9ED',
+    } }}; background: {{ match($myBranchLevel) {
+        'legendary' => '#F3F0FF',
+        'diamond'   => '#E1F5FE',
+        'gold'      => '#FFFDE7',
+        'silver'    => '#F5F5F5',
+        'bronze'    => '#FFF3E0',
+        default     => '#F7F8FA',
+    } }};">
         <div class="flex items-center justify-between mb-2">
             <div class="flex items-center gap-2">
-                <span class="text-2xl font-bold {{ match($myBranchLevel) {
-                    'legendary' => 'text-purple-600',
-                    'diamond'   => 'text-cyan-600',
-                    'gold'      => 'text-yellow-600',
-                    'silver'    => 'text-gray-500',
-                    'bronze'    => 'text-orange-600',
-                    default     => 'text-gray-400',
-                } }}">#{{ $myBranchRank }}</span>
+                <span class="text-xl font-bold" style="color: {{ match($myBranchLevel) {
+                    'legendary' => '#7B68EE',
+                    'diamond'   => '#039BE5',
+                    'gold'      => '#F9A825',
+                    'silver'    => '#78909C',
+                    'bronze'    => '#E65100',
+                    default     => '#707579',
+                } }};">#{{ $myBranchRank }}</span>
                 <div>
-                    <div class="font-semibold text-gray-800">{{ $myBranch['name'] }}</div>
-                    <div class="text-xs text-gray-500">{{ __('pwa.your_branch') }}</div>
+                    <div class="font-semibold text-gray-900 text-sm">{{ $myBranch['name'] }}</div>
+                    <div class="text-[11px]" style="color: #707579;">{{ __('pwa.your_branch') }}</div>
                 </div>
             </div>
             <div class="text-center">
@@ -42,53 +51,47 @@
                         @default           🏁
                     @endswitch
                 </div>
-                <div class="text-xs font-medium {{ match($myBranchLevel) {
-                    'legendary' => 'text-purple-600',
-                    'diamond'   => 'text-cyan-600',
-                    'gold'      => 'text-yellow-600',
-                    'silver'    => 'text-gray-500',
-                    'bronze'    => 'text-orange-600',
-                    default     => 'text-gray-400',
-                } }}">{{ __('competition.level_' . $myBranchLevel) }}</div>
+                <div class="text-[10px] font-semibold" style="color: #707579;">{{ __('competition.level_' . $myBranchLevel) }}</div>
             </div>
         </div>
         <div class="grid grid-cols-3 gap-2 text-center">
             <div>
-                <div class="text-sm font-bold text-gray-800">{{ number_format($myBranch['score']) }}</div>
-                <div class="text-xs text-gray-500">{{ __('competition.score') }}</div>
+                <div class="text-sm font-bold text-gray-900">{{ number_format($myBranch['score']) }}</div>
+                <div class="text-[10px]" style="color: #707579;">{{ __('competition.score') }}</div>
             </div>
             <div>
-                <div class="text-sm font-bold text-gray-800">{{ $myBranch['perfect_employees'] }}</div>
-                <div class="text-xs text-gray-500">{{ __('competition.perfect_employees') }}</div>
+                <div class="text-sm font-bold text-gray-900">{{ $myBranch['perfect_employees'] }}</div>
+                <div class="text-[10px]" style="color: #707579;">{{ __('competition.perfect_employees') }}</div>
             </div>
             <div>
-                <div class="text-sm font-bold {{ $myBranch['financial_loss'] > 0 ? 'text-red-600' : 'text-emerald-600' }}">
+                <div class="text-sm font-bold" style="color: {{ $myBranch['financial_loss'] > 0 ? '#E53935' : '#4DCD5E' }};">
                     {{ number_format($myBranch['financial_loss'], 0) }}
                 </div>
-                <div class="text-xs text-gray-500">{{ __('competition.financial_loss') }} ({{ __('competition.sar') }})</div>
+                <div class="text-[10px]" style="color: #707579;">{{ __('competition.financial_loss') }} ({{ __('competition.sar') }})</div>
             </div>
         </div>
     </div>
     @endif
 
-    {{-- Top 3 Branches --}}
+    {{-- Top Branches --}}
     <div>
-        <h4 class="text-xs font-medium text-gray-500 uppercase mb-2">{{ __('pwa.top_branches') }}</h4>
-        <div class="space-y-2">
+        <h4 class="text-[11px] font-semibold uppercase mb-2" style="color: #707579;">{{ __('pwa.top_branches') }}</h4>
+        <div class="space-y-1.5">
             @foreach($topBranches as $index => $branch)
-                <div class="flex items-center justify-between p-2 rounded-lg {{ $myBranch && $branch['id'] === $myBranch['id'] ? 'bg-emerald-50 border border-emerald-200' : 'bg-gray-50' }}">
+                <div class="flex items-center justify-between p-2 rounded-lg"
+                     style="background: {{ $myBranch && $branch['id'] === $myBranch['id'] ? '#EBF7FE' : '#F7F8FA' }};
+                            {{ $myBranch && $branch['id'] === $myBranch['id'] ? 'border: 1px solid #D6EFFD;' : '' }}">
                     <div class="flex items-center gap-2">
-                        <span class="w-6 h-6 flex items-center justify-center rounded-full text-xs font-bold {{ match($index) {
-                            0 => 'bg-yellow-100 text-yellow-700',
-                            1 => 'bg-gray-100 text-gray-600',
-                            2 => 'bg-orange-100 text-orange-700',
-                            default => 'bg-gray-100 text-gray-500',
-                        } }}">{{ $index + 1 }}</span>
-                        <span class="text-sm font-medium text-gray-800">{{ $branch['name'] }}</span>
+                        <span class="w-6 h-6 flex items-center justify-center rounded-full text-xs font-bold"
+                              style="background: {{ match($index) { 0 => '#FFF3E0', 1 => '#F5F5F5', 2 => '#FBE9E7', default => '#F7F8FA' } }};
+                                     color: {{ match($index) { 0 => '#F9A825', 1 => '#78909C', 2 => '#E65100', default =>  '#707579' } }};">
+                            {{ $index + 1 }}
+                        </span>
+                        <span class="text-sm font-medium text-gray-900">{{ $branch['name'] }}</span>
                     </div>
-                    <div class="flex items-center gap-3 text-xs text-gray-500">
+                    <div class="flex items-center gap-3 text-xs" style="color: #707579;">
                         <span>{{ number_format($branch['score']) }} {{ __('competition.score') }}</span>
-                        <span class="{{ $branch['financial_loss'] > 0 ? 'text-red-500' : 'text-emerald-500' }}">
+                        <span style="color: {{ $branch['financial_loss'] > 0 ? '#E53935' : '#4DCD5E' }};">
                             {{ number_format($branch['financial_loss'], 0) }} {{ __('competition.sar') }}
                         </span>
                     </div>
@@ -98,6 +101,6 @@
     </div>
 
     @if($totalBranches === 0)
-        <p class="text-sm text-gray-400 text-center py-4">{{ __('competition.no_branches') }}</p>
+        <p class="text-sm text-center py-4" style="color: #A0A4A8;">{{ __('competition.no_branches') }}</p>
     @endif
 </div>

@@ -1,39 +1,32 @@
-{{-- SARH v1.9.0 — ويدجت الترحيب ببوابة الموظفين --}}
 <x-filament-widgets::widget>
-    <x-filament::section>
-        <div class="flex items-center justify-between gap-x-4" dir="rtl">
-            <div class="flex-1">
-                <h2 class="text-xl font-bold text-gray-900 dark:text-white" style="font-family: 'Cairo', sans-serif;">
-                    بوابة الموظفين — نظام سهر
-                </h2>
-                <p class="mt-2 text-sm text-gray-600 dark:text-gray-400" style="font-family: 'Cairo', sans-serif;">
-                    {{ $todayDate }}
-                </p>
-
-                <div class="mt-4 flex flex-wrap gap-3">
-                    @if ($checkedIn)
-                        <x-filament::badge color="success" icon="heroicon-m-check-circle">
-                            تم تسجيل الحضور ({{ $checkInTime }})
-                        </x-filament::badge>
-                    @else
-                        <x-filament::badge color="danger" icon="heroicon-m-x-circle">
-                            لم يتم تسجيل الحضور بعد
-                        </x-filament::badge>
-                    @endif
-
-                    @if ($checkedOut)
-                        <x-filament::badge color="info" icon="heroicon-m-arrow-right-on-rectangle">
-                            تم تسجيل الانصراف
-                        </x-filament::badge>
-                    @endif
+    <div class="bg-white dark:bg-gray-800 rounded-xl p-5" style="border: 1px solid #E6E9ED;">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg" style="background: #2AABEE;">
+                    {{ mb_substr(auth()->user()->name ?? '', 0, 1) }}
+                </div>
+                <div>
+                    <h2 class="text-base font-bold text-gray-900 dark:text-white">{{ __('pwa.welcome') }}، {{ auth()->user()->name ?? '' }}</h2>
+                    <p class="text-sm" style="color: #707579;">{{ now()->locale('ar')->translatedFormat('l، j F Y') }}</p>
                 </div>
             </div>
-            <div class="hidden sm:flex flex-col items-center">
-                <x-heroicon-o-user-circle class="h-16 w-16 text-primary-500" />
-                <span class="mt-1 text-xs text-gray-500 dark:text-gray-400" style="font-family: 'Cairo', sans-serif;">
-                    {{ $userName }}
-                </span>
+            <div class="text-left">
+                @if($checkedIn ?? false)
+                    <span class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-bold text-white" style="background: #4DCD5E;">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        {{ __('pwa.checked_in') }}
+                    </span>
+                @else
+                    <span class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-bold" style="background: #FFF3E0; color: #E65100;">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        {{ __('pwa.not_checked_in') }}
+                    </span>
+                @endif
             </div>
         </div>
-    </x-filament::section>
+    </div>
 </x-filament-widgets::widget>

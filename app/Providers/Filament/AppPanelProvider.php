@@ -41,19 +41,19 @@ class AppPanelProvider extends PanelProvider
             ->login(CustomLogin::class)
             ->passwordReset()
             ->colors([
-                // SARH v4.2.2: Orange + Blue Corporate Brand
+                // Telegram Blue Brand
                 'primary' => [
-                    50  => '#FFF7ED',
-                    100 => '#FFEDD5',
-                    200 => '#FED7AA',
-                    300 => '#FDBA74',
-                    400 => '#FB923C',
-                    500 => '#F97316',
-                    600 => '#EA580C',
-                    700 => '#C2410C',
-                    800 => '#9A3412',
-                    900 => '#7C2D12',
-                    950 => '#431407',
+                    50  => '#EBF7FE',
+                    100 => '#D6EFFD',
+                    200 => '#ADDFFB',
+                    300 => '#84CFF9',
+                    400 => '#5BBFF7',
+                    500 => '#2AABEE',
+                    600 => '#229ED9',
+                    700 => '#1C96CC',
+                    800 => '#167EB0',
+                    900 => '#0D5E8A',
+                    950 => '#073D5C',
                 ],
                 'danger'  => Color::Rose,
                 'warning' => Color::Amber,

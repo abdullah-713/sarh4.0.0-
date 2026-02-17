@@ -1,33 +1,27 @@
 <x-filament-panels::page>
     <div class="space-y-6">
-        {{-- Hero: Personal Mirror (المرآة الشخصية) --}}
-        <div class="animate-fadeInUp">
-            @livewire(\App\Filament\App\Widgets\PersonalMirrorWidget::class)
+        {{-- Personal Mirror --}}
+        @livewire(\App\Filament\App\Widgets\PersonalMirrorWidget::class)
+        
+        {{-- Branch Progress --}}
+        @livewire(\App\Livewire\BranchProgressWidget::class)
+        
+        {{-- Quick Attendance --}}
+        @livewire(\App\Livewire\AttendanceWidget::class)
+        
+        {{-- Stats Grid --}}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            @livewire(\App\Livewire\AttendanceStatsWidget::class)
+            @livewire(\App\Livewire\FinancialWidget::class)
         </div>
 
-        {{-- Hero: Branch Progress Widget (Weekly Stats) --}}
-        <div class="animate-fadeInUp" style="animation-delay: 0.05s">
-            <livewire:branch-progress-widget />
+        {{-- Gamification --}}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            @livewire(\App\Livewire\GamificationWidget::class)
+            @livewire(\App\Livewire\CompetitionWidget::class)
         </div>
 
-        {{-- Row 2: Attendance --}}
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
-            <div class="animate-fadeInUp" style="animation-delay: 0.1s">
-                <livewire:attendance-widget />
-            </div>
-            <div class="animate-fadeInUp" style="animation-delay: 0.15s">
-                <livewire:attendance-stats-widget />
-            </div>
-        </div>
-
-        {{-- Row 3: Gamification + Circulars --}}
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
-            <div class="animate-fadeInUp" style="animation-delay: 0.2s">
-                <livewire:gamification-widget />
-            </div>
-            <div class="animate-fadeInUp" style="animation-delay: 0.25s">
-                <livewire:circulars-widget />
-            </div>
-        </div>
+        {{-- Circulars --}}
+        @livewire(\App\Livewire\CircularsWidget::class)
     </div>
 </x-filament-panels::page>

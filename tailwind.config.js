@@ -10,43 +10,42 @@ export default {
         './resources/**/*.blade.php',
         './resources/**/*.js',
         './resources/**/*.vue',
-        // Filament panel views & components
         './app/Filament/**/*.php',
         './vendor/filament/**/*.blade.php',
     ],
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Tajawal', ...defaultTheme.fontFamily.sans],
+                sans: ['Cairo', ...defaultTheme.fontFamily.sans],
             },
             colors: {
-                // Brand Orange (Primary)
-                'brand-orange': {
-                    50:  '#FFF7ED',
-                    100: '#FFEDD5',
-                    200: '#FED7AA',
-                    300: '#FDBA74',
-                    400: '#FB923C',
-                    500: '#F97316',
-                    600: '#EA580C',
-                    700: '#C2410C',
-                    800: '#9A3412',
-                    900: '#7C2D12',
-                    950: '#431407',
+                // Telegram Blue (Primary)
+                'tg-blue': {
+                    50:  '#EBF7FE',
+                    100: '#D6EFFD',
+                    200: '#ADDFFB',
+                    300: '#84CFF9',
+                    400: '#5BBFF7',
+                    500: '#2AABEE',
+                    600: '#229ED9',
+                    700: '#1C96CC',
+                    800: '#167EB0',
+                    900: '#0D5E8A',
+                    950: '#073D5C',
                 },
-                // Brand Blue (Secondary)
-                'brand-blue': {
-                    50:  '#EFF6FF',
-                    100: '#DBEAFE',
-                    200: '#BFDBFE',
-                    300: '#93C5FD',
-                    400: '#60A5FA',
-                    500: '#3B82F6',
-                    600: '#2563EB',
-                    700: '#1D4ED8',
-                    800: '#1E3A5F',
-                    900: '#0F1B2D',
-                    950: '#0A1120',
+                // Telegram Green
+                'tg-green': {
+                    50:  '#EDFBEF',
+                    100: '#D4F5D9',
+                    200: '#AAEDB5',
+                    300: '#7FE492',
+                    400: '#4DCD5E',
+                    500: '#33B544',
+                    600: '#2A9A39',
+                    700: '#227F2F',
+                    800: '#1A6425',
+                    900: '#12491B',
+                    950: '#0A2E11',
                 },
                 emerald: {
                     50:  '#ecfdf5',

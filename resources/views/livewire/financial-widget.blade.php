@@ -1,36 +1,34 @@
-<div class="card">
-    <div class="card-header flex items-center gap-2">
-        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-        </svg>
-        {{ __('pwa.financial_title') }}
+<div class="bg-white rounded-xl p-5" style="border: 1px solid #E6E9ED;">
+    <div class="flex items-center gap-2 mb-4">
+        <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: #EBF7FE;">
+            <svg class="w-4 h-4" style="color: #2AABEE;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+            </svg>
+        </div>
+        <span class="text-sm font-bold text-gray-900">{{ __('pwa.financial_title') }}</span>
     </div>
 
-    {{-- Discipline Score --}}
-    <div class="grid grid-cols-2 gap-4 mb-4">
-        <div class="stat-card">
-            <div class="stat-value {{ $onTimeRate >= 90 ? 'text-emerald-600' : ($onTimeRate >= 70 ? 'text-amber-500' : 'text-red-600') }}">
-                {{ $onTimeRate }}%
-            </div>
-            <div class="stat-label">{{ __('pwa.on_time_rate') }}</div>
+    {{-- Stats --}}
+    <div class="grid grid-cols-2 gap-3 mb-4">
+        <div class="text-center p-3 rounded-lg" style="background: #F7F8FA;">
+            <div class="text-xl font-bold" style="color: {{ $onTimeRate >= 90 ? '#4DCD5E' : ($onTimeRate >= 70 ? '#FF9800' : '#E53935') }};">{{ $onTimeRate }}%</div>
+            <div class="text-[11px]" style="color: #707579;">{{ __('pwa.on_time_rate') }}</div>
         </div>
-        <div class="stat-card">
-            <div class="stat-value {{ $totalDelayCost > 0 ? 'text-red-600' : 'text-emerald-600' }}">
-                {{ number_format($totalDelayCost, 2) }}
-            </div>
-            <div class="stat-label">{{ __('pwa.delay_cost') }} ({{ __('pwa.currency') }})</div>
+        <div class="text-center p-3 rounded-lg" style="background: #F7F8FA;">
+            <div class="text-xl font-bold" style="color: {{ $totalDelayCost > 0 ? '#E53935' : '#4DCD5E' }};">{{ number_format($totalDelayCost, 2) }}</div>
+            <div class="text-[11px]" style="color: #707579;">{{ __('pwa.delay_cost') }} ({{ __('pwa.currency') }})</div>
         </div>
     </div>
 
-    {{-- Progress Bar --}}
+    {{-- Progress --}}
     <div>
-        <div class="flex justify-between text-xs text-gray-500 mb-1">
+        <div class="flex justify-between text-xs mb-1" style="color: #707579;">
             <span>{{ __('pwa.this_month') }}</span>
             <span>{{ $totalDays - $lateDays }}/{{ $totalDays }} {{ __('pwa.on_time_days') }}</span>
         </div>
-        <div class="w-full bg-gray-100 rounded-full h-2.5">
-            <div class="h-2.5 rounded-full transition-all duration-500 {{ $onTimeRate >= 90 ? 'bg-emerald-500' : ($onTimeRate >= 70 ? 'bg-amber-400' : 'bg-red-500') }}"
-                 style="width: {{ $onTimeRate }}%"></div>
+        <div class="w-full h-1.5 rounded-full" style="background: #E6E9ED;">
+            <div class="h-1.5 rounded-full transition-all duration-500"
+                 style="width: {{ $onTimeRate }}%; background: {{ $onTimeRate >= 90 ? '#4DCD5E' : ($onTimeRate >= 70 ? '#FF9800' : '#E53935') }};"></div>
         </div>
     </div>
 </div>

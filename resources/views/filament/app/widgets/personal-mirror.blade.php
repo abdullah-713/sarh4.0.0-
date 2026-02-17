@@ -1,135 +1,71 @@
-<div>
-    @php
-        $m = $mirror ?? [];
-        $score = $m['performance_score'] ?? 0;
-        $scoreColor = match(true) {
-            $score >= 90 => 'emerald',
-            $score >= 70 => 'amber',
-            $score >= 50 => 'orange',
-            default => 'red',
-        };
-    @endphp
-
-    {{-- المرآة الشخصية --}}
-    <div class="bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+<x-filament-widgets::widget>
+    <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden" style="border: 1px solid #E6E9ED;">
         {{-- Header --}}
-        <div class="bg-gradient-to-l from-primary-500 to-primary-700 px-6 py-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-                        <x-heroicon-o-eye class="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-bold text-white">المرآة الشخصية</h3>
-                        <p class="text-sm text-white/70">{{ now()->translatedFormat('F Y') }}</p>
-                    </div>
-                </div>
-                {{-- Performance Score Circle --}}
-                <div class="relative w-16 h-16">
-                    <svg class="w-16 h-16 transform -rotate-90" viewBox="0 0 36 36">
-                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                              fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="3"/>
-                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                              fill="none" stroke="white" stroke-width="3"
-                              stroke-dasharray="{{ $score }}, 100"
-                              stroke-linecap="round"/>
-                    </svg>
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <span class="text-lg font-bold text-white">{{ $score }}</span>
-                    </div>
+        <div class="p-5 text-center text-white" style="background: linear-gradient(135deg, #2AABEE 0%, #229ED9 100%);">
+            <h3 class="text-sm font-medium opacity-80 mb-2">{{ __('pwa.performance_score') }}</h3>
+            <div class="relative w-24 h-24 mx-auto mb-2">
+                <svg class="w-24 h-24 transform -rotate-90" viewBox="0 0 36 36">
+                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="3"/>
+                    <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="white" stroke-width="3" stroke-dasharray="{{ ($score ?? 0) }}, 100" stroke-linecap="round"/>
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="text-2xl font-bold">{{ $score ?? 0 }}%</span>
                 </div>
             </div>
+            <p class="text-sm opacity-80">{{ $scoreLabel ?? __('pwa.good') }}</p>
         </div>
-
-        {{-- Motivational Message --}}
-        @if(!empty($m['message']))
-            <div class="px-6 py-3 bg-{{ $scoreColor }}-50 dark:bg-{{ $scoreColor }}-900/20 border-b border-{{ $scoreColor }}-200 dark:border-{{ $scoreColor }}-800">
-                <p class="text-sm font-medium text-{{ $scoreColor }}-800 dark:text-{{ $scoreColor }}-200 text-center">
-                    {{ $m['message'] }}
-                </p>
-            </div>
-        @endif
 
         {{-- Stats Grid --}}
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-gray-200 dark:bg-gray-700">
-            {{-- Present Days --}}
-            <div class="bg-white dark:bg-gray-900 p-4 text-center">
-                <div class="text-2xl font-bold text-emerald-600">{{ $m['present_days'] ?? 0 }}</div>
-                <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">أيام الحضور</div>
-                <div class="text-xs text-gray-400 mt-0.5">من {{ $m['working_days'] ?? 0 }} يوم</div>
+        <div class="grid grid-cols-2 gap-px" style="background: #E6E9ED;">
+            <div class="bg-white dark:bg-gray-800 p-4 text-center">
+                <div class="text-2xl font-bold" style="color: #4DCD5E;">{{ $presentDays ?? 0 }}</div>
+                <div class="text-xs mt-1" style="color: #707579;">{{ __('pwa.present_days') }}</div>
             </div>
-
-            {{-- Late Days --}}
-            <div class="bg-white dark:bg-gray-900 p-4 text-center">
-                <div class="text-2xl font-bold text-amber-600">{{ $m['late_days'] ?? 0 }}</div>
-                <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">مرات التأخير</div>
-                <div class="text-xs text-gray-400 mt-0.5">{{ $m['total_delay'] ?? 0 }} دقيقة</div>
+            <div class="bg-white dark:bg-gray-800 p-4 text-center">
+                <div class="text-2xl font-bold" style="color: #FF9800;">{{ $lateDays ?? 0 }}</div>
+                <div class="text-xs mt-1" style="color: #707579;">{{ __('pwa.late_days') }}</div>
             </div>
-
-            {{-- Financial Loss --}}
-            <div class="bg-white dark:bg-gray-900 p-4 text-center">
-                <div class="text-2xl font-bold text-red-600">{{ number_format($m['total_loss'] ?? 0, 0) }}</div>
-                <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">خسارتك المالية</div>
-                <div class="text-xs text-gray-400 mt-0.5">ريال سعودي</div>
+            <div class="bg-white dark:bg-gray-800 p-4 text-center">
+                <div class="text-2xl font-bold" style="color: #E53935;">{{ $totalLoss ?? '0 ر.س' }}</div>
+                <div class="text-xs mt-1" style="color: #707579;">{{ __('pwa.total_loss') }}</div>
             </div>
-
-            {{-- Streak --}}
-            <div class="bg-white dark:bg-gray-900 p-4 text-center">
-                <div class="text-2xl font-bold text-primary-600">{{ $m['streak'] ?? 0 }}</div>
-                <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">سلسلة الانضباط</div>
-                <div class="text-xs text-gray-400 mt-0.5">أيام متتالية</div>
+            <div class="bg-white dark:bg-gray-800 p-4 text-center">
+                <div class="text-2xl font-bold" style="color: #2AABEE;">{{ $currentStreak ?? 0 }}</div>
+                <div class="text-xs mt-1" style="color: #707579;">{{ __('pwa.current_streak') }}</div>
             </div>
         </div>
 
-        {{-- Bottom Row: Branch Rank + Rates --}}
-        <div class="p-4 border-t border-gray-200 dark:border-gray-700">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {{-- Branch Ranking --}}
-                @if(!empty($m['branch_rank']))
-                    <div class="flex items-center gap-3 bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
-                        <div class="w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center">
-                            <x-heroicon-o-trophy class="w-5 h-5 text-primary-600" />
-                        </div>
-                        <div>
-                            <div class="text-sm font-bold text-gray-900 dark:text-white">
-                                {{ $m['branch_rank']['position'] }} من {{ $m['branch_rank']['total'] }}
-                            </div>
-                            <div class="text-xs text-gray-500">ترتيبك في الفرع</div>
-                        </div>
-                        <div class="mr-auto">
-                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium
-                                @if(($m['branch_rank']['percentile'] ?? 0) >= 80) bg-emerald-100 text-emerald-800
-                                @elseif(($m['branch_rank']['percentile'] ?? 0) >= 50) bg-amber-100 text-amber-800
-                                @else bg-red-100 text-red-800
-                                @endif">
-                                أعلى {{ $m['branch_rank']['percentile'] ?? 0 }}%
-                            </span>
-                        </div>
-                    </div>
-                @endif
+        {{-- Branch Rank --}}
+        <div class="p-4 flex items-center justify-between" style="background: #F7F8FA;">
+            <div class="flex items-center gap-2">
+                <svg class="w-5 h-5" style="color: #FF9800;" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('pwa.branch_rank') }}</span>
+            </div>
+            <span class="text-sm font-bold" style="color: #2AABEE;">#{{ $branchRank ?? '-' }}</span>
+        </div>
 
-                {{-- Attendance Rate --}}
-                <div class="flex items-center gap-3 bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
-                    <div class="w-10 h-10 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center">
-                        <x-heroicon-o-check-circle class="w-5 h-5 text-emerald-600" />
-                    </div>
-                    <div>
-                        <div class="text-sm font-bold text-gray-900 dark:text-white">{{ $m['attendance_rate'] ?? 0 }}%</div>
-                        <div class="text-xs text-gray-500">نسبة الحضور</div>
-                    </div>
+        {{-- Rates --}}
+        <div class="p-4 space-y-3">
+            <div>
+                <div class="flex justify-between text-xs mb-1">
+                    <span style="color: #707579;">{{ __('pwa.on_time_rate') }}</span>
+                    <span class="font-bold" style="color: #4DCD5E;">{{ $onTimeRate ?? 0 }}%</span>
                 </div>
-
-                {{-- Punctuality Rate --}}
-                <div class="flex items-center gap-3 bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
-                    <div class="w-10 h-10 bg-sky-100 dark:bg-sky-900/30 rounded-full flex items-center justify-center">
-                        <x-heroicon-o-clock class="w-5 h-5 text-sky-600" />
-                    </div>
-                    <div>
-                        <div class="text-sm font-bold text-gray-900 dark:text-white">{{ $m['punctuality_rate'] ?? 0 }}%</div>
-                        <div class="text-xs text-gray-500">نسبة الانضباط</div>
-                    </div>
+                <div class="w-full h-2 rounded-full" style="background: #E6E9ED;">
+                    <div class="h-2 rounded-full" style="background: #4DCD5E; width: {{ $onTimeRate ?? 0 }}%;"></div>
+                </div>
+            </div>
+            <div>
+                <div class="flex justify-between text-xs mb-1">
+                    <span style="color: #707579;">{{ __('pwa.attendance_rate') }}</span>
+                    <span class="font-bold" style="color: #2AABEE;">{{ $attendanceRate ?? 0 }}%</span>
+                </div>
+                <div class="w-full h-2 rounded-full" style="background: #E6E9ED;">
+                    <div class="h-2 rounded-full" style="background: #2AABEE; width: {{ $attendanceRate ?? 0 }}%;"></div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</x-filament-widgets::widget>

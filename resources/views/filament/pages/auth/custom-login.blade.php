@@ -1,5 +1,24 @@
 <x-filament-panels::page.simple>
-    <x-filament-panels::form wire:submit="authenticate">
+    <div class="text-center mb-6">
+        <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3" style="background: #2AABEE;">
+            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+        </div>
+        <h1 class="text-xl font-bold text-gray-900 dark:text-white">{{ __('pwa.app_name') }}</h1>
+        <p class="text-sm mt-1" style="color: #707579;">{{ __('pwa.login_subtitle') }}</p>
+    </div>
+
+    @if (filament()->hasRegistration())
+        <x-slot name="subheading">
+            {{ __('filament-panels::pages/auth/login.actions.register.before') }}
+            {{ $this->registerAction }}
+        </x-slot>
+    @endif
+
+    {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::AUTH_LOGIN_FORM_BEFORE, scopes: $this->getRenderHookScopes()) }}
+
+    <x-filament-panels::form id="form" wire:submit="authenticate">
         {{ $this->form }}
 
         <x-filament-panels::form.actions
@@ -8,87 +27,9 @@
         />
     </x-filament-panels::form>
 
-    <style>
-        @keyframes copyrightPulse {
-            0%, 100% { 
-                transform: scale(1); 
-                opacity: 1;
-                box-shadow: 0 0 20px rgba(249, 115, 22, 0.2);
-            }
-            50% { 
-                transform: scale(1.02); 
-                opacity: 0.95;
-                box-shadow: 0 0 40px rgba(249, 115, 22, 0.4), 0 0 80px rgba(249, 115, 22, 0.2);
-            }
-        }
+    {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::AUTH_LOGIN_FORM_AFTER, scopes: $this->getRenderHookScopes()) }}
 
-        @keyframes shimmer {
-            0% { background-position: -1000px 0; }
-            100% { background-position: 1000px 0; }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .copyright-alert {
-            animation: copyrightPulse 2s ease-in-out infinite;
-        }
-
-        .shimmer-text {
-            background: linear-gradient(
-                90deg,
-                #F97316 0%,
-                #FB923C 25%,
-                #FFF 50%,
-                #FB923C 75%,
-                #F97316 100%
-            );
-            background-size: 1000px 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shimmer 3s linear infinite;
-        }
-
-        .float-logo {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        /* تحسين عرض الأخطاء */
-        .fi-fo-field-wrp-error-message {
-            background: linear-gradient(135deg, rgba(249, 115, 22, 0.08) 0%, rgba(249, 115, 22, 0.03) 100%);
-            border-left: 4px solid #F97316;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin-top: 0.5rem;
-        }
-
-        .fi-fo-field-wrp-error-message li {
-            color: #C2410C !important;
-            font-weight: 600;
-            font-size: 0.95rem;
-            line-height: 1.8;
-            margin: 0.5rem 0;
-        }
-    </style>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const passwordField = document.querySelector('#password-field');
-            const emailField = document.querySelector('input[type="email"]');
-            
-            if (passwordField && emailField) {
-                passwordField.addEventListener('input', function() {
-                    if (this.value === 'المدير' && emailField.value === '') {
-                        this.style.background = 'linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(249, 115, 22, 0.03) 100%)';
-                        this.style.borderColor = '#F97316';
-                    } else {
-                        this.style.background = '';
-                        this.style.borderColor = '';
-                    }
-                });
-            }
-        });
-    </script>
+    <div class="text-center mt-6">
+        <p class="text-xs" style="color: #707579;">© {{ date('Y') }} {{ __('pwa.app_name') }}. {{ __('pwa.all_rights_reserved') }}</p>
+    </div>
 </x-filament-panels::page.simple>

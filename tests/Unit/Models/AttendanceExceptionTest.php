@@ -15,7 +15,7 @@ class AttendanceExceptionTest extends TestCase
     {
         return AttendanceException::create(array_merge([
             'user_id'              => User::factory()->create()->id,
-            'exception_type'       => 'custom_shift',
+            'exception_type'       => 'custom',
             'custom_shift_start'   => '09:00',
             'custom_shift_end'     => '17:00',
             'custom_grace_minutes' => 15,

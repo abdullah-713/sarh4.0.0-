@@ -3,6 +3,9 @@
 namespace Tests\Unit\Models;
 
 use App\Models\AnomalyLog;
+use App\Models\AttendanceLog;
+use App\Models\Branch;
+use App\Models\SensorReading;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -13,12 +16,31 @@ class AnomalyLogTest extends TestCase
 
     private function createAnomaly(array $attrs = []): AnomalyLog
     {
+        $user = User::factory()->create();
+        $branch = Branch::factory()->create();
+        $log = AttendanceLog::factory()->create(['user_id' => $user->id, 'branch_id' => $branch->id]);
+        $reading = SensorReading::create([
+            'user_id'          => $user->id,
+            'attendance_log_id'=> $log->id,
+            'avg_accel_x'      => 0.1,
+            'avg_accel_y'      => 0.2,
+            'avg_accel_z'      => 9.8,
+            'variance_motion'  => 0.5,
+            'peak_frequency'   => 2.0,
+            'db_level'         => 40,
+            'work_probability' => 0.5,
+            'motion_signature' => 'walking',
+            'is_anomaly'       => false,
+            'sampling_window'  => 10,
+        ]);
+
         return AnomalyLog::create(array_merge([
-            'user_id'       => User::factory()->create()->id,
-            'anomaly_type'  => 'location_mismatch',
-            'confidence'    => 0.95,
-            'context_data'  => ['test' => true],
-            'is_reviewed'   => false,
+            'user_id'           => $user->id,
+            'sensor_reading_id' => $reading->id,
+            'anomaly_type'      => 'location_mismatch',
+            'confidence'        => 0.95,
+            'context_data'      => ['test' => true],
+            'is_reviewed'       => false,
         ], $attrs));
     }
 

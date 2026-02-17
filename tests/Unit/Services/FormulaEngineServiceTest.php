@@ -80,12 +80,13 @@ class FormulaEngineServiceTest extends TestCase
         AttendanceLog::factory()->late(30)->create([
             'user_id' => $user->id,
             'branch_id' => $branch->id,
+            'attendance_date' => now()->subDay()->toDateString(),
             'delay_cost' => 15.50,
         ]);
 
         $values = $this->service->resolveVariablesForUser(
             $user,
-            now()->startOfMonth()->toDateString(),
+            now()->subWeek()->toDateString(),
             now()->toDateString(),
             ['financial_loss']
         );

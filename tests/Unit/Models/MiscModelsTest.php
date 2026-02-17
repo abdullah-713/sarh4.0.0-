@@ -199,6 +199,7 @@ class MiscModelsTest extends TestCase
             'user_id'          => $user->id,
             'branch_id'        => $branch->id,
             'pattern_type'     => 'frequent_late',
+            'description_ar'   => 'تأخر متكرر',
             'frequency_score'  => 0.8,
             'financial_impact' => 500,
             'risk_level'       => 'high',
@@ -214,12 +215,12 @@ class MiscModelsTest extends TestCase
         $branch = Branch::factory()->create();
         EmployeePattern::create([
             'user_id' => $user->id, 'branch_id' => $branch->id,
-            'pattern_type' => 'frequent_late', 'risk_level' => 'high', 'is_active' => true,
+            'pattern_type' => 'frequent_late', 'description_ar' => 'تأخر', 'risk_level' => 'high', 'is_active' => true,
             'detected_at' => now(),
         ]);
         EmployeePattern::create([
             'user_id' => $user->id, 'branch_id' => $branch->id,
-            'pattern_type' => 'improving', 'risk_level' => 'low', 'is_active' => true,
+            'pattern_type' => 'improving', 'description_ar' => 'تحسن', 'risk_level' => 'low', 'is_active' => true,
             'detected_at' => now(),
         ]);
         $this->assertEquals(1, EmployeePattern::highRisk()->count());
@@ -238,7 +239,7 @@ class MiscModelsTest extends TestCase
         $branch = Branch::factory()->create();
         $pattern = EmployeePattern::create([
             'user_id' => $user->id, 'branch_id' => $branch->id,
-            'pattern_type' => 'frequent_late', 'risk_level' => 'critical',
+            'pattern_type' => 'frequent_late', 'description_ar' => 'حرج', 'risk_level' => 'critical',
             'is_active' => true, 'detected_at' => now(),
         ]);
         $this->assertEquals('danger', $pattern->getRiskColor());

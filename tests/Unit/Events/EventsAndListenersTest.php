@@ -104,10 +104,11 @@ class EventsAndListenersTest extends TestCase
 
         // Create badge
         $badge = Badge::create([
-            'name' => 'Test Badge',
-            'description' => 'Testing',
+            'name_ar' => 'شارة اختبار',
+            'name_en' => 'Test Badge',
+            'description_ar' => 'اختبار',
             'icon' => 'star',
-            'type' => 'attendance',
+            'category' => 'attendance',
             'criteria' => ['days' => 5],
             'points_reward' => 50,
         ]);

@@ -68,10 +68,9 @@ class TrapResponseService
 
         // إنشاء سجل تدقيق
         AuditLog::record(
-            userId: $user->id,
             action: "trap_triggered:{$trap->trap_code}",
             model: $interaction,
-            details: [
+            newValues: [
                 'trap_code'   => $trap->trap_code,
                 'trap_name'   => $trap->name,
                 'risk_score'  => $riskScore,

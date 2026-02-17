@@ -9,7 +9,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class TrapTest extends TestCase
+class TrapModelTest extends TestCase
 {
     use RefreshDatabase;
 

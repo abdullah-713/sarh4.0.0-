@@ -16,7 +16,7 @@ class CircularFactory extends Factory
             'title_en'     => fake()->sentence(3),
             'body_ar'      => fake('ar_SA')->paragraph(),
             'body_en'      => fake()->paragraph(),
-            'priority'     => fake()->randomElement(['normal', 'high', 'urgent']),
+            'priority'     => fake()->randomElement(['normal', 'important', 'urgent']),
             'target_scope' => 'all',
             'created_by'   => \App\Models\User::factory(),
             'requires_acknowledgment' => true,

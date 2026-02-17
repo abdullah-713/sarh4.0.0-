@@ -12,11 +12,13 @@ class LeaveRequestFactory extends Factory
     public function definition(): array
     {
         $start = fake()->dateTimeBetween('now', '+30 days');
+        $days = rand(1, 5);
         return [
             'user_id'     => \App\Models\User::factory(),
             'leave_type'  => fake()->randomElement(['annual', 'sick', 'emergency', 'unpaid']),
             'start_date'  => $start,
-            'end_date'    => (clone $start)->modify('+' . rand(1, 5) . ' days'),
+            'end_date'    => (clone $start)->modify('+' . $days . ' days'),
+            'total_days'  => $days,
             'reason'      => fake()->sentence(),
             'status'      => 'pending',
         ];
